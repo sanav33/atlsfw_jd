@@ -10,7 +10,7 @@ const singleArticleClient = new MongoClient(uri);
  * This async function finds all the articles in the database and returns their article id, author, preview image, title for previewing the articles in a list format.
  * @returns an async list of articles present in the database
  */
-async function pullAllArticlesPreview() {
+export async function pullAllArticlesPreview() {
   try {
     const database = allArticleClient.db("posts");
     const articles = database.collection("articles");
@@ -24,7 +24,7 @@ async function pullAllArticlesPreview() {
       projection: { _id: 1, author: 1, title: 1, preview_image: 1 },
     };
 
-    const cursor = await articles.find(query, options);
+    const cursor = articles.find(query, options);
 
     await cursor.forEach(article => {
       allArticles.push(article)
@@ -41,7 +41,7 @@ async function pullAllArticlesPreview() {
  * @param {*} id refers to the article id that we are performing a search one.
  * @returns an article object with the corresponding id. -1 if nothing was found.
  */
-async function findArticleWithId(id) {
+export async function findArticleWithId(id) {
   try {
     const database = singleArticleClient.db("posts");
     const articles = database.collection("articles");
