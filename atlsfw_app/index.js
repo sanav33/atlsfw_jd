@@ -19,10 +19,12 @@ async function run() {
       projection: { _id: 0, author: 1 },
     };
 
-    const article = await articles.findOne(query, options);
+    const cursor = await articles.find(query, options);
 
-    // since this method returns the matched document, not a cursor, print it directly
-    console.log(article);
+    await cursor.forEach(article => {
+      console.log(article);
+    });
+
   } finally {
     await client.close();
   }
