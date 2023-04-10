@@ -18,4 +18,3 @@ web-build/
 .metro-health-check*
 
 #ignore files
-index.js
