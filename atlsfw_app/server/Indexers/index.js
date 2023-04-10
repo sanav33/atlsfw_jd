@@ -1,7 +1,7 @@
-import { MongoClient, ObjectId } from "mongodb";
-
+import { MongoClient} from "mongodb";
+import {getMongoPasscode} from "../../sanasLife.js"
 // Replace the uri string with your MongoDB deployment's connection string.
-const uri = "mongodb+srv://sverma:<passcode>@atlsfw.dgkxf1k.mongodb.net/posts?retryWrites=true&w=majority";
+const uri = "mongodb+srv://sverma:"+ getMongoPasscode() + "@atlsfw.dgkxf1k.mongodb.net/posts?retryWrites=true&w=majority";
 
 const allArticleClient = new MongoClient(uri);
 const singleArticleClient = new MongoClient(uri);
