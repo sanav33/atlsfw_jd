@@ -46,7 +46,7 @@ export async function findArticleWithId(id) {
     const database = singleArticleClient.db("posts");
     const articles = database.collection("articles");
     // Specific filter for the query. If empty, then it finds all.
-    const query = { _id : article_id };
+    const query = { _id :id };
 
     const options = {
       // Include all fields in the returned document

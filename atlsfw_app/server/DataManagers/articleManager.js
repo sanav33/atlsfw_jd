@@ -14,15 +14,9 @@ async function getAllArticles() {
 
 async function getArticleById(id) {
     const article_id = new ObjectId(id);
-    article = await findArticleWithId(article_id);
+    const article = await findArticleWithId(article_id);
     if (article != -1) {
         article._id = article._id.toString()
     }
     return article;
 }
-
-const testList = await getAllArticles()
-const iid = testList[0]._id
-console.log(testList[0]._id)
-const testart = getArticleById(iid)
-console.log(testart)
