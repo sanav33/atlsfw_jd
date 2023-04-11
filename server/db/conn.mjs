@@ -1,8 +1,6 @@
 import { MongoClient } from "mongodb";
-import { getMongoPasscode } from "../password.mjs"
-const password = getMongoPasscode();
-const uri = "mongodb+srv://sverma:"+ password + "@atlsfw.dgkxf1k.mongodb.net/posts?retryWrites=true&w=majority";
-
+import getMongoPasscode from "../password.mjs";
+const uri = "mongodb+srv://sverma:" + getMongoPasscode() + "@atlsfw.dgkxf1k.mongodb.net/posts?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 let conn;

@@ -10,7 +10,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/posts", posts);
-console.log(ip.address());
 app.use((err, _req, res, next) => {
   res.status(500).send("Uh oh! An unexpected error occurred.");
 });
