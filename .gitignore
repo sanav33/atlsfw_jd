@@ -1,1 +1,2 @@
-server/password.mjs
+./server/password.mjs
+node_modules/
