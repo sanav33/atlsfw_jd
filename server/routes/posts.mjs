@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
   let collection = await db.collection("articles");
     const options = {
         // Include the fields needed for previews in the returned documents
-      projection: { _id: 1, author: 1, title: 1, preview_image: 1 },
+      projection: { _id: 1, author: 1, title: 1, preview_image: 1, content: 1, likes: 1 },
     };
 
   let results = await collection.find({}, options)
@@ -25,7 +25,7 @@ router.get("/:id", async (req, res) => {
   const query = { _id: ObjectId(req.params.id) };
   const options = {
     // Include all fields in the returned document
-    projection: { _id: 1, author: 1, title: 1, preview_image: 1, content: 1},
+    projection: { _id: 1, author: 1, title: 1, preview_image: 1, content: 1, likes: 1},
   };
   let results = await collection.findOne(query, options);
   if (!result) res.send("Not found").status(404);

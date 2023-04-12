@@ -1,5 +1,5 @@
 export function getMongoPasscode() {
-    return "atlsfw2023";
+    return "atlsfw_jd23";
 }
 
 export default getMongoPasscode;
