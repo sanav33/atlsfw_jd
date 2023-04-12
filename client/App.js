@@ -23,7 +23,7 @@ const DisplayAnImage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://10.0.0.178:5050/posts/");
+        const response = await fetch("http://<DEV_SERVER_IP>/posts/");
         const data = await response.json();
         setIp(data);
       } catch (error) {
