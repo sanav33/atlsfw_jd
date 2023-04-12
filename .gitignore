@@ -1,3 +1,3 @@
-./server/password.mjs
+server/password.mjs
 node_modules/
 client/node_modules/
