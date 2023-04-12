@@ -12,5 +12,7 @@
 3. Run `npx expo login` in your terminal.
 4. Run `npx expo start`.
 
-*NOTE:* To get the development server IP, run `hostname -I` in your terminal and use the first IP address.
+**NOTE:**
+1. To get the development server IP, run `hostname -I` in your terminal and use the first IP address.
+2. There is example code for how to hit the endpoints in `client/App.js`.
 
