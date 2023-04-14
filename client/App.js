@@ -1,41 +1,23 @@
 // This is example code to hit the server endpoint to access the posts in JSON format.
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    width: 300,
-    height: 300,
-  },
-  logo: {
-    width: 66,
-    height: 58,
-  },
-  likes: {
-    flexDirection: 'row',
-    paddingTop: 1
-  }
-});
-
 const LikeButton = () => {
+  //set button to red or black
   const [liked, setLiked] = useState(false);
-  const [ip, setIp] = useState('');
+  //likes count
   const [count, setCount] = useState(1);
+
+  //get likes from endpoint
+  const [ip, setIp] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("http://128.61.53.208:5050/posts/6434998aac3580d94d2d9858");
         const data = await response.json();
-        // count = data.likes;
-        // console.log(data.likes);
         setCount(data.likes);
         setIp(data.likes);
       } catch (error) {
@@ -59,7 +41,7 @@ const LikeButton = () => {
   );
 };
 
-const DisplayAnImage = () => {
+const App = () => {
 
   return (
     <View style={styles.container}>
@@ -67,8 +49,28 @@ const DisplayAnImage = () => {
       <LikeButton/>
     </View>
   );
-};
+
+}
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    width: 300,
+    height: 300,
+  },
+  logo: {
+    width: 66,
+    height: 58,
+  }, 
+  likes: {
+    flexDirection: 'row',
+    paddingTop: 1
+  }
+});
 
 
-
-export default DisplayAnImage;
+export default App;
