@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  let collection = await db.collection("articles)");
+  let collection = await db.collection("articles");
   const query = { _id: new ObjectId(req.params.id) };
   const options = {
     // Include all fields in the returned document
