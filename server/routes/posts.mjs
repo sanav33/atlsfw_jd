@@ -23,11 +23,13 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   let collection = await db.collection("articles");
   const query = { _id: new ObjectId(req.params.id) };
+  console.log(req.params.id  + " hi stupid");
   const options = {
     // Include all fields in the returned document
     projection: { _id: 1, author: 1, title: 1, preview_image: 1, content: 1, likes: 1},
   };
   let result = await collection.findOne(query, options);
+  console.log(result);
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
 })
