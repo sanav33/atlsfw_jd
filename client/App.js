@@ -16,7 +16,8 @@ const LikeButton = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://128.61.53.208:5050/posts/6434998aac3580d94d2d9858");
+        const response = await fetch("http://128.61.52.90:5050/posts/6434998aac3580d94d2d9858");
+        // console.log(response);
         const data = await response.json();
         setCount(data.likes);
         setIp(data.likes);
@@ -40,13 +41,61 @@ const LikeButton = () => {
     
   );
 };
+//need to keep track of the loaded article content with global var
+var contents = " ";
+var articleTitle = " ";
+
+const ArticleButton = () => {
+  
+  const [showText, setShowText] = useState(false);
+  
+  // console.log("contents init: " + contents + ";");
+
+  const [ip, setIp] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        //"http://<your IP here>:5050/posts/<objectID>"
+        //check IP every time u start
+        //objID can be found on cloud.mongodb.com, look in gc for login
+        const response = await fetch("http://128.61.52.90:5050/posts/6434998aac3580d94d2d9858");
+        const data = await response.json();
+        setIp(data.content);
+
+        //data = the specificed obj in JSON format
+
+        // console.log("still empty: " + contents + ";");
+        contents = data.content;
+        articleTitle = data.title;
+        // console.log("has contents: " + contents + ";");
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <View>
+      <Button title="Show Article" onPress={() => setShowText(!showText)}/>
+      {showText ? <Text>{contents}</Text> : null}
+    </View>
+  );
+};
+
 
 const App = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?auto=format&fit=crop&w=700&q=60" }}/>
-      <LikeButton/>
+      <Image style={styles.image} source={{ uri: "https://cdn.thewirecutter.com/wp-content/media/2021/05/mensjeans-2048px-4026-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024&dpr=2" }}/>
+      <View style={{flexDirection: 'row'}}>
+        <ArticleButton/>
+        <LikeButton/>
+      </View>
+
     </View>
   );
 
@@ -69,7 +118,18 @@ const styles = StyleSheet.create({
   likes: {
     flexDirection: 'row',
     paddingTop: 1
-  }
+  },
+  button: {
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 4,
+    backgroundColor: 'oldlace',
+    alignSelf: 'flex-start',
+    marginHorizontal: '1%',
+    marginBottom: 6,
+    minWidth: '48%',
+    textAlign: 'center',
+  },
 });
 
 
