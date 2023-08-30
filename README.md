@@ -16,3 +16,6 @@
 1. To get the development server IP, run `hostname -I` in your terminal and use the first IP address.
 2. There is example code for how to hit the endpoints in `client/App.js`.
 
+## Team Links
+1. Github: https://github.com/sanav33/atlsfw_jd
+2. Jira: https://atlsfw-gatech-jid-3104.atlassian.net/jira/software/projects/SCRUM/boards/1  
