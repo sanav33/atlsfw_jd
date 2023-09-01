@@ -10,6 +10,7 @@ try {
   console.error(e);
 }
 
-let db = conn.db("posts");
+let posts_db = conn.db("posts");
+let users_db = conn.db("users");
 
-export default db;
+export {users_db, posts_db};
