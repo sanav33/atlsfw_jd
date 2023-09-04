@@ -3,6 +3,7 @@
 import React, { useState, useEffect} from 'react';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import SignUpScreen from './SignupScreen';
 
 const LikeButton = () => {
   //set button to red or black
@@ -98,6 +99,8 @@ const App = () => {
 
     </View>
   );
+//  console.log("hello loading shit rn");
+//  return SignUpScreen();
 
 }
 
