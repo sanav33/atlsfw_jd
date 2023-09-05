@@ -4,6 +4,7 @@ import "express-async-errors";
 import signup from "./routes/signup.mjs";
 import bodyParser from "body-parser";
 import posts from "./routes/posts.mjs";
+import login from "./routes/login.mjs";
 
 // Replace the uri string with your MongoDB deployment's connection string.
 
@@ -14,7 +15,8 @@ app.use(cors());
 app.use(bodyParser.json());
 // Get a list of 50 posts
 
-app.use('/', signup);
+app.use('/', login);
+app.use('/signup', signup);
 app.use((err, _req, res, next) => {
   res.status(500).send("Uh oh! An unexpected error occurred.");
 });

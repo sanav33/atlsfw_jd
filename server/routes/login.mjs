@@ -12,39 +12,39 @@ enum AccountType {
 
 const router = express.Router();
 
-router.get("/signup", async (req, res) => {
+router.get("/", async (req, res) => {
     console.log("getting signup");
     res.json({ success: true });
 });
 
-router.post("/signup", async (req, res) => {
-    console.log("got a signup request");
-    const { email, password, first_name, last_name, username, birthday, gender, phone_number, subscribed_to_news } = req.body;
+router.post("/", async (req, res) => {
+    console.log("got a login request");
+    const { email, password } = req.body;
     console.log(email, password);
     if (!email || !password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
-    const hashed_email = bcrypt.hash(email, 10);
-    const existingUser = await users_db.collection('user_login').findOne({ hashed_email: hashed_email });
-    if (existingUser) {
-        return res.status(400).json({ success: false, message: 'Email already registered' });
+    const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: email, hashed_password: password });
+    if (!existingUser) {
+        console.log('work?');
+        return res.send('user doesn\'t exist').status(400).json({ success: false, message: 'This account does not exist' });
     }
-    const hashedPassword = await bcrypt.hash(password, 8);
-    await users_db.collection('user_login').insertOne({ password_hashed: hashedPassword, account_type: 2, hashed_email: hashed_email, encrypted_email: "" });
-    await users_db.collection('customer_info').insertOne({
-        first_name: first_name,
-        account_type: AccountType.General,
-        hashed_email: hashed_email,
-        encrypted_email: "",
-        last_name: last_name,
-        username: username,
-        gender: gender,
-        phone_number: phone_number,
-        subscribed_to_news: subscribed_to_news,
-        birthday: birthday
-    });
     res.json({ success: true });
 });
+router.get("/login/:login", async (req, res) => {
+  let collection = await users_db.collection("user_login");
+  const query = { hashed_email: req.params.hashed_email }
+  console.log(req.params.hashed_email + " hi stupid");
+  const options = {
+    // Include all fields in the returned document
+    projection: { _id: 1, encrypted_email: 1 },
+  };
+  let result = await collection.findOne(query, options);
+  console.log(result);
+  if (!result) res.send("Not found").status(404);
+  else res.send(result).status(200);
+})
+
 // Get a list of 50 posts
 /*
 router.post("/", async (req, res) => {

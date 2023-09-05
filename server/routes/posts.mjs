@@ -34,19 +34,6 @@ router.get("/posts/:id", async (req, res) => {
   else res.send(result).status(200);
 })
 
-router.get("login/:login", async (req, res) => {
-  let collection = await users_db.collection("user_login");
-  const query = { hashed_email: req.params.hashed_email }
-  console.log(req.params.hashed_email + " hi stupid");
-  const options = {
-    // Include all fields in the returned document
-    projection: { _id: 1, encrypted_email: 1 },
-  };
-  let result = await collection.findOne(query, options);
-  console.log(result);
-  if (!result) res.send("Not found").status(404);
-  else res.send(result).status(200);
-})
 
 // // Fetches the latest posts
 // router.get("/latest", async (req, res) => {

@@ -2,44 +2,31 @@ import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-const SignUpScreen = () => {
+const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [phone_number, setPhoneNumber] = useState('');
-  const [subscribed_to_news, setSubscribedToNews] = useState('');
-  const [gender, setGender] = useState('');
 
-
-  const handleSignUp = async () => {
+  const handleLogin = async () => {
     try {
       // Send the user data to your backend
-      const response = await axios.post('http://143.215.118.140:5050/signup', {
+      const response = await axios.post('http://143.215.118.140:5050/', {
           email,
           password,
-          first_name,
-          last_name,
-          username,
-          birthday,
-          gender,
-          phone_number,
-          subscribed_to_news,
         });
 
+    console.log(response.data);
       const data = response.data;
 
       if (data.success) {
-          console.log("successfully signed user up");
+          console.log("successfully logged in");
         // Handle success (e.g., navigate to another screen)
       } else {
-          console.log("signup failed");
+          console.log("well what about this");
+          console.log(data.message);
         // Handle error (e.g., display an error message)
       }
     } catch (error) {
-      console.error('Error during sign-up:', error);
+      console.error('Error during login:', error.response.data.message);
     }
   };
 
@@ -59,7 +46,7 @@ const SignUpScreen = () => {
         style={styles.input}
         secureTextEntry
       />
-      <Button title="Sign Up" onPress={handleSignUp} />
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 };
@@ -79,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default LoginScreen;
