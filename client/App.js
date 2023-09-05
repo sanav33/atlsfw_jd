@@ -89,18 +89,18 @@ const ArticleButton = () => {
 
 const App = () => {
 
-  return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: "https://cdn.thewirecutter.com/wp-content/media/2021/05/mensjeans-2048px-4026-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024&dpr=2" }}/>
-      <View style={{flexDirection: 'row'}}>
-        <ArticleButton/>
-        <LikeButton/>
-      </View>
+  // return (
+  //   <View style={styles.container}>
+  //     <Image style={styles.image} source={{ uri: "https://cdn.thewirecutter.com/wp-content/media/2021/05/mensjeans-2048px-4026-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024&dpr=2" }}/>
+  //     <View style={{flexDirection: 'row'}}>
+  //       <ArticleButton/>
+  //       <LikeButton/>
+  //     </View>
 
-    </View>
-  );
-//  console.log("hello loading shit rn");
-//  return SignUpScreen();
+  //   </View>
+  // );
+  console.log("hello loading shit rn");
+  return SignUpScreen();
 
 }
 

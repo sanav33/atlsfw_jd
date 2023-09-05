@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
+import axios from 'axios';
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
@@ -8,18 +9,17 @@ const SignUpScreen = () => {
   const handleSignUp = async () => {
     try {
       // Send the user data to your backend
-        console.log("trying to open up signup screen");
-      const response = await fetch('http://153.33.221.24:5050/');
+      const response = await axios.post('http://143.215.118.140:5050/', {
+          email,
+          password
+        });
 
-      const data = await response.json();
+      const data = response.data;
 
       if (data.success) {
-          console.log("hello");
-          console.log(data);
         // Handle success (e.g., navigate to another screen)
       } else {
         // Handle error (e.g., display an error message)
-          console.log("uh oh");
       }
     } catch (error) {
       console.error('Error during sign-up:', error);
