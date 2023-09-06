@@ -13,7 +13,7 @@ enum AccountType {
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    console.log("getting signup");
+    console.log("getting login");
     res.json({ success: true });
 });
 
@@ -24,26 +24,27 @@ router.post("/", async (req, res) => {
     if (!email || !password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
+    const hashed_password = bcrypt.hash(password, 10);
     const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: email, hashed_password: password });
     if (!existingUser) {
-        console.log('work?');
         return res.send('user doesn\'t exist').status(400).json({ success: false, message: 'This account does not exist' });
     }
     res.json({ success: true });
 });
+
 router.get("/login/:login", async (req, res) => {
-  let collection = await users_db.collection("user_login");
-  const query = { hashed_email: req.params.hashed_email }
-  console.log(req.params.hashed_email + " hi stupid");
-  const options = {
-    // Include all fields in the returned document
-    projection: { _id: 1, encrypted_email: 1 },
-  };
-  let result = await collection.findOne(query, options);
-  console.log(result);
-  if (!result) res.send("Not found").status(404);
-  else res.send(result).status(200);
-})
+    let collection = await users_db.collection("user_login");
+    const query = { hashed_email: req.params.hashed_email }
+    console.log(req.params.hashed_email + " hi stupid");
+    const options = {
+        // Include all fields in the returned document
+        projection: { _id: 1, encrypted_email: 1 },
+    };
+    let result = await collection.findOne(query, options);
+    console.log(result);
+    if (!result) res.send("Not found").status(404);
+    else res.send(result).status(200);
+});
 
 // Get a list of 50 posts
 /*

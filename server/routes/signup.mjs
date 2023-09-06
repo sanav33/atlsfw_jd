@@ -19,29 +19,27 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
     console.log("got a signup request");
-    const { email, password, first_name, last_name, username, birthday, gender, phone_number, subscribed_to_news } = req.body;
+    const { email, password /*, first_name, last_name, username, birthday, gender, phone_number, subscribed_to_news */ } = req.body;
     console.log(email, password);
     if (!email || !password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
-    const hashed_email = bcrypt.hash(email, 10);
     const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: email });
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
-    const hashedPassword = await bcrypt.hash(password, 8);
-    await users_db.collection('user_login').insertOne({ password_hashed: hashedPassword, account_type: 2, hashed_email: hashed_email, encrypted_email: email });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await users_db.collection('user_login').insertOne({ password_hashed: hashedPassword, account_type: 2, encrypted_email: email });
     await users_db.collection('customer_info').insertOne({
-        first_name: first_name,
-        account_type: AccountType.General,
-        hashed_email: hashed_email,
-        encrypted_email: "",
-        last_name: last_name,
-        username: username,
-        gender: gender,
-        phone_number: phone_number,
-        subscribed_to_news: subscribed_to_news,
-        birthday: birthday
+        encrypted_email: email,
+        first_name: "",
+        account_type: 2,
+        last_name: "",
+        username: "",
+        gender: "",
+        phone_number: "",
+        subscribed_to_news: false,
+        birthday: ""
     });
     res.json({ success: true });
 });

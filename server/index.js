@@ -16,12 +16,13 @@ app.use(bodyParser.json());
 // Get a list of 50 posts
 
 app.use('/', login);
-app.use('/signup', signup);
+//app.use('/signup', signup);
+app.use(signup);
+app.use(posts);
 app.use((err, _req, res, next) => {
   res.status(500).send("Uh oh! An unexpected error occurred.");
 });
 
-app.use("/posts", posts);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
