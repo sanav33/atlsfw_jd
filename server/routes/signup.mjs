@@ -25,12 +25,12 @@ router.post("/signup", async (req, res) => {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
     const hashed_email = bcrypt.hash(email, 10);
-    const existingUser = await users_db.collection('user_login').findOne({ hashed_email: hashed_email });
+    const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: email });
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
     const hashedPassword = await bcrypt.hash(password, 8);
-    await users_db.collection('user_login').insertOne({ password_hashed: hashedPassword, account_type: 2, hashed_email: hashed_email, encrypted_email: "" });
+    await users_db.collection('user_login').insertOne({ password_hashed: hashedPassword, account_type: 2, hashed_email: hashed_email, encrypted_email: email });
     await users_db.collection('customer_info').insertOne({
         first_name: first_name,
         account_type: AccountType.General,
