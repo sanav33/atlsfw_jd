@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
 import getMongoPasscode from "../password.mjs";
+
 const uri = "mongodb+srv://sverma:" + getMongoPasscode() + "@atlsfw.dgkxf1k.mongodb.net/posts?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
@@ -10,6 +11,7 @@ try {
   console.error(e);
 }
 
-let db = conn.db("posts");
+let posts_db = conn.db("posts");
+let users_db = conn.db("users");
 
-export default db;
+export { posts_db, users_db };
