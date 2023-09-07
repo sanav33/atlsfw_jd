@@ -1,8 +1,12 @@
 // This is example code to hit the server endpoint to access the posts in JSON format.
 
 import React, { useState, useEffect} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import LoginScreen from './Screens/LoginScreen';
+import SignUpScreen from './Screens/SignUpScreen';
 
 const LikeButton = () => {
   //set button to red or black
@@ -59,7 +63,7 @@ const ArticleButton = () => {
         //"http://<your IP here>:5050/posts/<objectID>"
         //check IP every time u start
         //objID can be found on cloud.mongodb.com, look in gc for login
-        const response = await fetch("http://128.61.52.90:5050/posts/6434998aac3580d94d2d9858");
+        const response = await fetch("http://143.215.89.116:5050/posts/6434998aac3580d94d2d9858");
         const data = await response.json();
         setIp(data.content);
 
@@ -85,18 +89,17 @@ const ArticleButton = () => {
   );
 };
 
-
+const Stack = createNativeStackNavigator();
 const App = () => {
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: "https://cdn.thewirecutter.com/wp-content/media/2021/05/mensjeans-2048px-4026-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024&dpr=2" }}/>
-      <View style={{flexDirection: 'row'}}>
-        <ArticleButton/>
-        <LikeButton/>
-      </View>
-
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Log In">
+        <Stack.Screen name="Log In" component={LoginScreen} />
+        <Stack.Screen name="Sign Up" component={SignUpScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    
   );
 
 }
