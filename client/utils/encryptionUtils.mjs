@@ -1,7 +1,7 @@
-import publicKeyPem from "../pki.js";
-const forge = require('node-forge');
+import publicKeyPem from "../pki.mjs";
+import forge from 'node-forge';
 
-function encryptWithPublicKey(publicKeyPem, message) {
+function encryptWithPublicKey(message) {
     const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
     const encrypted = publicKey.encrypt(message, 'RSA-OAEP', {
         md: forge.md.sha256.create(),
@@ -13,5 +13,4 @@ function encryptWithPublicKey(publicKeyPem, message) {
 }
 
 export default encryptWithPublicKey;
-const encryptedMessage = encryptWithPublicKey(publicKeyPem, "Hello, Server!");
-console.log(encryptedMessage);
+

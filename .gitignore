@@ -18,5 +18,3 @@ web-build/
 .metro-health-check*
 
 server/password.mjs
-client/pki.js
-client/pki.mjs
