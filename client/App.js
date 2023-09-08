@@ -3,6 +3,7 @@
 import React, { useState, useEffect} from 'react';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { generateKeyPair, keys } from './Keygen.js';
 
 const LikeButton = () => {
   //set button to red or black
