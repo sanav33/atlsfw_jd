@@ -19,3 +19,4 @@ web-build/
 
 server/password.mjs
 client/pki.js
+client/pki.mjs
