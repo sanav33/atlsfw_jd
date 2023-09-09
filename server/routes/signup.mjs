@@ -28,7 +28,7 @@ router.post("/signup", async (req, res) => {
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
-    await users_db.collection('user_login').insertOne({ encrypted_password: encrypted_password, account_type: 2, encrypted_email: email });
+    await users_db.collection('user_login').insertOne({ encrypted_password: encrypted_password, account_type: 2, encrypted_email: encrypted_email });
     await users_db.collection('customer_info').insertOne({
         encrypted_email: encrypted_email,
         first_name: "",
