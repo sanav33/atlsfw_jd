@@ -1,6 +1,9 @@
 import publicKeyPem from "../pki.mjs";
 import forge from 'node-forge';
 
+/*
+ * This function accepts a string and returns an encrypted string
+ */
 function encryptWithPublicKey(message) {
     const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
     const encrypted = publicKey.encrypt(message, 'RSA-OAEP', {
