@@ -11,13 +11,13 @@ const LoginScreen = ({navigation}) => {
     try {
       // const encrypted_email = encryptWithPublicKey(email);
       // const encrypted_password = encryptWithPublicKey(password);
-      const encrypted_email = email;
-      const encrypted_password = password;
+      const hashed_email = email;
+      const hashed_password = password;
       // Send the user data to your backend
       console.log("handling login");
       const response = await axios.post('http://143.215.92.102:5050/', {
-          encrypted_email,
-          encrypted_password,
+          hashed_email,
+          hashed_password,
         });
 
     console.log(response.data);
