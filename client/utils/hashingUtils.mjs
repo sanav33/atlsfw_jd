@@ -1,12 +1,12 @@
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
-export const hashPassword = async (password) => {
-    const saltRounds = 10; // This value can be adjusted. Higher means more secure but slower.
-    const hash = await bcrypt.hash(password, saltRounds);
+export const hashString = (password) => {
+    const saltRounds = bcrypt.genSaltSync(10); // This value can be adjusted. Higher means more secure but slower.
+    const hash = bcrypt.hashSync(password);
     return hash;
 }
 
-export default hashPassword;
+export default hashString;
 /*
  * An example to call the function
 const password = "yourPlainTextPassword";
