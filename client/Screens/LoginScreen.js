@@ -18,6 +18,8 @@ const LoginScreen = ({navigation}) => {
       const hashed_password = hashString(password);
       // Send the user data to your backend
       console.log("handling login");
+      console.log(hashed_email);
+      console.log(hashed_password);
       const response = await axios.post('http://143.215.92.102:5050/', {
           hashed_email,
           hashed_password,
