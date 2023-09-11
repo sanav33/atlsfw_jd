@@ -19,15 +19,14 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     console.log("got a login request");
-    const { email, password } = req.body;
-    console.log(email, password);
-    if (!email || !password) {
+    const { encrypted_email, encrypted_password } = req.body;
+    console.log(encrypted_email, encrypted_password);
+    if (!encrypted_email || !encrypted_password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
-    const hashed_password = bcrypt.hash(password, 10);
-    const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: email, hashed_password: password });
+    const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: encrypted_email, encrypted_password: encrypted_password });
     if (!existingUser) {
-        return res.send('user doesn\'t exist').status(400).json({ success: false, message: 'This account does not exist' });
+        return res.status(400).json({ success: false, message: 'This account does not exist' });
     }
     res.json({ success: true });
 });

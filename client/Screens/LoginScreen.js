@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
-// import axios from 'axios';
+import axios from 'axios';
+import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -8,10 +9,15 @@ const LoginScreen = ({navigation}) => {
 
   const handleLogin = async () => {
     try {
+      // const encrypted_email = encryptWithPublicKey(email);
+      // const encrypted_password = encryptWithPublicKey(password);
+      const encrypted_email = email;
+      const encrypted_password = password;
       // Send the user data to your backend
-      const response = await axios.post('http://143.215.118.140:5050/', {
-          email,
-          password,
+      console.log("handling login");
+      const response = await axios.post('http://143.215.92.102:5050/', {
+          encrypted_email,
+          encrypted_password,
         });
 
     console.log(response.data);
