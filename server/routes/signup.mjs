@@ -19,19 +19,18 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
     console.log("got a signup request");
-    const { email, password /*, first_name, last_name, username, birthday, gender, phone_number, subscribed_to_news */ } = req.body;
-    console.log(email, password);
-    if (!email || !password) {
+    const { encrypted_email, encrypted_password /*, first_name, last_name, username, birthday, gender, phone_number, subscribed_to_news */ } = req.body;
+    console.log(encrypted_email, encrypted_password);
+    if (!encrypted_email || !encrypted_password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
-    const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: email });
+    const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: encrypted_email });
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await users_db.collection('user_login').insertOne({ password_hashed: hashedPassword, account_type: 2, encrypted_email: email });
+    await users_db.collection('user_login').insertOne({ encrypted_password: encrypted_password, account_type: 2, encrypted_email: encrypted_email });
     await users_db.collection('customer_info').insertOne({
-        encrypted_email: email,
+        encrypted_email: encrypted_email,
         first_name: "",
         account_type: 2,
         last_name: "",
