@@ -1,4 +1,19 @@
-# ATLSFW iOS App
+# Atlanta Sustainable Fashion Week (ATLSFW) Mobile Application
+# A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style more sustainably.
+
+## Version 0.1.0
+### Features
+1. Login Page including text input fields for username and password
+2. Login button on Login page
+3. Sign Up link on Login Page for new users
+4. Signup Page including text input fields for full name, email, username, password, confirm password
+5. Sign Up button on Signup Page that navigates Login page
+6. Privacy policy agreement statement checkbox on Signup Page
+7. Account type dropdown options of “Customer” and “Vendor” on Login Page
+### Bug Fixes
+1. N/A
+### Known Issues
+1. Account login works without encryption of email and password
 
 ## Setting up server
 1. Clone the repository.
