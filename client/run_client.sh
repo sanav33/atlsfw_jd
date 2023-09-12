@@ -8,7 +8,7 @@ if [ "$OS" == "Linux" ]; then
     MY_LOCAL_IP=$(hostname -I | awk '{print $1}')
     # Your Linux-specific command here
 elif [ "$OS" == "Darwin" ]; then
-    MY_LOCAL_IP=$(ifconfig en0 | grep "inet" | awk '{print $2}')
+    MY_LOCAL_IP=$(ifconfig en0 | grep "inet " | awk '{print $2}')
     # Your macOS-specific command here
 else
     echo "This operating system is not supported by the script."
