@@ -20,12 +20,12 @@ const SignUpScreen = () => {
     try {
       // const encrypted_email = encryptWithPublicKey(email);
       // const encrypted_password = encryptWithPublicKey(password);
-      const hashed_email = hashString(email);
+      const hashed_email = await hashString(email);
       const encrypted_email = encryptWithPublicKey(email);
-      const hashed_password = hashString(password);
+      const hashed_password = await hashString(password);
       console.log("email and pw hashed", hashed_email);
       // Send the user data to your backend
-      const response = await axios.post('http://143.215.92.102:5050/signup', {
+      const response = await axios.post('http://10.0.0.86:5050/signup', {
           hashed_email,
           encrypted_email,
           hashed_password,

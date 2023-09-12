@@ -63,7 +63,7 @@ const ArticleButton = () => {
         //"http://<your IP here>:5050/posts/<objectID>"
         //check IP every time u start
         //objID can be found on cloud.mongodb.com, look in gc for login
-        const response = await fetch("http://143.215.89.116:5050/posts/6434998aac3580d94d2d9858");
+        const response = await fetch("http://10.0.0.86:5050/posts/6434998aac3580d94d2d9858");
         const data = await response.json();
         setIp(data.content);
 
