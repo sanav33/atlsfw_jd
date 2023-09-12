@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import MY_IP_ADDRESS from './environment_variables.mjs';
+
 const LikeButton = () => {
   //set button to red or black
   const [liked, setLiked] = useState(false);
@@ -91,7 +92,7 @@ const ArticleButton = () => {
 
 const Stack = createNativeStackNavigator();
 const App = () => {
-
+  console.log("found local ip @", MY_IP_ADDRESS);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Log In">
