@@ -7,7 +7,7 @@ import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
-
+import MY_IP_ADDRESS from './environment_variables.mjs';
 const LikeButton = () => {
   //set button to red or black
   const [liked, setLiked] = useState(false);
@@ -20,7 +20,7 @@ const LikeButton = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://128.61.52.90:5050/posts/6434998aac3580d94d2d9858");
+        const response = await fetch("http://" + MY_IP_ADDRESS +":5050/posts/6434998aac3580d94d2d9858");
         // console.log(response);
         const data = await response.json();
         setCount(data.likes);
@@ -63,7 +63,7 @@ const ArticleButton = () => {
         //"http://<your IP here>:5050/posts/<objectID>"
         //check IP every time u start
         //objID can be found on cloud.mongodb.com, look in gc for login
-        const response = await fetch("http://10.0.0.86:5050/posts/6434998aac3580d94d2d9858");
+        const response = await fetch("http://" + MY_IP_ADDRESS + ":5050/posts/6434998aac3580d94d2d9858");
         const data = await response.json();
         setIp(data.content);
 
