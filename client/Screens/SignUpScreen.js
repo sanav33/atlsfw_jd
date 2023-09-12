@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
 import axios from 'axios';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
-
+import hashString from '../utils/hashingUtils.mjs';
+import MY_IP_ADDRESS from '../environment_variables.mjs';
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,11 +20,12 @@ const SignUpScreen = () => {
     try {
       // const encrypted_email = encryptWithPublicKey(email);
       // const encrypted_password = encryptWithPublicKey(password);
-      const hashed_email = email;
-      const encrypted_email = email;
-      const hashed_password = password;
+      const hashed_email = await hashString(email);
+      const encrypted_email = encryptWithPublicKey(email);
+      const hashed_password = await hashString(password);
+      console.log("email and pw hashed", hashed_email);
       // Send the user data to your backend
-      const response = await axios.post('http://143.215.92.102:5050/signup', {
+      const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/signup', {
           hashed_email,
           encrypted_email,
           hashed_password,

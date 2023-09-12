@@ -18,3 +18,9 @@ web-build/
 .metro-health-check*
 
 server/password.mjs
+
+client/get_ip.sh
+
+client/run_client.sh
+
+client/.env
