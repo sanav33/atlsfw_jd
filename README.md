@@ -36,11 +36,11 @@ export default getMongoPasscode;
 ### Troubleshooting
 * Can't run `./run_server.sh` or `.run_client.sh` because of a "Permission denied" error?
 
-Run `chmod +x <name_of_script.sh>`
+    Run `sudo chmod +x <name_of_script.sh>`
 
 * Getting "module not found" errors?
 
-Check your `package.json` file and see if the missing dependency is there. If not, add it in and run `npm install`.
+    Check your `package.json` file and see if the missing dependency is there. If not, add it in and run `npm install`.
 
 
 **NOTE:**
