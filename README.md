@@ -1,5 +1,5 @@
 # Atlanta Sustainable Fashion Week (ATLSFW) Mobile Application
-# A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style more sustainably.
+A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style more sustainably.
 
 ## Version 0.1.0
 ### Features
@@ -18,17 +18,32 @@
 ## Setting up server
 1. Clone the repository.
 2. Run `cd server` and `npm install`.
-3. Create a `password.mjs` file.
-4. Run `node index.js`. You should see `Server is running on port: 5050`.
+3. Create a `password.mjs` file with the following content:
+```
+export getMongoPasscode() {
+    return "<password>"
+}
+export default getMongoPasscode;
+```
+4. Run `./run_server.sh`. You should see `Server is running on port: 5050`.
 
 ## Setting up client
 1. Run `npm install` within the client directory.
 2. Install the Expo Go app from the App Store and create an account.
 3. Run `npx expo login` in your terminal.
-4. Run `npx expo start`.
+4. Run `./run_client.sh`.
+
+### Troubleshooting
+* Can't run `./run_server.sh` or `.run_client.sh` because of a "Permission denied" error?
+
+Run `chmod +x <name_of_script.sh>`
+
+* Getting "module not found" errors?
+
+Check your `package.json` file and see if the missing dependency is there. If not, add it in and run `npm install`.
+
 
 **NOTE:**
-1. To get the development server IP, run `hostname -I` in your terminal and use the first IP address.
 2. There is example code for how to hit the endpoints in `client/App.js`.
 
 ## Team Links
