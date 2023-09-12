@@ -3,7 +3,7 @@ import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
 import axios from 'axios';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 import hashString from '../utils/hashingUtils.mjs';
-
+import MY_IP_ADDRESS from '../environment_variables.mjs';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ const LoginScreen = ({navigation}) => {
       console.log("handling login");
       console.log(hashed_email);
       console.log(hashed_password);
-      const response = await axios.post('http://10.0.0.86:5050/', {
+      const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/', {
           hashed_email,
           hashed_password,
         });
