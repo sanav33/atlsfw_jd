@@ -17,7 +17,7 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 
 ## Setting up server
 1. Clone the repository.
-2. Run `cd server` and `npm install`.
+2. Run `cd server`.
 3. Create a `password.mjs` file with the following content:
 ```
 export getMongoPasscode() {
