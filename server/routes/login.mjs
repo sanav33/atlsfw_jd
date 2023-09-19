@@ -26,6 +26,8 @@ router.post("/", async (req, res) => {
     }
     const existingUser = await users_db.collection('user_login').findOne({ hashed_email: hashed_email, hashed_password: hashed_password });
     if (!existingUser) {
+        console.log(hashed_email);
+        console.log(hashed_password);
         return res.status(400).json({ success: false, message: 'The email-password combination is incorrect' });
     }
     res.json({ success: true });
