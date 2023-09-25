@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
 import axios from 'axios';
-import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
-import hashString from '../utils/hashingUtils.mjs';
-import MY_IP_ADDRESS from '../environment_variables.mjs';
+import encryptWithPublicKey from '../utils/encryptionUtils.js';
+import hashString from '../utils/hashingUtils.js';
+import MY_IP_ADDRESS from '../environment_variables.js';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -69,6 +69,13 @@ const LoginScreen = ({navigation}) => {
           title="Sign up here!"
           color="green"
           onPress={() => navigation.navigate('Sign Up')}
+        />
+      </View>
+      <View>
+        <Button 
+          title="Start Reading!"
+          color="green"
+          onPress={() => navigation.navigate('Article View')}
         />
       </View>
       

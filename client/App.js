@@ -7,7 +7,9 @@ import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
-import MY_IP_ADDRESS from './environment_variables.mjs';
+import MY_IP_ADDRESS from './environment_variables.js';
+import WebView from 'react-native-webview';
+import ArticleScreen from './Screens/ArticleScreen';
 
 const LikeButton = () => {
   //set button to red or black
@@ -98,6 +100,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="Log In">
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
+        <Stack.Screen name="Article View" component={ArticleScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     

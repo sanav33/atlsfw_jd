@@ -1,4 +1,4 @@
-import publicKeyPem from "../pki.mjs";
+import publicKeyPem from "../pki.js";
 import forge from 'node-forge';
 
 /*

@@ -15,4 +15,4 @@ else
     exit 1
 fi
 
-echo -e "export const MY_IP_ADDRESS = \"$MY_LOCAL_IP\";\nexport default MY_IP_ADDRESS;" > ./environment_variables.mjs && npx expo start
+echo -e "export const MY_IP_ADDRESS = \"$MY_LOCAL_IP\";\nexport default MY_IP_ADDRESS;" > ./environment_variables.mjs && cat environment_variables.mjs && npx expo start

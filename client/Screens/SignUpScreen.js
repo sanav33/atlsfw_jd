@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
 import axios from 'axios';
-import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
-import hashString from '../utils/hashingUtils.mjs';
-import MY_IP_ADDRESS from '../environment_variables.mjs';
+import encryptWithPublicKey from '../utils/encryptionUtils.js';
+import hashString from '../utils/hashingUtils.js';
+import MY_IP_ADDRESS from '../environment_variables.js';
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
