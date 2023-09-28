@@ -7,85 +7,62 @@ const router = express.Router();
 // Get a list of 50 posts
 router.get("/posts", async (req, res) => {
   let collection = await posts_db.collection("articles");
-    const options = {
-        // Include the fields needed for previews in the returned documents
-      projection: { _id: 1, author: 1, title: 1, preview_image: 1, content: 1, likes: 1 },
-    };
-
-  let results = await collection.find({}, options)
-    .limit(50)
+  let results = await collection.find({})
     .toArray();
   console.log(results);
 
   res.send(results).status(200);
 });
 
-router.get("/posts/:id", async (req, res) => {
-  let collection = await posts_db.collection("articles");
-  const query = { _id: new ObjectId(req.params.id) };
-  console.log(req.params.id  + " hi stupid");
-  const options = {
-    // Include all fields in the returned document
-    projection: { _id: 1, author: 1, title: 1, preview_image: 1, content: 1, likes: 1},
-  };
-  let result = await collection.findOne(query, options);
-  console.log(result);
-  if (!result) res.send("Not found").status(404);
-  else res.send(result).status(200);
-})
-
-
-// // Fetches the latest posts
-// router.get("/latest", async (req, res) => {
-//   let collection = await db.collection("posts");
-//   let results = await collection.aggregate([
-//     {"$project": {"author": 1, "title": 1, "tags": 1, "date": 1}},
-//     {"$sort": {"date": -1}},
-//     {"$limit": 3}
-//   ]).toArray();
-//   res.send(results).status(200);
-// });
-
-// // Get a single post
-// router.get("/:id", async (req, res) => {
-//   let collection = await db.collection("posts");
-//   let query = {_id: ObjectId(req.params.id)};
-//   let result = await collection.findOne(query);
-
-//   if (!result) res.send("Not found").status(404);
-//   else res.send(result).status(200);
-// });
-
-// // Add a new document to the collection
-// router.post("/", async (req, res) => {
-//   let collection = await db.collection("posts");
-//   let newDocument = req.body;
-//   newDocument.date = new Date();
-//   let result = await collection.insertOne(newDocument);
-//   res.send(result).status(204);
-// });
-
-// // Update the post with a new comment
-// router.patch("/comment/:id", async (req, res) => {
-//   const query = { _id: ObjectId(req.params.id) };
-//   const updates = {
-//     $push: { comments: req.body }
+// router.get("/posts/:id", async (req, res) => {
+//   let collection = await posts_db.collection("articles");
+//   const query = { _id: new ObjectId(req.params.id) };
+//   console.log(req.params.id  + " hi stupid");
+//   const options = {
+//     // Include all fields in the returned document
+//     projection: { _id: 1, author_id: 1, author_name: 1, like_count: 1, author_pfp_link: 1, article_title: 1, article_preview_image: 1, article_link: 1 },
 //   };
+//   let result = await collection.findOne(query, options);
+//   console.log(result);
+//   if (!result) res.send("Not found").status(404);
+//   else {
+//     res.redirect(result.article_link);
+//   };
+// })
 
-//   let collection = await db.collection("posts");
-//   let result = await collection.updateOne(query, updates);
+router.post('/posts/:user_id/:article_id/', async (req, res) => {
+  console.log("trying to like/dislike an article");
+  const { user_id, article_id } = req.params;
+  const like = parseInt(req.query.like);
+  const { liked_articles } = req.body;
 
-//   res.send(result).status(200);
-// });
+  if (!user_id) {
+      return res.status(404).send({ message: "User not found!" });
+  }
+  if (!article_id) {
+      return res.status(404).send({ message: "Article not found!" });
+  }
 
-// // Delete an entry
-// router.delete("/:id", async (req, res) => {
-//   const query = { _id: ObjectId(req.params.id) };
+  await users_db.collection("customer_info").updateOne({ _id: new ObjectId(user_id) }, { $set: { liked_articles: liked_articles }},
+    (err, _) => {
+      if (err) {
+        return res.status(400).send({ success: false, message: "Liked article update failed!" });
+      }
+  });
 
-//   const collection = db.collection("posts");
-//   let result = await collection.deleteOne(query);
+  // Update likes based on the "like" query parameter
+  let like_count = 0;
+  if (like && (like === 1 || like === -1)) {
+      await posts_db.collection("articles").updateOne({ _id: new ObjectId(article_id) }, { $inc: { like_count: like }}, (err, _) => {
+      if (err) {
+        return res.status(400).send({ success: false, message: "Like action unsuccessful!" });
+      }});
+  } else {
+      return res.status(400).send({ message: "Invalid like query!" });
+  }
 
-//   res.send(result).status(200);
-// });
+  return res.send({ success: true });
+});
+
 
 export default router;

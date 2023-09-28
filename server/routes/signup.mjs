@@ -1,6 +1,5 @@
 import express from "express";
 import { posts_db, users_db } from "../db/conn.mjs";
-import bcrypt, { hash } from "bcrypt";
 
 /*
 enum AccountType {
