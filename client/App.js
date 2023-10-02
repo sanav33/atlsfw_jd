@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CommunityScreen from './ContentPage';
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import MY_IP_ADDRESS from './environment_variables.mjs';
@@ -91,7 +92,7 @@ const ArticleButton = () => {
 };
 
 const Stack = createNativeStackNavigator();
-const App = () => {
+const App = (navigation={navigation}) => {
   console.log("found local ip @", MY_IP_ADDRESS);
   return (
     <NavigationContainer>
@@ -102,6 +103,7 @@ const App = () => {
     </NavigationContainer>
     
   );
+  <CommunityScreen navigation={navigation} />;
 
 }
 
