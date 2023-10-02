@@ -4,10 +4,18 @@ import axios from 'axios';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../redux/actions/loginAction';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [counter, setCounter] = useState(0);
+
+  //redux stuff
+  const dispatch = useDispatch();
+ 
+  const isLogged = useSelector((store) => store.isLogged.isLogged);
 
   const handleLogin = async () => {
     try {
@@ -29,6 +37,8 @@ const LoginScreen = ({navigation}) => {
 
       if (data.success) {
           console.log("successfully logged in");
+          //send login action to store
+          dispatch(login());
         // Handle success (e.g., navigate to another screen)
       } else {
           console.log("well what about this");
@@ -42,6 +52,7 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.text}>New here?</Text>
       <TextInput
         placeholder="Email"
         value={email}
@@ -62,7 +73,7 @@ const LoginScreen = ({navigation}) => {
           color="black"
           onPress={handleLogin} />
       </View>
-      
+      {isLogged ? <Text>logged in</Text> : <Text>not logged in</Text>}
       <Text style={styles.text}>New here?</Text>
       <View>
         <Button 
@@ -73,8 +84,6 @@ const LoginScreen = ({navigation}) => {
       </View>
       
       </View>
-      
-    
   );
 };
 

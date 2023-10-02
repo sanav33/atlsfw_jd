@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import MY_IP_ADDRESS from './environment_variables.mjs';
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { store } from './redux/store';
 
 const LikeButton = () => {
   //set button to red or black
@@ -94,12 +96,15 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   console.log("found local ip @", MY_IP_ADDRESS);
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log In">
-        <Stack.Screen name="Log In" component={LoginScreen} />
-        <Stack.Screen name="Sign Up" component={SignUpScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Log In">
+          <Stack.Screen name="Log In" component={LoginScreen} />
+          <Stack.Screen name="Sign Up" component={SignUpScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+    
     
   );
 
