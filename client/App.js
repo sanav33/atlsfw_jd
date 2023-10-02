@@ -5,11 +5,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CommunityScreen from './Screens/ContentPage';
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import MY_IP_ADDRESS from './environment_variables.mjs';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import { store } from './redux/store';
+import Article from "./components/Article";
 
 const LikeButton = () => {
   //set button to red or black
@@ -93,18 +95,18 @@ const ArticleButton = () => {
 };
 
 const Stack = createNativeStackNavigator();
-const App = () => {
+const App = (navigation={navigation}) => {
   console.log("found local ip @", MY_IP_ADDRESS);
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Log In">
-          <Stack.Screen name="Log In" component={LoginScreen} />
-          <Stack.Screen name="Sign Up" component={SignUpScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Community Screen">
+        <Stack.Screen name="Log In" component={LoginScreen} />
+        <Stack.Screen name="Sign Up" component={SignUpScreen} />
+        <Stack.Screen name="Community Screen" component={CommunityScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
     </Provider>
-    
     
   );
 

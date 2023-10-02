@@ -7,6 +7,7 @@ import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/loginAction';
 
+
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,8 +50,11 @@ const LoginScreen = ({navigation}) => {
       console.error('Error during login:', error.response.data.message);
     }
   };
+/* Login to Your Account */
+
 
   return (
+
     <View style={styles.container}>
       <Text style={styles.text}>New here?</Text>
       <TextInput
@@ -60,6 +64,7 @@ const LoginScreen = ({navigation}) => {
         style={styles.input}
         keyboardType="email-address"
       />
+
       <TextInput
         placeholder="Password"
         value={password}
@@ -75,6 +80,7 @@ const LoginScreen = ({navigation}) => {
       </View>
       {isLogged ? <Text>logged in</Text> : <Text>not logged in</Text>}
       <Text style={styles.text}>New here?</Text>
+
       <View>
         <Button 
           title="Sign up here!"
