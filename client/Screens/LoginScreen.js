@@ -5,6 +5,7 @@ import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 
+
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -7,7 +7,9 @@ import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
+import HomeScreen from './Screens/HomeScreen';
 import MY_IP_ADDRESS from './environment_variables.mjs';
+import Article from "./components/Article";
 
 const LikeButton = () => {
   //set button to red or black
@@ -95,9 +97,10 @@ const App = () => {
   console.log("found local ip @", MY_IP_ADDRESS);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log In">
+      <Stack.Navigator initialRouteName="Home Screen">
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
+        <Stack.Screen name="Home Screen" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     
