@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import CommunityScreen from './ContentPage';
+import CommunityScreen from './Screens/ContentPage';
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import HomeScreen from './Screens/HomeScreen';
@@ -101,12 +101,11 @@ const App = (navigation={navigation}) => {
       <Stack.Navigator initialRouteName="Home Screen">
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
-        <Stack.Screen name="Home Screen" component={HomeScreen} />
+        <Stack.Screen name="Home Screen" component={CommunityScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     
   );
-  <CommunityScreen navigation={navigation} />;
 
 }
 
