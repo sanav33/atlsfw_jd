@@ -1,4 +1,3 @@
-server/curl_test.sh
 node_modules/
 .expo/
 dist/
