@@ -5,6 +5,7 @@ import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 
+
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,8 +40,11 @@ const LoginScreen = ({navigation}) => {
       console.error('Error during login:', error.response.data.message);
     }
   };
+/* Login to Your Account */
+
 
   return (
+
     <View style={styles.container}>
       <TextInput
         placeholder="Email"
@@ -49,6 +53,7 @@ const LoginScreen = ({navigation}) => {
         style={styles.input}
         keyboardType="email-address"
       />
+
       <TextInput
         placeholder="Password"
         value={password}
@@ -64,6 +69,7 @@ const LoginScreen = ({navigation}) => {
       </View>
       
       <Text style={styles.text}>New here?</Text>
+
       <View>
         <Button 
           title="Sign up here!"
