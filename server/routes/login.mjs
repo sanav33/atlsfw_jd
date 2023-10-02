@@ -1,6 +1,5 @@
 import express from "express";
 import { posts_db, users_db } from "../db/conn.mjs";
-import bcrypt, { hash } from "bcrypt";
 
 /*
 enum AccountType {
@@ -19,32 +18,20 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     console.log("got a login request");
-    const { email, password } = req.body;
-    console.log(email, password);
-    if (!email || !password) {
+    const { hashed_email, hashed_password } = req.body;
+    console.log(hashed_email, hashed_password);
+    if (!hashed_email || !hashed_password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
-    const hashed_password = bcrypt.hash(password, 10);
-    const existingUser = await users_db.collection('user_login').findOne({ encrypted_email: email, hashed_password: password });
+    const existingUser = await users_db.collection('user_login').findOne({ hashed_email: hashed_email, hashed_password: hashed_password });
     if (!existingUser) {
-        return res.send('user doesn\'t exist').status(400).json({ success: false, message: 'This account does not exist' });
+        console.log(hashed_email);
+        console.log(hashed_password);
+        return res.status(400).json({ success: false, message: 'The email-password combination is incorrect' });
     }
     res.json({ success: true });
 });
 
-router.get("/login/:login", async (req, res) => {
-    let collection = await users_db.collection("user_login");
-    const query = { hashed_email: req.params.hashed_email }
-    console.log(req.params.hashed_email + " hi stupid");
-    const options = {
-        // Include all fields in the returned document
-        projection: { _id: 1, encrypted_email: 1 },
-    };
-    let result = await collection.findOne(query, options);
-    console.log(result);
-    if (!result) res.send("Not found").status(404);
-    else res.send(result).status(200);
-});
 
 // Get a list of 50 posts
 /*
