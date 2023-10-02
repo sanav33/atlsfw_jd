@@ -3,6 +3,7 @@
 import React, { useState, useEffect} from 'react';
 import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CommunityScreen from './ContentPage';
 
 const LikeButton = () => {
   //set button to red or black
@@ -86,7 +87,7 @@ const ArticleButton = () => {
 };
 
 
-const App = () => {
+const App = (navigation={navigation}) => {
 
   return (
     <View style={styles.container}>
@@ -98,6 +99,7 @@ const App = () => {
 
     </View>
   );
+  <CommunityScreen navigation={navigation} />;
 
 }
 
