@@ -8,7 +8,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CommunityScreen from './Screens/ContentPage';
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
-import HomeScreen from './Screens/HomeScreen';
 import MY_IP_ADDRESS from './environment_variables.mjs';
 import Article from "./components/Article";
 
@@ -98,10 +97,10 @@ const App = (navigation={navigation}) => {
   console.log("found local ip @", MY_IP_ADDRESS);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home Screen">
+      <Stack.Navigator initialRouteName="Community Screen">
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
-        <Stack.Screen name="Home Screen" component={CommunityScreen} />
+        <Stack.Screen name="Community Screen" component={CommunityScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     
