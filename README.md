@@ -1,6 +1,23 @@
 # Atlanta Sustainable Fashion Week (ATLSFW) Mobile Application
 A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style more sustainably.
 
+# Release Notes
+## Version 0.2.0
+### Features
+1. Home page is now the new Content Page that contains article components.
+2. Article components are scrollable on the page.
+3. Articles are dynamically produced from content that is retrieved from endpoint.
+4. Each article component contains a clickable title and thumbnail that retireves the article.
+5. Each article has a like and save button that are functional and non-functional, respectively.
+6. Content Page contains a COMMUNITY header.
+7. Content Page contains a navigation bar with the home, events, and search buttons that navigate to the Home Page (Content Page) and likes, shop, and profile buttons that navigate to the Signup Page.
+8. Author title exists for the content page (currently one for all of the articles) that retireved the Author Page with a bio (currently dummy data).
+### Bug Fixes
+1. N/A
+### Known Issues
+1. Save button only changes color to indicate saving an article, but it is not functional as of yet.
+2. Author Page is currently dummy data and not actual author's bio.
+
 ## Version 0.1.0
 ### Features
 1. Login Page including text input fields for username and password
