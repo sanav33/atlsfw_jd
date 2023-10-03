@@ -1,34 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import MasonryList from '@react-native-seoul/masonry-list';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignupScreen from './SignUpScreen';
 import AuthorNameScreen from './AuthorNameScreen'; // Import the AuthorNameScreen component
 import Article from '../components/Article';
+import axios from 'axios';
+import MY_IP_ADDRESS from '../environment_variables.mjs';
 
-var articles =  [
-	{
-		title: 'Recycle Your Denim',
-		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
-		likes: 0
-	},
-	{
-		title: 'Sustainable Materials',
-		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
-		likes: 0
-	},
-  {
-		title: 'Recycle Your Denim',
-		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
-		likes: 0
-	},
-	{
-		title: 'Sustainable Materials',
-		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
-		likes: 0
-	},
+
+// var articles =  [
+// 	{
+// 		title: 'Recycle Your Denim',
+// 		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
+// 		likes: 0
+// 	},
+// 	{
+// 		title: 'Sustainable Materials',
+// 		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
+// 		likes: 0
+// 	},
+//   {
+// 		title: 'Recycle Your Denim',
+// 		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
+// 		likes: 0
+// 	},
+// 	{
+// 		title: 'Sustainable Materials',
+// 		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
+// 		likes: 0
+// 	},
   
-]
+// ]
+var articles = []
 
 // Main component
 const CommunityScreen = () => {
@@ -46,6 +50,23 @@ const CommunityScreen = () => {
       setCurrentScreen('AuthorName');
     };
 
+    const [articleData, setArticleData] = useState()
+
+    useEffect(() => {
+      const getStuff = async () => {
+        try {
+    
+          const response = await axios.get('http://' + MY_IP_ADDRESS + ':5050/posts');
+    
+          console.log(response.data);
+          setArticleData(response.data);
+        } catch (error) {
+          console.error('Error during login:', error.message);
+        }
+      };
+      getStuff();
+    }, []);
+
   return (
     <View style={{ flex: 1 }}>
       {/* Header Bar */}
@@ -56,24 +77,13 @@ const CommunityScreen = () => {
       {/* Main Content */}
       {currentScreen === 'Community' ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Community Content Goes Here</Text>
 
-          {/* Save Button */}
-          <TouchableOpacity onPress={handleSavePress} style={{ marginTop: 20 }}>
-            <Icon name={isSavePressed ? 'bookmark' : 'bookmark-o'} size={30} color={isSavePressed ? 'blue' : 'black'} />
-          </TouchableOpacity>
-
-          {/* Author's Name */}
-          <TouchableOpacity onPress={navigateToAuthorPage} style={{ marginTop: 10 }}>
-            <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Author's Name</Text>
-          </TouchableOpacity>
-          
           <MasonryList
           
             numColumns={2}
-            data={articles}
-            keyExtractor={item => item.image}
-            renderItem={({ item, index }) => (
+            data={articleData}
+            keyExtractor={item => item["_id"]}
+            renderItem={({ item, index}) => (
               // <View style={[
               //   {
               //     aspectRatio: 1,
@@ -88,7 +98,7 @@ const CommunityScreen = () => {
               //     paddingLeft: 10
               //   }
               // ]}>
-                <Article article={{title: item.title,image:item.image}}></Article>
+                <Article article={{title: item["article_title"],image:item["article_preview_image"]}}></Article>
               // </View>
             )}
           />
