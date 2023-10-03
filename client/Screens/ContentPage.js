@@ -9,29 +9,6 @@ import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 
 
-// var articles =  [
-// 	{
-// 		title: 'Recycle Your Denim',
-// 		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
-// 		likes: 0
-// 	},
-// 	{
-// 		title: 'Sustainable Materials',
-// 		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
-// 		likes: 0
-// 	},
-//   {
-// 		title: 'Recycle Your Denim',
-// 		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
-// 		likes: 0
-// 	},
-// 	{
-// 		title: 'Sustainable Materials',
-// 		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
-// 		likes: 0
-// 	},
-  
-// ]
 var articles = []
 
 // Main component
@@ -84,21 +61,7 @@ const CommunityScreen = () => {
             data={articleData}
             keyExtractor={item => item["_id"]}
             renderItem={({ item, index}) => (
-              // <View style={[
-              //   {
-              //     aspectRatio: 1,
-              //     flexGrow: 1,
-              //     width: "95%",
-              //     position: "relative",
-              //   },
-              //   index % 2 === 0
-              //   ? {
-              //     paddingRight: 10,
-              //   } : {
-              //     paddingLeft: 10
-              //   }
-              // ]}>
-                <Article article={{title: item["article_title"],image:item["article_preview_image"]}}></Article>
+                <Article article={{title: item["article_title"],image:item["article_preview_image"], author:item["author_name"]}}></Article>
               // </View>
             )}
           />
