@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignupScreen from './SignUpScreen';
 import AuthorNameScreen from './AuthorNameScreen'; // Import the AuthorNameScreen component
+import Article from '../components/Article';
+
+var articles =  [
+	{
+		title: 'Recycle Your Denim',
+		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
+		likes: 0
+	},
+	{
+		title: 'Sustainable Materials',
+		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
+		likes: 0
+	}
+]
 
 // Main component
 const CommunityScreen = () => {
@@ -41,9 +55,16 @@ const CommunityScreen = () => {
           <TouchableOpacity onPress={navigateToAuthorPage} style={{ marginTop: 10 }}>
             <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Author's Name</Text>
           </TouchableOpacity>
-
+          
+          <FlatList
+            data={articles}
+            keyExtractor={item => item.image}
+            // renderItem={({ item }) => <Text>{item.title}</Text>}
+            renderItem={({ item }) => <Article article={{title: item.title,image:item.image}}></Article>}
+          />
 
         </View>
+        
       ) : currentScreen === 'Signup' ? (
         <SignupScreen />
       ) : currentScreen === 'AuthorName' ? (
