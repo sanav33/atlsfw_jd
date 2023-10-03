@@ -9,12 +9,14 @@ var articles =  [
 	{
 		title: 'Recycle Your Denim',
 		image: "https://wwd.com/wp-content/uploads/2017/04/shutterstock_564544348.jpg",
-		likes: 0
+		likes: 0,
+    author: "John Smith"
 	},
 	{
 		title: 'Sustainable Materials',
 		image: "https://alewivesfabrics.com/cdn/shop/files/IMG_6856_800x.jpg?v=1689828443",
-		likes: 0
+		likes: 0,
+    author: "Jane Doe"
 	}
 ]
 
@@ -44,23 +46,12 @@ const CommunityScreen = () => {
       {/* Main Content */}
       {currentScreen === 'Community' ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Community Content Goes Here</Text>
-
-          {/* Save Button */}
-          <TouchableOpacity onPress={handleSavePress} style={{ marginTop: 20 }}>
-            <Icon name={isSavePressed ? 'bookmark' : 'bookmark-o'} size={30} color={isSavePressed ? 'blue' : 'black'} />
-          </TouchableOpacity>
-
-          {/* Author's Name */}
-          <TouchableOpacity onPress={navigateToAuthorPage} style={{ marginTop: 10 }}>
-            <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Author's Name</Text>
-          </TouchableOpacity>
           
           <FlatList
             data={articles}
             keyExtractor={item => item.image}
             // renderItem={({ item }) => <Text>{item.title}</Text>}
-            renderItem={({ item }) => <Article article={{title: item.title,image:item.image}}></Article>}
+            renderItem={({ item }) => <Article article={{title: item.title,image:item.image, author: item.author}}></Article>}
           />
 
         </View>
