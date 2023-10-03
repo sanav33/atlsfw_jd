@@ -7,11 +7,10 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 1. Home page is now the new Content Page that contains article components.
 2. Article components are scrollable on the page.
 3. Articles are dynamically produced from content that is retrieved from endpoint.
-4. Each article component contains a clickable title and thumbnail that retireves the article.
-5. Each article has a like and save button that are functional and non-functional, respectively.
-6. Content Page contains a COMMUNITY header.
-7. Content Page contains a navigation bar with the home, events, and search buttons that navigate to the Home Page (Content Page) and likes, shop, and profile buttons that navigate to the Signup Page.
-8. Author title exists for the content page (currently one for all of the articles) that retireved the Author Page with a bio (currently dummy data).
+4. Each article has a like button that is functional.
+5. Content Page contains a COMMUNITY header.
+6. Content Page contains a navigation bar with the home, events, and search buttons that navigate to the Home Page (Content Page) and likes, shop, and profile buttons that navigate to the Signup Page.
+8. Author title exists for the content page (currently one for all of the articles).
 ### Bug Fixes
 1. N/A
 ### Known Issues
