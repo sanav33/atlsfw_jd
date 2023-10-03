@@ -9,6 +9,8 @@ import CommunityScreen from './Screens/ContentPage';
 import LoginScreen from './Screens/LoginScreen';
 import SignUpScreen from './Screens/SignUpScreen';
 import MY_IP_ADDRESS from './environment_variables.mjs';
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { store } from './redux/store';
 import Article from "./components/Article";
 
 const LikeButton = () => {
@@ -96,6 +98,7 @@ const Stack = createNativeStackNavigator();
 const App = (navigation={navigation}) => {
   console.log("found local ip @", MY_IP_ADDRESS);
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Community Screen">
         <Stack.Screen name="Log In" component={LoginScreen} />
@@ -103,6 +106,7 @@ const App = (navigation={navigation}) => {
         <Stack.Screen name="Community Screen" component={CommunityScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
     
   );
 
