@@ -1,8 +1,10 @@
-import privateKeyPem from '../password.mjs';
+import { privateKeyPem } from '../password.mjs';
+import forge from 'node-forge';
 
 export function decryptWithPrivateKey(encryptedMessage) {
     // Convert the PEM-formatted private key to a private key object
     const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+    
 
     // Decode the base64-encoded encrypted message
     const encryptedBuffer = forge.util.decode64(encryptedMessage);
