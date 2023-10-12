@@ -5,6 +5,7 @@ import signup from "./routes/signup.mjs";
 import bodyParser from "body-parser";
 import posts from "./routes/posts.mjs";
 import login from "./routes/login.mjs";
+import vendor from "./routes/vendor.mjs";
 
 // Replace the uri string with your MongoDB deployment's connection string.
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use('/', login);
 app.use(signup);
 app.use(posts);
+app.use(vendor);
 app.use((err, _req, res, next) => {
   res.status(500).send("Uh oh! An unexpected error occurred.");
 });

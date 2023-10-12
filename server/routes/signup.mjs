@@ -27,12 +27,12 @@ router.post("/signup", async (req, res) => {
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
-    await users_db.collection('user_login').insertOne({ hashed_password: hashed_password, account_type: 2, hashed_email: hashed_email });
+    await users_db.collection('user_login').insertOne({ hashed_password: hashed_password, account_type: 3, hashed_email: hashed_email });
     await users_db.collection('customer_info').insertOne({
         hashed_email: hashed_email,
         encrypted_email: encrypted_email,
         first_name: "",
-        account_type: 2,
+        account_type: 3,
         last_name: "",
         username: "",
         gender: "",
@@ -40,7 +40,7 @@ router.post("/signup", async (req, res) => {
         subscribed_to_news: false,
         birthday: ""
     });
-    res.json({ success: true });
+    res.status(200).json({ success: true });
 });
 // Get a list of 50 posts
 /*
