@@ -8,7 +8,8 @@ export const dummy_data = {
                 "author_id": 1,
                 "author_name": "Author 1",
                 "author_pfp_link": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?fit=crop&w=700&q=60",
-                "like_count": 34
+                "like_count": 34,
+                "tags": ["innovation", "environment", "brand-release", "fashion-week"]
             }
         },
         {
@@ -19,7 +20,8 @@ export const dummy_data = {
                 "author_id": 1134,
                 "author_name": "Author 2",
                 "author_pfp_link": "https://media.npr.org/assets/img/2021/03/10/life-kit_clothes-1-5_slide-f027dc177586fe5fea045c1b920094b773be8ba0-s1100-c50.jpg",
-                "like_count": 56
+                "like_count": 56,
+                "tags": ["workforce", "eco-friendly", "upcycled-fashion"]
             }
         },
         {
@@ -30,7 +32,8 @@ export const dummy_data = {
                 "author_id": 2384,
                 "author_name": "Author 3",
                 "author_pfp_link": "link",
-                "like_count": 12
+                "like_count": 12,
+                "tags": ["vegan", "organic", "food-sustainability"]
             }
         },
         {
@@ -41,7 +44,8 @@ export const dummy_data = {
                 "author_id": 4926,
                 "author_name": "Author 4",
                 "author_pfp_link": "https://media.glamour.com/photos/6262e7e3f03d4b336fcce033/master/w_2560%2Cc_limit/sustainable%2520brands%2520refresh.jpg",
-                "like_count": 35
+                "like_count": 35,
+                "tag": ["food-sustainability", "business-stories"]
             }
         },
         {
@@ -52,7 +56,8 @@ export const dummy_data = {
                 "author_id": 4826,
                 "author_name": "Author 5",
                 "author_pfp_link": "https://imageio.forbes.com/specials-images/imageserve/63c98cc6bc16ed91ea766ec0/Vector-illustration-of-Slow-fashion-concept-with-Earth-planet-globe--clothes-hanger/960x0.jpg?format=jpg&width=960",
-                "like_count": 41
+                "like_count": 41,
+                "tags": ["business-stories", "workforce", "life-hacks"]
             }
         },
         {
@@ -63,7 +68,8 @@ export const dummy_data = {
                 "author_id": 5419,
                 "author_name": "Author 6",
                 "author_pfp_link": "https://cfda.imgix.net/2021/04/Sustainable-fashion-brands-1.jpg",
-                "like_count": 21
+                "like_count": 21,
+                "tags": ["luxury-brand", "eco-friendly", "brand-release"]
             }
         },
         {
@@ -74,7 +80,8 @@ export const dummy_data = {
                 "author_id": 2584,
                 "author_name": "Author 7",
                 "author_pfp_link": "https://assets.entrepreneur.com/content/3x2/2000/20180903101116-beautiful-design-dress-985635.jpeg",
-                "like_count": 59
+                "like_count": 59,
+                "tags": ["business-stories", "fashion-week", "innovation"]
             }
         },
         {
@@ -85,7 +92,8 @@ export const dummy_data = {
                 "author_id": 1585,
                 "author_name": "Author 8",
                 "author_pfp_link": "https://assets.entrepreneur.com/content/3x2/2000/1637661746-MyPost11.jpg",
-                "like_count": 28
+                "like_count": 28,
+                "tags": ["eco-friendly", "upcycled-fashion", "thrifting"]
             }
         },
         {
@@ -96,7 +104,8 @@ export const dummy_data = {
                 "author_id": 7058,
                 "author_name": "Author 9",
                 "author_pfp_link": "https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=700&q=60",
-                "like_count": 46
+                "like_count": 46,
+                "tags": ["upcycled-fashion", "thrifting"]
             }
         },
         {
@@ -107,7 +116,8 @@ export const dummy_data = {
                 "author_id": 1476,
                 "author_name": "Author 8",
                 "author_pfp_link": "https://assets.entrepreneur.com/content/3x2/2000/1637661746-MyPost11.jpg",
-                "like_count": 6
+                "like_count": 6,
+                "tags": ["eco-friendly", "upcycled-fashion", "thrifting", "workforce"]
             }
         }
     ]
