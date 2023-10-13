@@ -6,12 +6,26 @@ const router = express.Router();
 
 // Get a list of 50 posts
 router.get("/posts", async (req, res) => {
-  let collection = await posts_db.collection("articles");
-  let results = await collection.find({})
-    .toArray();
-  console.log(results);
+  try {
+    // Extracting the query parameter which is a list of strings
+    const tagsQuery = req.query.tags;
 
-  res.send(results).status(200);
+    // If the tags query parameter exists, split it by comma to get an array
+    const tags = tagsQuery ? tagsQuery.split(",") : [];
+    console.log(tags);
+
+    const collection = posts_db.collection('articles');
+
+    // MongoDB query to find articles which contain any of the tags in the 'tags' field
+    const query = tags.length > 0 ? { tags: { $in: tags } } : {};
+
+    const articles = await collection.find(query).toArray();
+
+    res.status(200).json(articles);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // router.get("/posts/:id", async (req, res) => {
@@ -61,7 +75,7 @@ router.post('/posts/:user_id/:article_id/', async (req, res) => {
       return res.status(400).send({ message: "Invalid like query!" });
   }
 
-  return res.send({ success: true });
+  return res.status(200).send({ success: true });
 });
 
 
