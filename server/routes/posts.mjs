@@ -1,8 +1,13 @@
 import express from "express";
 import { posts_db, users_db } from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
+import tagsList from "../utils/tagsList.mjs";
 
 const router = express.Router();
+
+router.get("/tags", async (req, res) => {
+  res.status(200).json(tagsList);
+})
 
 // Get a list of 50 posts
 router.get("/posts", async (req, res) => {
