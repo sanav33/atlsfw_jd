@@ -49,12 +49,12 @@ const LoginScreen = ({navigation}) => {
         }
     } catch (error) {
       console.error('Error during login:', error.response.data.message);
-          Alert.alert('Login Error', error.response.data.message,
-            [{text:'Try Again',
-              cancelable: true,
-              },
-            ],
-          );
+        Alert.alert('Login Error', error.response.data.message,
+          [{text:'Try Again',
+            cancelable: true,
+            },
+          ],
+        );
     }
   };
 /* Login to Your Account */

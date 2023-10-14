@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextInput, View, StyleSheet } from 'react-native';
+import { Button, TextInput, View, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 import hashString from '../utils/hashingUtils.mjs';
@@ -43,12 +43,25 @@ const SignUpScreen = () => {
       if (data.success) {
           console.log("successfully signed user up");
         // Handle success (e.g., navigate to another screen)
+          Alert.alert('Signup Successful!', "Go back to the login screen to log in.",
+            [{text:'OK',
+              cancelable: true,
+              },
+            ],
+          );
       } else {
           console.log("signup failed");
-        // Handle error (e.g., display an error message)
+
       }
     } catch (error) {
-      console.error('Error during sign-up:', error);
+        console.error('Error during sign-up:', error);
+        // Handle error (e.g., display an error message)
+        Alert.alert('Signup Error', error.response.data.message,
+          [{text:'Try Again',
+            cancelable: true,
+            },
+          ],
+        );
     }
   };
 

@@ -55,7 +55,7 @@ const CommunityScreen = () => {
       {currentScreen === 'Community' ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
-          <MasonryList
+          <FlatList
           
             numColumns={2}
             data={articleData}
