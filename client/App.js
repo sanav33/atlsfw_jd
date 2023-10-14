@@ -100,7 +100,7 @@ const App = (navigation={navigation}) => {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Community Screen">
+      <Stack.Navigator initialRouteName="Log In">
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
         <Stack.Screen name="Community Screen" component={CommunityScreen} />
