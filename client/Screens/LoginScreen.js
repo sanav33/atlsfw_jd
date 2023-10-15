@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
+import { Button, Text, TextInput, View, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 import hashString from '../utils/hashingUtils.mjs';
@@ -41,13 +41,20 @@ const LoginScreen = ({navigation}) => {
           //send login action to store
           dispatch(login());
         // Handle success (e.g., navigate to another screen)
+          navigation.navigate('Community Screen');
       } else {
           console.log("well what about this");
           console.log(data.message);
         // Handle error (e.g., display an error message)
-      }
+        }
     } catch (error) {
       console.error('Error during login:', error.response.data.message);
+        Alert.alert('Login Error', error.response.data.message,
+          [{text:'Try Again',
+            cancelable: true,
+            },
+          ],
+        );
     }
   };
 /* Login to Your Account */
