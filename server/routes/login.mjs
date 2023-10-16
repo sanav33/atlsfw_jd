@@ -29,7 +29,11 @@ router.post("/", async (req, res) => {
         console.log(hashed_password);
         return res.status(400).json({ success: false, message: 'The email-password combination is incorrect' });
     }
-    res.json({ success: true });
+
+    const userInfo = await users_db.collection("customer_info").findOne({hashed_email: hashed_email});
+    userInfo._id = userInfo._id.toString();
+
+    res.status(200).json({ success: true, user: userInfo});
 });
 
 
