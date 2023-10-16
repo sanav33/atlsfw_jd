@@ -18,7 +18,7 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
     console.log("got a signup request");
-    const {hashed_email, encrypted_email, hashed_password /*, first_name, last_name, username, birthday, gender, phone_number, subscribed_to_news */ } = req.body;
+    const {hashed_email, encrypted_email, hashed_password, first_name, last_name, account_type, username, birthday, gender, phone_number, subscribed_to_news } = req.body;
     console.log(hashed_email, hashed_password);
     if (!hashed_email || !hashed_password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
@@ -27,18 +27,21 @@ router.post("/signup", async (req, res) => {
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
+    if (encrypted_email == null || first_name == null || last_name == null || account_type == null || username == null || birthday == null || gender == null || phone_number == null || subscribed_to_news == null) {
+        return res.status(400).json({success: false, message: "Missing certain attributes"})
+    }
     await users_db.collection('user_login').insertOne({ hashed_password: hashed_password, account_type: 3, hashed_email: hashed_email });
     await users_db.collection('customer_info').insertOne({
         hashed_email: hashed_email,
         encrypted_email: encrypted_email,
-        first_name: "",
-        account_type: 3,
-        last_name: "",
-        username: "",
-        gender: "",
-        phone_number: "",
-        subscribed_to_news: false,
-        birthday: ""
+        first_name: first_name,
+        account_type: account_type,
+        last_name: last_name,
+        username: username,
+        gender: gender,
+        phone_number: phone_number,
+        subscribed_to_news: subscribed_to_news,
+        birthday: birthday
     });
 
     const userInfo = await users_db.collection("customer_info").findOne({hashed_email: hashed_email});
