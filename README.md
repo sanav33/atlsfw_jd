@@ -1,5 +1,5 @@
 # Atlanta Sustainable Fashion Week (ATLSFW) Mobile Application
-A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style more sustainably.
+A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style sustainably.
 
 # Release Notes
 ## Version 0.2.0
