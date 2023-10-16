@@ -61,7 +61,13 @@ const CommunityScreen = () => {
             data={articleData}
             keyExtractor={item => item["_id"]}
             renderItem={({ item, index}) => (
-                <Article article={{title: item["article_title"],image:item["article_preview_image"], author:item["author_name"]}}></Article>
+                <Article article={{
+                  title: item["article_title"], 
+                  image:item["article_preview_image"], 
+                  author:item["author_name"], 
+                  likes:item["like_count"],
+                  id:item["_id"],
+                }}></Article>
               // </View>
             )}
           />

@@ -1,12 +1,14 @@
 import {View, Image, Text, StyleSheet, Pressable, TouchableOpacity} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import {useState, useEffect} from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { like, unlike } from "../redux/actions/likeAction";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthorNameScreen from '../Screens/AuthorNameScreen'; // Import the AuthorNameScreen component
 
 const Article = (props) => {
-	const { image, title, author} = props.article;
+	const { image, title, author, likes, id} = props.article;
 
 	const [currentScreen, setCurrentScreen] = useState('Community');
 
@@ -28,7 +30,40 @@ const Article = (props) => {
 		if (image) {
 			Image.getSize(image, (width, height) => setRatio(width / height));
 		}
-	}, [image])
+	}, [image]);
+
+	//redux stuff
+	const dispatch = useDispatch();
+ 
+	const isLogged = useSelector((store) => store.isLogged.isLogged);
+	const liked_articles = useSelector((store) => store.liked_articles.liked_articles);
+
+	const handleLike = () => {
+		setLiked((isLiked) => !isLiked);
+		// //check if logged in 
+		// if (isLogged) {
+		// 	addedToDB();
+		// }
+		// // TODO: if not, go to login
+		
+	}
+	// const addedToDB = async () => {
+	// 	// TODO: get user ID
+	// 	// TODO: figure out URL format
+	// 	const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/' + '/posts/:user_id/:article_id/', {
+	// 		liked_articles
+	// 	});
+
+	// 	console.log(response.data);
+	// 	const data = response.data;
+
+	// 	if (data.success) {
+	// 		//dispatch like action if article has been added
+	// 		dispatch(like(id));
+	// 	} else {
+	// 		// TODO: send data failed msg or smth
+	// 	}
+	// }
 
 	return (
 		<View style={styles.article}>
@@ -43,13 +78,13 @@ const Article = (props) => {
 				<TouchableOpacity onPress={navigateToAuthorPage} style={{ marginTop: 10 }}>
             <Text style={styles.authorName}>{author}</Text>
          </TouchableOpacity>
-         				<Pressable onPress={() => setLiked((isLiked) => !isLiked)} style={styles.likeButton}>
+         				<Pressable onPress={() => handleLike()} style={styles.likeButton}>
       				<MaterialCommunityIcons
         			name={liked ? "heart" : "heart-outline"}
         			size={32}
         			color={liked ? "red" : "black"}
       				/>
-      			<Text>{liked ? (count + 1) : count}</Text>
+      			<Text>{liked ? (likes + 1) : likes}</Text>
     			</Pressable>
 
           		<TouchableOpacity onPress={() => setSavePressed((isSavePressed) => !isSavePressed)} style={styles.saveButton}>
