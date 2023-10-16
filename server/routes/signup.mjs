@@ -27,7 +27,9 @@ router.post("/signup", async (req, res) => {
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
-
+    if (encrypted_email == null || first_name == null || last_name == null || account_type == null || username == null || birthday == null || gender == null || phone_number == null || subscribed_to_news == null) {
+        return res.status(400).json({success: false, message: "Missing certain attributes"})
+    }
     await users_db.collection('user_login').insertOne({ hashed_password: hashed_password, account_type: 3, hashed_email: hashed_email });
     await users_db.collection('customer_info').insertOne({
         hashed_email: hashed_email,
