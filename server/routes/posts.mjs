@@ -79,8 +79,8 @@ router.post('/posts/:user_id/:article_id/', async (req, res) => {
   } else {
       return res.status(400).send({ message: "Invalid like query!" });
   }
-
-  return res.status(200).send({ success: true });
+  const new_like_count = await posts_db.collection("articles").findOne({ _id: new ObjectId(article_id) });
+  return res.status(200).send({ success: true , like_count: new_like_count });
 });
 
 
