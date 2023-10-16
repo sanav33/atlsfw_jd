@@ -40,7 +40,11 @@ router.post("/signup", async (req, res) => {
         subscribed_to_news: false,
         birthday: ""
     });
-    res.status(200).json({ success: true });
+
+    const userInfo = await users_db.collection("customer_info").findOne({hashed_email: hashed_email});
+    userInfo._id = userInfo._id.toString();
+
+    res.status(200).json({ success: true, user: userInfo });
 });
 // Get a list of 50 posts
 /*
