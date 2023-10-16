@@ -27,9 +27,7 @@ router.post("/signup", async (req, res) => {
     if (existingUser) {
         return res.status(400).json({ success: false, message: 'Email already registered' });
     }
-    if (!encrypted_email || !first_name || !last_name || !account_type || !username || !birthday || !gender || !phone_number ) {
-        return res.status(400).json({success: false, message: "Missing certain attributes"})
-    }
+
     await users_db.collection('user_login').insertOne({ hashed_password: hashed_password, account_type: 3, hashed_email: hashed_email });
     await users_db.collection('customer_info').insertOne({
         hashed_email: hashed_email,

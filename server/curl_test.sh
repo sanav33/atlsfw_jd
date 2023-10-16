@@ -10,15 +10,15 @@ PORT=5050
 URL="http://${IP_ADDRESS}:${PORT}" # Replace '/endpoint' with the correct endpoint path if needed
 
 # Send POST request
-# curl -X POST \
-#      -H "Content-Type: application/json" \
-#      -d '{ "hashed_email": "testCat6", "hashed_password": "tested", "encrypted_email": "catTest", "first_name": "cat", "last_name": "x", "account_type": 3, "username": "catUser", "birthday": "aha", "gender": "who knows", "phone_number": "cant have it", "subscribed_to_news": false }' \
-#      $URL/signup
-
 curl -X POST \
      -H "Content-Type: application/json" \
-     -d '{ "hashed_email": "testCat6", "hashed_password": "tested" }' \
-     $URL
+     -d '{ "hashed_email": "testCat7", "hashed_password": "tested", "": "catTest", "first_name": "cat", "last_name": "x", "account_type": 3, "username": "catUser", "birthday": "aha", "gender": "who knows", "phone_number": "cant have it", "subscribed_to_news": false }' \
+     $URL/signup
+
+# curl -X POST \
+#      -H "Content-Type: application/json" \
+#      -d '{ "hashed_email": "testCat6", "hashed_password": "tested" }' \
+#      $URL
 
 # Send GET request
 # curl -X POST \
