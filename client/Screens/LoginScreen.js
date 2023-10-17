@@ -6,7 +6,7 @@ import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/loginAction';
-
+import { setID } from '../redux/actions/idAction';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -17,6 +17,7 @@ const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
  
   const isLogged = useSelector((store) => store.isLogged.isLogged);
+  const user_id = useSelector((store) => store.user_id.user_id);
 
   const handleLogin = async () => {
     try {
@@ -33,13 +34,17 @@ const LoginScreen = ({navigation}) => {
           hashed_password,
         });
 
-    console.log(response.data);
+      console.log(response.data);
       const data = response.data;
+      console.log(data.user._id);
+      // console.log(response.user._id);
 
       if (data.success) {
           console.log("successfully logged in");
           //send login action to store
           dispatch(login());
+          //set user ID to store
+          dispatch(setID(data.user._id));
         // Handle success (e.g., navigate to another screen)
           navigation.navigate('Community Screen');
       } else {

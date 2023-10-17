@@ -6,16 +6,18 @@ import { like, unlike } from "../redux/actions/likeAction";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthorNameScreen from '../Screens/AuthorNameScreen'; // Import the AuthorNameScreen component
+import axios from 'axios';
+import MY_IP_ADDRESS from '../environment_variables.mjs';
 
 const Article = (props) => {
-	const { image, title, author, likes, id} = props.article;
+	const { image, title, author, likes, article_id} = props.article;
 
 	const [currentScreen, setCurrentScreen] = useState('Community');
 
 	const [ratio, setRatio] = useState(1);
 	const [isSavePressed, setSavePressed] = useState(false);
-  const [liked, setLiked] = useState(false);
-  const [count, setCount] = useState(1);
+	const [liked, setLiked] = useState(false);
+	const [count, setCount] = useState(1);
 
 	const LikeButton = () => {};
 
@@ -37,33 +39,58 @@ const Article = (props) => {
  
 	const isLogged = useSelector((store) => store.isLogged.isLogged);
 	const liked_articles = useSelector((store) => store.liked_articles.liked_articles);
+	const user_id = useSelector((store) => store.user_id.user_id);
 
 	const handleLike = () => {
-		setLiked((isLiked) => !isLiked);
-		// //check if logged in 
-		// if (isLogged) {
-		// 	addedToDB();
-		// }
-		// // TODO: if not, go to login
+		setLiked((liked) => !liked);
+		//check if logged in 
+		if (isLogged) {
+			if (!liked) {
+				addedToDB();
+			} else {
+				removeFromDB();
+			}
+		} else {
+			//has not been tested yet bc can't get to comm pg without being logged
+			navigation.navigate('Community Screen');
+		}
 		
 	}
-	// const addedToDB = async () => {
-	// 	// TODO: get user ID
-	// 	// TODO: figure out URL format
-	// 	const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/' + '/posts/:user_id/:article_id/', {
-	// 		liked_articles
-	// 	});
 
-	// 	console.log(response.data);
-	// 	const data = response.data;
+	const addedToDB = async () => {
+		const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/' + 'posts/' + user_id + '/' + article_id + '?like=1', {
+			liked_articles
+		});
 
-	// 	if (data.success) {
-	// 		//dispatch like action if article has been added
-	// 		dispatch(like(id));
-	// 	} else {
-	// 		// TODO: send data failed msg or smth
-	// 	}
-	// }
+		console.log(response.data);
+		const data = response.data;
+
+		if (data.success) {
+			//dispatch like action if article has been added
+			dispatch(like(article_id));
+		} else {
+			console.log("well what about this");
+          	console.log(data.message);
+		}
+	}
+
+	const removeFromDB = async () => {
+		console.log('http://' + MY_IP_ADDRESS + ':5050/' + 'posts/' + user_id + '/' + article_id + '?like=-1');
+		const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/' + 'posts/' + user_id + '/' + article_id + '?like=-1', {
+			liked_articles
+		});
+
+		console.log(response.data);
+		const data = response.data;
+
+		if (data.success) {
+			//dispatch like action if article has been added
+			dispatch(unlike(article_id));
+		} else {
+			console.log("well what about this");
+          	console.log(data.message);
+		}
+	}
 
 	return (
 		<View style={styles.article}>
@@ -76,15 +103,15 @@ const Article = (props) => {
 				/>
 				<Text style={styles.title}>{title}</Text>
 				<TouchableOpacity onPress={navigateToAuthorPage} style={{ marginTop: 10 }}>
-            <Text style={styles.authorName}>{author}</Text>
-         </TouchableOpacity>
-         				<Pressable onPress={() => handleLike()} style={styles.likeButton}>
+            		<Text style={styles.authorName}>{author}</Text>
+         		</TouchableOpacity>
+         		<Pressable onPress={() => handleLike()} style={styles.likeButton}>
       				<MaterialCommunityIcons
         			name={liked ? "heart" : "heart-outline"}
         			size={32}
         			color={liked ? "red" : "black"}
       				/>
-      			<Text>{liked ? (likes + 1) : likes}</Text>
+      				<Text>{liked ? likes + 1 : likes}</Text>
     			</Pressable>
 
           		<TouchableOpacity onPress={() => setSavePressed((isSavePressed) => !isSavePressed)} style={styles.saveButton}>
