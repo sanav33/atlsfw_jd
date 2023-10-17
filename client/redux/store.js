@@ -1,5 +1,7 @@
 import { configureStore, createSlice, combineReducers } from '@reduxjs/toolkit';
 import loginReducer from './reducers/loginReducer';
+import likeReducer from './reducers/likeReducer';
+import idReducer from './reducers/idReducer';
 
 // HOW REDUX STATE WORKS
 // 
@@ -19,12 +21,16 @@ import loginReducer from './reducers/loginReducer';
 // 2) create new reducer function under ./redux/reducers
     // specify initial state and all possible states
     // EX: for COUNT_INCREASE, state.count++
+    // ***WARNING*** DO NOT MUTATE STATE do not directly change state
+    // if adding new item to array, spread + add new data, do not push()
 // 3) in store.js, add reducer to rootReducer
 // 4) in your component, create dispatch and selector hooks to change and get state, respectively
 
 
 const rootReducer = combineReducers({
     isLogged: loginReducer,
+    liked_articles: likeReducer,
+    user_id: idReducer,
     // add more reducers here
 });
 

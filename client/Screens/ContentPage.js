@@ -66,7 +66,7 @@ const CommunityScreen = () => {
                   image:item["article_preview_image"], 
                   author:item["author_name"], 
                   likes:item["like_count"],
-                  id:item["_id"],
+                  article_id:item["_id"],
                 }}></Article>
               // </View>
             )}
