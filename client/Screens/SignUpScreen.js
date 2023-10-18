@@ -14,6 +14,7 @@ const SignUpScreen = ({ navigation }) => {
   const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
   const [agreeSubscribe, setAgreeSubscribe] = useState(false);
+  //encrypted email
 
   const handleSignUp = async () => {
     try {
@@ -28,9 +29,11 @@ const SignUpScreen = ({ navigation }) => {
         hashed_email,
         hashed_password,
         phone_number: phoneNum,
+        //just to keep the format consistent, might as well do birthday: birthday, gender: gender
         birthday,
         gender,
         subscribed_to_news: agreeSubscribe,
+        //encrypted email
       };
 
       const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/signup', userData);
