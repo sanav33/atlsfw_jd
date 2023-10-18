@@ -12,6 +12,8 @@ import MY_IP_ADDRESS from './environment_variables.mjs';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import { store } from './redux/store';
 import Article from "./components/Article";
+import ArticleContentScreen from './Screens/ArticleContent';
+import AuthorNameScreen from './Screens/AuthorNameScreen';
 
 const LikeButton = () => {
   //set button to red or black
@@ -104,6 +106,8 @@ const App = (navigation={navigation}) => {
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
         <Stack.Screen name="Community Screen" component={CommunityScreen} />
+        <Stack.Screen name="Article Content" component={ArticleContentScreen} />
+        <Stack.Screen name="Author" component={AuthorNameScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

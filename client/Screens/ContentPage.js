@@ -8,9 +8,6 @@ import Article from '../components/Article';
 import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 
-
-var articles = []
-
 // Main component
 const CommunityScreen = () => {
     const [currentScreen, setCurrentScreen] = useState('Community');
@@ -67,6 +64,7 @@ const CommunityScreen = () => {
                   author:item["author_name"], 
                   likes:item["like_count"],
                   article_id:item["_id"],
+                  article_link: item["article_link"],
                 }}></Article>
             )}
           />
