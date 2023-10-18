@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, TextInput, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, TextInput, Modal, Button, StyleSheet } from 'react-native';
 import MasonryList from '@react-native-seoul/masonry-list';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignupScreen from './SignUpScreen';
@@ -8,14 +8,13 @@ import Article from '../components/Article';
 import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 
-
-var articles = []
-
 // Main component
 const CommunityScreen = () => {
     const [currentScreen, setCurrentScreen] = useState('Community');
     const [isSavePressed, setSavePressed] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false); // For filter modal visibility
+    const [tags, setTags] = useState([]);  // State for the tags
+    const [inputTag, setInputTag] = useState([]); // For input field
 
     const navigateToPage = (pageName) => {
         setCurrentScreen(pageName);
@@ -44,6 +43,32 @@ const CommunityScreen = () => {
       };
       getStuff();
     }, []);
+
+    useEffect(() => {
+      // Fetch tags from the new endpoint
+      const fetchTags = async () => {
+          try {
+              const url = `http://${MY_IP_ADDRESS}:5050/tags`;
+              const response = await axios.get(url);
+              if (response.data && Array.isArray(response.data)) {
+                  setTags(response.data);
+              }
+          } catch (error) {
+              console.error('Error fetching tags:', error.message);
+          }
+      };
+      fetchTags();
+  }, []);
+
+  const handleTagPress = (tag) => {
+      if (inputTag.includes(tag)) {
+          // Remove the tag if it's already selected
+          setInputTag(prevTags => prevTags.filter(t => t !== tag));
+      } else {
+          // Add the tag if it's not selected
+          setInputTag(prevTags => [...prevTags, tag]);
+      }
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -88,14 +113,35 @@ const CommunityScreen = () => {
           }}
       >
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ height: 250, width: 350, padding: 20, backgroundColor: 'white', borderRadius: 10 }}>
+              <View style={{ height: 350, width: 350, padding: 30, backgroundColor: 'white', borderRadius: 10 }}>
+                {/* Close Button */}
+                <TouchableOpacity
+                    style={styles.closeModalButton}
+                    onPress={() => setShowFilterModal(false)}
+                >
+                    <Icon name="times" size={20} color="black" />
+                </TouchableOpacity>
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-                      <TextInput placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} />
+                      <TextInput value={inputTag.join(', ')} placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} editable={false} />
                       <TouchableOpacity style={{ marginLeft: 10 }}>
                           <Icon name="filter" size={20} color="black" />
                       </TouchableOpacity>
                   </View>
-                  {/* Space for filter buttons below this */}
+                  {/* Container for filter buttons */}
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                      {tags.map(tag => (
+                          <TouchableOpacity
+                              key={tag}
+                              onPress={() => handleTagPress(tag)}
+                              style={[
+                                  styles.tagButton,
+                                  tags.includes(tag) && styles.tagButtonSelected
+                              ]}
+                          >
+                              <Text style={tags.includes(tag) ? styles.tagTextSelected : styles.tagText}>{tag}</Text>
+                          </TouchableOpacity>
+                      ))}
+                  </View>
               </View>
           </View>
       </Modal>
@@ -137,12 +183,43 @@ const CommunityScreen = () => {
       {/* Organization Logo */}
       <View style={{ alignItems: 'center', paddingBottom: 20 }}>
         <Image
-          source={require('./ATLSFWlogo.jpg')} // Replace with the actual path to your organization logo
+          source={require('./ATLSFWlogo.jpg')}
           style={{ width: 150, height: 50, resizeMode: 'contain' }}
         />
       </View>
     </View>
   );
 };
+
+// New StyleSheet for the tag buttons
+const styles = StyleSheet.create({
+  tagButton: {
+      padding: 5,
+      width: '48%',
+      borderColor: 'gray',
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: 5,
+      marginRight: 2,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#FFF', 
+  },
+  tagButtonSelected: {
+      backgroundColor: '#C1E1C1',
+  },
+  tagText: {
+      color: 'black',
+  },
+  tagTextSelected: {
+      color: 'black',
+  },
+  closeModalButton: {
+    position: 'absolute', // Absolute position
+    top: 2,
+    left: 1,
+    padding: 10,
+},
+});
 
 export default CommunityScreen;
