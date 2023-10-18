@@ -46,11 +46,6 @@ const CommunityScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Header Bar */}
-      <View style={{ padding: 15, backgroundColor: 'green', marginTop: 32, alignItems: 'center' }}>
-        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>COMMUNITY</Text>
-      </View>
-
       {/* Main Content */}
       {currentScreen === 'Community' ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
