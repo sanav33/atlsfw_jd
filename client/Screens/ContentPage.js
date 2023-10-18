@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, TextInput, Modal } from 'react-native';
 import MasonryList from '@react-native-seoul/masonry-list';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignupScreen from './SignUpScreen';
@@ -15,6 +15,7 @@ var articles = []
 const CommunityScreen = () => {
     const [currentScreen, setCurrentScreen] = useState('Community');
     const [isSavePressed, setSavePressed] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false); // For filter modal visibility
 
     const navigateToPage = (pageName) => {
         setCurrentScreen(pageName);
@@ -50,8 +51,12 @@ const CommunityScreen = () => {
       {currentScreen === 'Community' ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
+          {/* Filter Icon */}
+          <TouchableOpacity onPress={() => setShowFilterModal(true)} style={{ position: 'absolute', top: 10, right: 10, zIndex: 10 }}>
+            <Icon name="filter" size={30} color="black" />
+          </TouchableOpacity>
+
           <FlatList
-          
             numColumns={2}
             data={articleData}
             keyExtractor={item => item["_id"]}
@@ -63,10 +68,8 @@ const CommunityScreen = () => {
                   likes:item["like_count"],
                   article_id:item["_id"],
                 }}></Article>
-              // </View>
             )}
           />
-
         </View>
         
       ) : currentScreen === 'Signup' ? (
@@ -74,6 +77,28 @@ const CommunityScreen = () => {
       ) : currentScreen === 'AuthorName' ? (
         <AuthorNameScreen />
       ) : null}
+
+      {/* Filter Modal */}
+      <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showFilterModal}
+          onRequestClose={() => {
+              setShowFilterModal(!showFilterModal);
+          }}
+      >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ height: 250, width: 350, padding: 20, backgroundColor: 'white', borderRadius: 10 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+                      <TextInput placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} />
+                      <TouchableOpacity style={{ marginLeft: 10 }}>
+                          <Icon name="filter" size={20} color="black" />
+                      </TouchableOpacity>
+                  </View>
+                  {/* Space for filter buttons below this */}
+              </View>
+          </View>
+      </Modal>
 
       {/* Navigation Bar */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'lightgray', padding: 10 }}>
