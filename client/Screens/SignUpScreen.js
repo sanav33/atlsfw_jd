@@ -3,7 +3,7 @@ import { Button, Text, TextInput, View, StyleSheet, Alert, Switch } from 'react-
 import axios from 'axios';
 import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
-
+import { isValidPassword, isValidEmail } from '../utils/format.mjs';
 const SignUpScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -20,31 +20,38 @@ const SignUpScreen = ({ navigation }) => {
     try {
       const hashed_email = await hashString(email);
       const hashed_password = await hashString(password);
-
-      // Send the user data to your backend
-      let userData = {
-        first_name: firstName,
-        last_name: lastName,
-        username,
-        hashed_email,
-        hashed_password,
-        phone_number: phoneNum,
-        //just to keep the format consistent, might as well do birthday: birthday, gender: gender
-        birthday,
-        gender,
-        subscribed_to_news: agreeSubscribe,
-        //encrypted email
-      };
-
-      const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/signup', userData);
-
-      const data = response.data;
-      if (data.success) {
-        Alert.alert('Success', 'Account created successfully!', [{ text: 'OK' }]);
-        navigation.navigate('Log In');
+      
+      if (!isValidEmail(email)) {
+        Alert.alert('Error', "Email format is invalid", [{ text: 'Try Again' }]);
+      } else if (!isValidPassword(password)) {
+        Alert.alert('Error', 'Password must satisfy the following requirements: \n1. At least one uppercase letter \n2. At least one lowercase letter \n3. At least one number \n4. At least one special character \n 5. At least 8 characters long', [{ text: 'Try Again' }]);
       } else {
-        Alert.alert('Error', data.message, [{ text: 'Try Again' }]);
+        // Send the user data to your backend
+        let userData = {
+          first_name: firstName,
+          last_name: lastName,
+          username,
+          hashed_email,
+          hashed_password,
+          phone_number: phoneNum,
+          //just to keep the format consistent, might as well do birthday: birthday, gender: gender
+          birthday,
+          gender,
+          subscribed_to_news: agreeSubscribe,
+          //encrypted email
+        };
+
+        const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/signup', userData);
+
+        const data = response.data;
+        if (data.success) {
+          Alert.alert('Success', 'Account created successfully!', [{ text: 'OK' }]);
+          navigation.navigate('Log In');
+        } else {
+          Alert.alert('Error', data.message, [{ text: 'Try Again' }]);
+        }
       }
+      
     } catch (error) {
       console.error('Error during sign up:', error.response.data.message);
       Alert.alert('Sign Up Error', error.response.data.message, [{ text: 'Try Again' }]);
