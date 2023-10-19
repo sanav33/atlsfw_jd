@@ -11,3 +11,10 @@ export const unlike = (data) => {
       payload: data,
     };
   };
+
+export const get_list = (data) => {
+  return {
+    type: 'GET_LIST',
+    payload: data,
+  };
+};
