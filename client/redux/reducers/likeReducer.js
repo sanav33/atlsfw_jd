@@ -7,14 +7,20 @@ export default (state = initialState, action) => {
         case 'LIKE':
             return {
                 ...state,
-                liked_articles: [...state.liked_articles, action.payload],
+                liked_articles: [...(new Set([...state.liked_articles, action.payload]))],
+                // liked_articles: [...state.liked_articles, action.payload],
               };
         case 'DISLIKE':
-            const filtered = state.liked_articles.filter(article => article.id !== action.payload)
+            const filtered = state.liked_articles.filter(article => article.id != action.payload);
             return { 
                 ...state, 
                 liked_articles: filtered,
-            }
+            };
+        case 'GET_LIST':
+            return {
+                ...state,
+                liked_articles: action.payload,
+                };
         default:
             return state;
     }

@@ -7,6 +7,7 @@ import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/loginAction';
 import { setID } from '../redux/actions/idAction';
+import { get_list } from '../redux/actions/likeAction';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -34,17 +35,24 @@ const LoginScreen = ({navigation}) => {
           hashed_password,
         });
 
-      console.log(response.data);
+      // console.log(response.data);
       const data = response.data;
-      console.log(data.user._id);
-      // console.log(response.user._id);
+      // console.log(data.user._id);
+      // console.log(data.user.liked_articles);
 
       if (data.success) {
           console.log("successfully logged in");
+
+          // REDUX STATES
           //send login action to store
           dispatch(login());
           //set user ID to store
           dispatch(setID(data.user._id));
+          //get previously liked articles list
+          dispatch(get_list(data.user.liked_articles));
+
+          console.log(user_id);
+
         // Handle success (e.g., navigate to another screen)
           navigation.navigate('Community Screen');
       } else {
