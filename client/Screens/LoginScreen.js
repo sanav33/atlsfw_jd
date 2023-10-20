@@ -98,7 +98,7 @@ const LoginScreen = ({navigation}) => {
           color="black"
           onPress={handleLogin} />
       </View>
-      {isLogged ? <Text>logged in</Text> : <Text>not logged in</Text>}
+      {/* {isLogged ? <Text>logged in</Text> : <Text>not logged in</Text>} */}
       <Text style={styles.text}>New here?</Text>
 
       <View>
