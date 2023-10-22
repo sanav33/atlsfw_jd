@@ -51,8 +51,6 @@ const LoginScreen = ({navigation}) => {
           //get previously liked articles list
           dispatch(get_list(data.user.liked_articles));
 
-          console.log(user_id);
-
         // Handle success (e.g., navigate to another screen)
           navigation.navigate('Community Screen');
       } else {

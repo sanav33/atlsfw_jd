@@ -7,14 +7,22 @@ import AuthorNameScreen from './AuthorNameScreen'; // Import the AuthorNameScree
 import Article from '../components/Article';
 import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
+import { set_tags_list } from '../redux/actions/tagsAction';
+import { add_tag, remove_tag } from '../redux/actions/tagsAction';
+import { useSelector } from 'react-redux';
 
 // Main component
 const CommunityScreen = () => {
     const [currentScreen, setCurrentScreen] = useState('Community');
     const [isSavePressed, setSavePressed] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false); // For filter modal visibility
-    const [tags, setTags] = useState([]);  // State for the tags
-    const [inputTag, setInputTag] = useState([]); // For input field
+    // const [tags, setTags] = useState([]);  // State for the tags
+
+    //tags redux state here
+    const tags_list = useSelector((store) => store.tags_list.tags_list);
+
+    // TODO: wtf is this, how does she track previous tags?????
+    // const [inputTag, setInputTag] = useState([]); // For input field
 
     const navigateToPage = (pageName) => {
         setCurrentScreen(pageName);
@@ -51,7 +59,10 @@ const CommunityScreen = () => {
               const url = `http://${MY_IP_ADDRESS}:5050/tags`;
               const response = await axios.get(url);
               if (response.data && Array.isArray(response.data)) {
-                  setTags(response.data);
+                //dispatch tags state here
+                set_tags_list(response.data);
+                console.log("it's here", response.data);
+                  // setTags(response.data);
               }
           } catch (error) {
               console.error('Error fetching tags:', error.message);
@@ -61,13 +72,22 @@ const CommunityScreen = () => {
   }, []);
 
   const handleTagPress = (tag) => {
-      if (inputTag.includes(tag)) {
-          // Remove the tag if it's already selected
-          setInputTag(prevTags => prevTags.filter(t => t !== tag));
-      } else {
-          // Add the tag if it's not selected
-          setInputTag(prevTags => [...prevTags, tag]);
-      }
+    console.log("TAG LIST B4 PRESS",tags_list);
+    if (tags_list.includes(tag)) {
+      // Remove the tag if it's already selected
+      remove_tag(tag);
+    } else {
+      // Add the tag if it's not selected
+      add_tag(tag);
+    }
+    console.log("TAG LIST AFTER PRESS",tags_list);
+      // if (inputTag.includes(tag)) {
+      //     // Remove the tag if it's already selected
+      //     setInputTag(prevTags => prevTags.filter(t => t !== tag));
+      // } else {
+      //     // Add the tag if it's not selected
+      //     setInputTag(prevTags => [...prevTags, tag]);
+      // }
   };
 
   return (
@@ -122,25 +142,36 @@ const CommunityScreen = () => {
                     <Icon name="times" size={20} color="black" />
                 </TouchableOpacity>
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-                      <TextInput value={inputTag.join(', ')} placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} editable={false} />
+                      <TextInput value={tags_list.toString()} placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} editable={false} />
                       <TouchableOpacity style={{ marginLeft: 10 }}>
                           <Icon name="filter" size={20} color="black" />
                       </TouchableOpacity>
                   </View>
                   {/* Container for filter buttons */}
                   <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                      {tags.map(tag => (
+                          <TouchableOpacity
+                              key={"hehe"}
+                              // onPress={() => handleTagPress(tag)}
+                              style={[
+                                  styles.tagButtonSelected,
+                                  // tags_list.includes(tag) && styles.tagButtonSelected
+                              ]}
+                          >
+                              <Text style={styles.tagTextSelected}>{"hehehehe"}</Text>
+                          </TouchableOpacity>
+                    
+                      {/* {tags_list.map(tag => (
                           <TouchableOpacity
                               key={tag}
                               onPress={() => handleTagPress(tag)}
                               style={[
                                   styles.tagButton,
-                                  tags.includes(tag) && styles.tagButtonSelected
+                                  tags_list.includes(tag) && styles.tagButtonSelected
                               ]}
                           >
-                              <Text style={tags.includes(tag) ? styles.tagTextSelected : styles.tagText}>{tag}</Text>
+                              <Text style={tags_list.includes(tag) ? styles.tagTextSelected : styles.tagText}>{tag}</Text>
                           </TouchableOpacity>
-                      ))}
+                      ))} */}
                   </View>
               </View>
           </View>

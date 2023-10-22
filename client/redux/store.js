@@ -2,6 +2,7 @@ import { configureStore, createSlice, combineReducers } from '@reduxjs/toolkit';
 import loginReducer from './reducers/loginReducer';
 import likeReducer from './reducers/likeReducer';
 import idReducer from './reducers/idReducer';
+import tagsReducer from './reducers/tagsReducer';
 
 // HOW REDUX STATE WORKS
 // 
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     liked_articles: likeReducer,
     user_id: idReducer,
     // add more reducers here
+    tags_list: tagsReducer,
 });
 
 export const store = configureStore({

@@ -14,7 +14,9 @@ const Article = (props) => {
 
 	const [currentScreen, setCurrentScreen] = useState('Community');
 
+	//list redux states
 	const liked_articles_state = useSelector((store) => store.liked_articles.liked_articles);
+	const tags_list = useSelector((store) => store.tags_list.tags_list);
 
 	const [ratio, setRatio] = useState(1);
 	const [isSavePressed, setSavePressed] = useState(false);
@@ -84,7 +86,7 @@ const Article = (props) => {
 			liked_articles
 		});
 
-		console.log(response.data);
+		// console.log(response.data);
 		const data = response.data;
 
 		if (data.success) {
@@ -102,7 +104,7 @@ const Article = (props) => {
 			liked_articles
 		});
 
-		console.log(response.data);
+		// console.log(response.data);
 		const data = response.data;
 
 		if (data.success) {
