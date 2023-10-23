@@ -1,32 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Text, TextInput, View, StyleSheet, Alert, Switch } from 'react-native';
-import axios from 'axios';
-import hashString from '../utils/hashingUtils.mjs';
-import MY_IP_ADDRESS from '../environment_variables.mjs';
-import { isValidPassword, isValidEmail } from '../utils/format.mjs';
-import { useSelector, useDispatch } from 'react-redux';
-import VendorProfile from '../components/profile_pages/VendorProfile';
-import UserProfile from '../components/profile_pages/UserProfile';
-import AdminProfile from '../components/profile_pages/AdminProfile';
 
-const ProfilePage = ({ navigation }) => {
-
-    const account_type = useSelector((store) => store.acct_type.acct_type);
-    // const account_type = 3; //hardcode to test
-    let content;
-
-    if (account_type === 1) {
-      content = <AdminProfile/>;
-    } else if (account_type === 2) {
-      content = <VendorProfile/>;
-    } else if (account_type === 3) {
-      content = <UserProfile/>;
-    } else {
-      console.log("hello this account type doesnt exist");
-      content = null;
-    }
-
-
+const UserProfile = () => {
     const [email, setEmail] = useState('');
     //encrypted email
   
@@ -45,17 +20,30 @@ const ProfilePage = ({ navigation }) => {
         Alert.alert('Sign Up Error', error.response.data.message, [{ text: 'Try Again' }]);
       }
     };
-  
+    
     return (
-      <View style={{ flex: 1 }}>
-        {content}
-      </View>
+    <View style={styles.container}>
+        <Text style={styles.text}>User Profile</Text>
+        <TextInput
+            placeholder="Do later*"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+            keyboardType="email-address"
+        />
+
+        <View style={styles.buttonContainer}>
+        <Button
+            title="Insert here"
+            color="black"
+            onPress={verifyEmail}
+        />
+        </View>
+    </View>
     );
-  };
+};
 
-
-  
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
@@ -89,6 +77,5 @@ const ProfilePage = ({ navigation }) => {
       padding: 8,
     },
   });
-  
-  export default ProfilePage;
-  
+
+export default UserProfile;

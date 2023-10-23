@@ -66,7 +66,6 @@ const Article = (props) => {
 			} else {
 				// create temp list, remove liked article
 				liked_articles = liked_articles_state.slice();
-				console.log("before splice",liked_articles);
 				liked_articles.splice(liked_articles.indexOf(article_id), 1)
 
 				// hit BE endpoint
