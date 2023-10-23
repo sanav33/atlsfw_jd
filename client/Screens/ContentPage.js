@@ -16,6 +16,7 @@ const CommunityScreen = () => {
     const [showFilterModal, setShowFilterModal] = useState(false); // For filter modal visibility
     const [tags, setTags] = useState([]);  // State for the tags
     const [inputTag, setInputTag] = useState([]); // For input field
+    const [refreshKey, setRefreshKey] = useState(0);
 
     const navigateToPage = (pageName) => {
         setCurrentScreen(pageName);
@@ -28,22 +29,29 @@ const CommunityScreen = () => {
       setCurrentScreen('AuthorName');
     };
 
-    const [articleData, setArticleData] = useState()
+    const [articleData, setArticleData] = useState();
 
+
+    // function for fetching article data with selected tags
+    const fetchData = async () => {
+    try {
+      const response = await axios.get('http://' + MY_IP_ADDRESS + ':5050/posts' + '?tags=' + inputTag.join(','));
+      setArticleData(response.data);
+    } catch (error) {
+      console.error('Error during data fetch:', error.message);
+    }
+  };
+
+    // Fetch article data when page is initialized
     useEffect(() => {
-      const getStuff = async () => {
-        try {
-    
-          const response = await axios.get('http://' + MY_IP_ADDRESS + ':5050/posts');
-    
-          console.log(response.data);
-          setArticleData(response.data);
-        } catch (error) {
-          console.error('Error during login:', error.message);
-        }
-      };
-      getStuff();
+      fetchData();
     }, []);
+
+
+    const filterArticles = async () => {
+    // Fetch data when filtering is applied
+    await fetchData();
+    };
 
     useEffect(() => {
       // Fetch tags from the new endpoint
@@ -127,7 +135,7 @@ const CommunityScreen = () => {
                 </TouchableOpacity>
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
                       <TextInput value={inputTag.join(', ')} placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} editable={false} />
-                      <TouchableOpacity style={{ marginLeft: 10 }}>
+                      <TouchableOpacity onPress={() => filterArticles() }style={{ marginLeft: 10 }} >
                           <Icon name="filter" size={20} color="black" />
                       </TouchableOpacity>
                   </View>
