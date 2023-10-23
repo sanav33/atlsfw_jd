@@ -8,13 +8,17 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthorNameScreen from '../Screens/AuthorNameScreen'; // Import the AuthorNameScreen component
 import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
+import ArticleContent from '../Screens/ArticleContent';
+import { useNavigation } from '@react-navigation/native';
 
 const Article = (props) => {
-	const { image, title, author, likes, article_id} = props.article;
+	const { image, title, author, likes, article_id, article_link} = props.article;
 
 	const [currentScreen, setCurrentScreen] = useState('Community');
 
 	const liked_articles_state = useSelector((store) => store.liked_articles.liked_articles);
+
+  	const navigation = useNavigation();
 
 	const [ratio, setRatio] = useState(1);
 	const [isSavePressed, setSavePressed] = useState(false);
@@ -23,13 +27,10 @@ const Article = (props) => {
 
 	const LikeButton = () => {};
 
-	const navigateToPage = (pageName) => {
-        setCurrentScreen(pageName);
-    };
+  const navigateToContent = (link) => {
+  	navigation.navigate('Article Content', { link });
+  };
 
-    const navigateToAuthorPage = () => {
-      setCurrentScreen('AuthorNameScreen');
-    };
 	useEffect(() => {
 		if (image) {
 			Image.getSize(image, (width, height) => setRatio(width / height));
@@ -116,14 +117,16 @@ const Article = (props) => {
 	return (
 		<View style={styles.article}>
 			<View>
+			<TouchableOpacity onPress={() => navigateToContent(article_link)}>
 				<Image
 					source={{
 						uri:image,
 					}}
 					style={[styles.image, {aspectRatio: ratio}]}
 				/>
+				</TouchableOpacity>
 				<Text style={styles.title}>{title}</Text>
-				<TouchableOpacity onPress={navigateToAuthorPage} style={{ marginTop: 10 }}>
+				<TouchableOpacity onPress={() => navigation.navigate('Author')} style={{ marginTop: 10 }}>
             		<Text style={styles.authorName}>{author}</Text>
          		</TouchableOpacity>
          		<Pressable onPress={() => handleLike()} style={styles.likeButton}>
