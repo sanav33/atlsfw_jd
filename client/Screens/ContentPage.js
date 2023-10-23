@@ -93,6 +93,7 @@ const CommunityScreen = () => {
                   author:item["author_name"], 
                   likes:item["like_count"],
                   article_id:item["_id"],
+                  article_link: item["article_link"],
                 }}></Article>
             )}
           />
