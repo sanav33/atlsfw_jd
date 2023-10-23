@@ -27,31 +27,34 @@ const CommunityScreen = () => {
       setCurrentScreen('AuthorName');
     };
 
+    // get article data from BE endpoint
     const [articleData, setArticleData] = useState()
 
+    // call endpoint here
     useEffect(() => {
-      const getStuff = async () => {
+      const fetchPosts = async () => {
         try {
     
           const response = await axios.get('http://' + MY_IP_ADDRESS + ':5050/posts');
     
-          console.log(response.data);
+          // console.log(response.data);
           setArticleData(response.data);
         } catch (error) {
           console.error('Error during login:', error.message);
         }
       };
-      getStuff();
+      fetchPosts();
     }, []);
 
+    // Fetch tags from the new endpoint
     useEffect(() => {
-      // Fetch tags from the new endpoint
       const fetchTags = async () => {
           try {
               const url = `http://${MY_IP_ADDRESS}:5050/tags`;
               const response = await axios.get(url);
               if (response.data && Array.isArray(response.data)) {
                   setTags(response.data);
+                  console.log("TAG LIST", tags);
               }
           } catch (error) {
               console.error('Error fetching tags:', error.message);
@@ -60,6 +63,7 @@ const CommunityScreen = () => {
       fetchTags();
   }, []);
 
+  // tag button press handler
   const handleTagPress = (tag) => {
       if (inputTag.includes(tag)) {
           // Remove the tag if it's already selected
@@ -68,6 +72,19 @@ const CommunityScreen = () => {
           // Add the tag if it's not selected
           setInputTag(prevTags => [...prevTags, tag]);
       }
+  };
+
+  const handleGoPress = async () => {
+    try {
+      const response = await axios.get('http://' + MY_IP_ADDRESS + ':5050/posts' + '?tags=' + inputTag.join(','));
+
+      // console.log(response.data);
+      setArticleData(response.data);
+    } catch (error) {
+      console.error('Error during login:', error.message);
+    }
+
+    console.log("new fetch articles", articleData);
   };
 
   return (
@@ -123,8 +140,8 @@ const CommunityScreen = () => {
                 </TouchableOpacity>
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
                       <TextInput value={inputTag.join(', ')} placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} editable={false} />
-                      <TouchableOpacity style={{ marginLeft: 10 }}>
-                          <Icon name="filter" size={20} color="black" />
+                      <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => handleGoPress()}>
+                          <Icon name="filter" size={20} color="green" />
                       </TouchableOpacity>
                   </View>
                   {/* Container for filter buttons */}
