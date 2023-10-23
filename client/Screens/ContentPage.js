@@ -7,6 +7,7 @@ import AuthorNameScreen from './AuthorNameScreen'; // Import the AuthorNameScree
 import Article from '../components/Article';
 import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
+import ProfilePage from './ProfilePage';
 
 // Main component
 const CommunityScreen = () => {
@@ -100,6 +101,8 @@ const CommunityScreen = () => {
         
       ) : currentScreen === 'Signup' ? (
         <SignupScreen />
+      ) : currentScreen === 'Profile' ? (
+        <ProfilePage />
       ) : currentScreen === 'AuthorName' ? (
         <AuthorNameScreen />
       ) : null}
@@ -175,7 +178,7 @@ const CommunityScreen = () => {
             <Text>Shop</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Signup')}>
+        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Profile')}>
             <Icon name="home" size={20} color="black" alignItems="center"/>
             <Text>Profile</Text>
         </TouchableOpacity>

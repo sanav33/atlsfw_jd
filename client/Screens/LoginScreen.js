@@ -7,6 +7,8 @@ import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/loginAction';
 import { setID } from '../redux/actions/idAction';
+import { get_list } from '../redux/actions/likeAction';
+import { set_acct_type } from '../redux/actions/accountAction';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -18,6 +20,7 @@ const LoginScreen = ({navigation}) => {
  
   const isLogged = useSelector((store) => store.isLogged.isLogged);
   const user_id = useSelector((store) => store.user_id.user_id);
+  const account_type = useSelector((store) => store.acct_type.acct_type);
 
   const handleLogin = async () => {
     try {
@@ -34,17 +37,26 @@ const LoginScreen = ({navigation}) => {
           hashed_password,
         });
 
-      console.log(response.data);
+      // console.log(response.data);
       const data = response.data;
-      console.log(data.user._id);
-      // console.log(response.user._id);
+      console.log("HERE",data.user.account_type);
+      // console.log(data.user.liked_articles);
 
       if (data.success) {
           console.log("successfully logged in");
+
+          // REDUX STATES
           //send login action to store
           dispatch(login());
           //set user ID to store
           dispatch(setID(data.user._id));
+          //get previously liked articles list
+          dispatch(get_list(data.user.liked_articles));
+          //set account type
+          dispatch(set_acct_type(data.user.account_type));
+
+          console.log(account_type);
+
         // Handle success (e.g., navigate to another screen)
           navigation.navigate('Community Screen');
       } else {
@@ -90,7 +102,7 @@ const LoginScreen = ({navigation}) => {
           color="black"
           onPress={handleLogin} />
       </View>
-      {isLogged ? <Text>logged in</Text> : <Text>not logged in</Text>}
+      {/* {isLogged ? <Text>logged in</Text> : <Text>not logged in</Text>} */}
       <Text style={styles.text}>New here?</Text>
 
       <View>

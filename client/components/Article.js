@@ -16,11 +16,13 @@ const Article = (props) => {
 
 	const [currentScreen, setCurrentScreen] = useState('Community');
 
-	const navigation = useNavigation();
+	const liked_articles_state = useSelector((store) => store.liked_articles.liked_articles);
+  
+  const navigation = useNavigation();
 
 	const [ratio, setRatio] = useState(1);
 	const [isSavePressed, setSavePressed] = useState(false);
-	const [liked, setLiked] = useState(false);
+	const [liked, setLiked] = useState(liked_articles_state.includes(article_id));
 	const [count, setCount] = useState(1);
 
 	const LikeButton = () => {};
@@ -36,25 +38,44 @@ const Article = (props) => {
 		}
 	}, [image]);
 
-	//redux stuff
+	//begin like button functionality
 	const dispatch = useDispatch();
  
+	//redux states
 	const isLogged = useSelector((store) => store.isLogged.isLogged);
-	const liked_articles = useSelector((store) => store.liked_articles.liked_articles);
 	const user_id = useSelector((store) => store.user_id.user_id);
+	let liked_articles = [];
+
+	//set liked articles to liked 
 
 	const handleLike = () => {
+		// toggle button state
 		setLiked((liked) => !liked);
+
 		//check if logged in 
+		console.log("inside article",isLogged);
+		console.log(user_id);
+
 		if (isLogged) {
 			if (!liked) {
-				addedToDB();
+				// create temp list, append new liked article
+				liked_articles = liked_articles_state.slice();
+				liked_articles.push(article_id);
+				liked_articles = [...new Set(liked_articles)];
+
+				// hit BE endpoint
+				addedToDB(liked_articles);
 			} else {
-				removeFromDB();
+				// create temp list, remove liked article
+				liked_articles = liked_articles_state.slice();
+				liked_articles.splice(liked_articles.indexOf(article_id), 1)
+
+				// hit BE endpoint
+				removeFromDB(liked_articles);
 			}
 		} else {
 			//has not been tested yet bc can't get to comm pg without being logged
-			navigation.navigate('Community Screen');
+			// navigation.navigate('Community Screen');
 		}
 		
 	}
@@ -68,8 +89,9 @@ const Article = (props) => {
 		const data = response.data;
 
 		if (data.success) {
-			//dispatch like action if article has been added
+			//dispatch like action if article has been added to db
 			dispatch(like(article_id));
+			
 		} else {
 			console.log("well what about this");
           	console.log(data.message);
@@ -77,7 +99,6 @@ const Article = (props) => {
 	}
 
 	const removeFromDB = async () => {
-		console.log('http://' + MY_IP_ADDRESS + ':5050/' + 'posts/' + user_id + '/' + article_id + '?like=-1');
 		const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/' + 'posts/' + user_id + '/' + article_id + '?like=-1', {
 			liked_articles
 		});
@@ -86,7 +107,7 @@ const Article = (props) => {
 		const data = response.data;
 
 		if (data.success) {
-			//dispatch like action if article has been added
+			//dispatch unlike action if article has been removed from db
 			dispatch(unlike(article_id));
 		} else {
 			console.log("well what about this");
@@ -111,7 +132,7 @@ const Article = (props) => {
          		</TouchableOpacity>
          		<Pressable onPress={() => handleLike()} style={styles.likeButton}>
       				<MaterialCommunityIcons
-        			name={liked ? "heart" : "heart-outline"}
+        			name={ liked ? "heart" : "heart-outline"}
         			size={32}
         			color={liked ? "red" : "black"}
       				/>
