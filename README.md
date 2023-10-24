@@ -2,6 +2,25 @@
 A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style sustainably.
 
 # Release Notes
+## Version 0.3.0
+### Features
+1. Content Page (Community Page) includes a filter feature button at the top of the screen.
+2. Filter Button prompts a pop-up (Filter Modal) that displays a set of tags for filtering the articles.
+3. Users are able to select the tags of their choosing to be displayed in the input field above the tag options.
+4. Search Button (that looks the same as the larger Filter Button) within the Filter Modal that displays the Filtered Articles (articles that associate with the chosen tags).
+5. Login Page includes a check for validity of email and password formatting with a Login Error popup.
+6. Admin Profile has been created.
+7. Authorize Vendor Button has been created to be verified by Admin on Admin Profile.
+8. Author names are clickable and lead to a general author bio page, currently not displaying specific author content.
+9. Like Button functionality is implemented with the newly implemented redux state management.
+10. Articles on the Content Page are displayed via Webview pulling up the article content when the thumbnail image is pressed on the Content Page.
+### Bug Fixes
+1. Articles display their respective content using webview now instead of all articles displaying the first article’s content when pressed.
+### Known Issues
+1. MasonryList usage is causing a bug, and its implementation is only visible when there is originally a FlatList in its place and once pulled from master, it can be changed to MasonryList to be displayed correctly on the app.
+2. Signup Page displays an error for signups that do not include input in the optional fields, even though it should go through as a valid signup.
+
+
 ## Version 0.2.0
 ### Features
 1. Home page is now the new Content Page that contains article components.
@@ -10,7 +29,7 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 4. Each article has a like button that is functional.
 5. Content Page contains a COMMUNITY header.
 6. Content Page contains a navigation bar with the home, events, and search buttons that navigate to the Home Page (Content Page) and likes, shop, and profile buttons that navigate to the Signup Page.
-8. Author title exists for the content page (currently one for all of the articles).
+7. Author title exists for the content page (currently one for all of the articles).
 ### Bug Fixes
 1. N/A
 ### Known Issues
