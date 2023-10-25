@@ -1,19 +1,19 @@
 // This is example code to hit the server endpoint to access the posts in JSON format.
 
-import React, { useState, useEffect} from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button, View, StyleSheet, Text, Image, Pressable } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Button, View, StyleSheet, Text, Image, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import CommunityScreen from './Screens/ContentPage';
-import LoginScreen from './Screens/LoginScreen';
-import SignUpScreen from './Screens/SignUpScreen';
-import MY_IP_ADDRESS from './environment_variables.mjs';
-import { Provider, useSelector, useDispatch } from 'react-redux';
-import { store } from './redux/store';
-import Article from "./components/Article";
-import ArticleContentScreen from './Screens/ArticleContent';
-import AuthorNameScreen from './Screens/AuthorNameScreen';
+import CommunityScreen from "./Screens/ContentPage";
+import LoginScreen from "./Screens/LoginScreen";
+import SignUpScreen from "./Screens/SignUpScreen";
+import MY_IP_ADDRESS from "./environment_variables.mjs";
+import { Provider, useSelector, useDispatch } from "react-redux";
+import { store } from "./redux/store";
+import ArticleContentScreen from "./Screens/ArticleContent";
+import AuthorNameScreen from "./Screens/AuthorNameScreen";
+import SavedArticles from "./Screens/SavedArticles";
 
 const LikeButton = () => {
   //set button to red or black
@@ -22,18 +22,20 @@ const LikeButton = () => {
   const [count, setCount] = useState(1);
 
   //get likes from endpoint
-  const [ip, setIp] = useState('');
+  const [ip, setIp] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://" + MY_IP_ADDRESS +":5050/posts/6434998aac3580d94d2d9858");
+        const response = await fetch(
+          "http://" + MY_IP_ADDRESS + ":5050/posts/6434998aac3580d94d2d9858"
+        );
         // console.log(response);
         const data = await response.json();
         setCount(data.likes);
         setIp(data.likes);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -41,15 +43,17 @@ const LikeButton = () => {
   }, []);
 
   return (
-    <Pressable onPress={() => setLiked((isLiked) => !isLiked)} style={styles.likes}>
+    <Pressable
+      onPress={() => setLiked((isLiked) => !isLiked)}
+      style={styles.likes}
+    >
       <MaterialCommunityIcons
         name={liked ? "heart" : "heart-outline"}
         size={32}
         color={liked ? "red" : "black"}
       />
-      <Text>{liked ? (count + 1) : count}</Text>
+      <Text>{liked ? count + 1 : count}</Text>
     </Pressable>
-    
   );
 };
 //need to keep track of the loaded article content with global var
@@ -57,12 +61,11 @@ var contents = " ";
 var articleTitle = " ";
 
 const ArticleButton = () => {
-  
   const [showText, setShowText] = useState(false);
-  
+
   // console.log("contents init: " + contents + ";");
 
-  const [ip, setIp] = useState('');
+  const [ip, setIp] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,7 +73,9 @@ const ArticleButton = () => {
         //"http://<your IP here>:5050/posts/<objectID>"
         //check IP every time u start
         //objID can be found on cloud.mongodb.com, look in gc for login
-        const response = await fetch("http://" + MY_IP_ADDRESS + ":5050/posts/6434998aac3580d94d2d9858");
+        const response = await fetch(
+          "http://" + MY_IP_ADDRESS + ":5050/posts/6434998aac3580d94d2d9858"
+        );
         const data = await response.json();
         setIp(data.content);
 
@@ -81,7 +86,7 @@ const ArticleButton = () => {
         articleTitle = data.title;
         // console.log("has contents: " + contents + ";");
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -90,31 +95,33 @@ const ArticleButton = () => {
 
   return (
     <View>
-      <Button title="Show Article" onPress={() => setShowText(!showText)}/>
+      <Button title="Show Article" onPress={() => setShowText(!showText)} />
       {showText ? <Text>{contents}</Text> : null}
     </View>
   );
 };
 
 const Stack = createNativeStackNavigator();
-const App = (navigation={navigation}) => {
+const App = (navigation = { navigation }) => {
   console.log("found local ip @", MY_IP_ADDRESS);
   return (
     <Provider store={store}>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log In">
-        <Stack.Screen name="Log In" component={LoginScreen} />
-        <Stack.Screen name="Sign Up" component={SignUpScreen} />
-        <Stack.Screen name="Community Screen" component={CommunityScreen} />
-        <Stack.Screen name="Article Content" component={ArticleContentScreen} />
-        <Stack.Screen name="Author" component={AuthorNameScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Log In">
+          <Stack.Screen name="Log In" component={LoginScreen} />
+          <Stack.Screen name="Sign Up" component={SignUpScreen} />
+          <Stack.Screen name="Community Screen" component={CommunityScreen} />
+          <Stack.Screen
+            name="Article Content"
+            component={ArticleContentScreen}
+          />
+          <Stack.Screen name="Author" component={AuthorNameScreen} />
+          <Stack.Screen name="Saved Articles" component={SavedArticles} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
-    
   );
-
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -129,23 +136,22 @@ const styles = StyleSheet.create({
   logo: {
     width: 66,
     height: 58,
-  }, 
+  },
   likes: {
-    flexDirection: 'row',
-    paddingTop: 1
+    flexDirection: "row",
+    paddingTop: 1,
   },
   button: {
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 4,
-    backgroundColor: 'oldlace',
-    alignSelf: 'flex-start',
-    marginHorizontal: '1%',
+    backgroundColor: "oldlace",
+    alignSelf: "flex-start",
+    marginHorizontal: "1%",
     marginBottom: 6,
-    minWidth: '48%',
-    textAlign: 'center',
+    minWidth: "48%",
+    textAlign: "center",
   },
 });
-
 
 export default App;
