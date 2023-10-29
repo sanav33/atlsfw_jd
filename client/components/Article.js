@@ -8,7 +8,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthorNameScreen from '../Screens/AuthorNameScreen'; // Import the AuthorNameScreen component
 import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
-import ArticleContent from '../Screens/ArticleContent';
 import { useNavigation } from '@react-navigation/native';
 
 const Article = (props) => {

@@ -10,10 +10,10 @@ PORT=5050
 URL="http://${IP_ADDRESS}:${PORT}" # Replace '/endpoint' with the correct endpoint path if needed
 
 # Send POST request
-curl -X POST \
-     -H "Content-Type: application/json" \
-     -d '{ "hashed_email": "testCat8", "hashed_password": "tested", "encrypted_email": "catTest", "first_name": "cat", "last_name": "x", "account_type": 3, "username": "catUser", "birthday": "aha", "gender": "who knows", "subscribed_to_news": false }' \
-     $URL/signup
+# curl -X POST \
+#      -H "Content-Type: application/json" \
+#      -d '{ "hashed_email": "testCat8", "hashed_password": "tested", "encrypted_email": "catTest", "first_name": "cat", "last_name": "x", "account_type": 3, "username": "catUser", "birthday": "aha", "gender": "who knows", "subscribed_to_news": false }' \
+#      $URL/signup
 
 # curl -X POST \
 #      -H "Content-Type: application/json" \
@@ -21,7 +21,7 @@ curl -X POST \
 #      $URL
 
 # Send GET request
-# curl -X POST \
-#      -H "Content-Type: application/json" \
-#      -d '{ "liked_articles": ["6510a9f588a3b446139ff5ea"] }' \
-#      "$URL/posts/64f20d6e41ccc9b6b4c8af65/6510a9f588a3b446139ff5ea/?like=-1"
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -d '{ "saved_articles": [] }' \
+     "$URL/posts/64f20d6e41ccc9b6b4c8af65/65288ad91e03706195ddf437/?save=-1"
