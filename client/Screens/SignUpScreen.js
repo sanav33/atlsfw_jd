@@ -4,6 +4,7 @@ import axios from 'axios';
 import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { isValidPassword, isValidEmail } from '../utils/format.mjs';
+import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
 const SignUpScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -20,6 +21,7 @@ const SignUpScreen = ({ navigation }) => {
     try {
       const hashed_email = await hashString(email);
       const hashed_password = await hashString(password);
+      const encrypted_email = encryptWithPublicKey(email);
       
       if (!isValidEmail(email)) {
         Alert.alert('Error', "Email format is invalid", [{ text: 'Try Again' }]);
@@ -28,17 +30,16 @@ const SignUpScreen = ({ navigation }) => {
       } else {
         // Send the user data to your backend
         let userData = {
+          hashed_email: hashed_email,
+          hashed_password: hashed_password,
+          encrypted_email: encrypted_email,
           first_name: firstName,
           last_name: lastName,
-          username,
-          hashed_email,
-          hashed_password,
+          username: username,
+          gender: gender,
           phone_number: phoneNum,
-          //just to keep the format consistent, might as well do birthday: birthday, gender: gender
-          birthday,
-          gender,
           subscribed_to_news: agreeSubscribe,
-          //encrypted email
+          birthday: birthday,
         };
 
         const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/signup', userData);
@@ -53,8 +54,8 @@ const SignUpScreen = ({ navigation }) => {
       }
       
     } catch (error) {
-      console.error('Error during sign up:', error.response.data.message);
-      Alert.alert('Sign Up Error', error.response.data.message, [{ text: 'Try Again' }]);
+      console.error('Error during sign up:', error.response?.data?.message);
+      Alert.alert('Sign Up Error', error.response?.data?.message, [{ text: 'Try Again' }]);
     }
   };
 
