@@ -41,7 +41,8 @@ router.post("/signup", async (req, res) => {
         phone_number: phone_number,
         subscribed_to_news: subscribed_to_news,
         birthday: birthday,
-        liked_articles: []
+        liked_articles: [],
+        saved_articles: []
     });
 
     const userInfo = await users_db.collection("customer_info").findOne({hashed_email: hashed_email});
