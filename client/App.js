@@ -14,6 +14,7 @@ import { store } from './redux/store';
 import Article from "./components/Article";
 import ArticleContentScreen from './Screens/ArticleContent';
 import AuthorNameScreen from './Screens/AuthorNameScreen';
+import UserProfileScreen from './Screens/UserProfilePage';
 
 const LikeButton = () => {
   //set button to red or black
@@ -102,7 +103,8 @@ const App = (navigation={navigation}) => {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log In">
+      <Stack.Navigator initialRouteName="User Profile">
+        <Stack.Screen name="User Profile" component={UserProfileScreen}/>
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
         <Stack.Screen name="Community Screen" component={CommunityScreen} />
