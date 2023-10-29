@@ -39,7 +39,7 @@ const LoginScreen = ({navigation}) => {
 
       // console.log(response.data);
       const data = response.data;
-      console.log("HERE",data.user.account_type);
+      console.log("HERE",data.account_type);
       // console.log(data.user.liked_articles);
 
       if (data.success) {
@@ -53,7 +53,7 @@ const LoginScreen = ({navigation}) => {
           //get previously liked articles list
           dispatch(get_list(data.user.liked_articles));
           //set account type
-          dispatch(set_acct_type(data.user.account_type));
+          dispatch(set_acct_type(data.account_type));
 
           console.log(account_type);
 
