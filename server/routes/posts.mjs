@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/tags", async (req, res) => {
   res.status(200).json(tagsList);
-})
+});
 
 // Get a list of 50 posts
 router.get("/posts", async (req, res) => {
@@ -33,21 +33,34 @@ router.get("/posts", async (req, res) => {
   }
 });
 
-// router.get("/posts/:id", async (req, res) => {
-//   let collection = await posts_db.collection("articles");
-//   const query = { _id: new ObjectId(req.params.id) };
-//   console.log(req.params.id  + " hi stupid");
-//   const options = {
-//     // Include all fields in the returned document
-//     projection: { _id: 1, author_id: 1, author_name: 1, like_count: 1, author_pfp_link: 1, article_title: 1, article_preview_image: 1, article_link: 1 },
-//   };
-//   let result = await collection.findOne(query, options);
-//   console.log(result);
-//   if (!result) res.send("Not found").status(404);
-//   else {
-//     res.redirect(result.article_link);
-//   };
-// })
+router.get("/posts/top_liked", async (req, res) => {
+  try {
+    const collection = posts_db.collection('articles');
+    const top_liked = await collection.find({})
+      .sort({ like_count: -1 }) // Sorting in descending order
+      .limit(3) // Limiting to 3 documents
+      .toArray();
+    res.status(200).json(top_liked);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/posts/top_saved", async (req, res) => {
+  console.log("bro");
+  try {
+    const collection = posts_db.collection('articles');
+    const top_saved = await collection.find({})
+      .sort({ save_count: -1 }) // Sorting in descending order
+      .limit(3) // Limiting to 3 documents
+      .toArray();
+    res.status(200).json(top_saved);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 router.post('/posts/:user_id/:article_id/', async (req, res) => {
   console.log("trying to like/dislike an article");
