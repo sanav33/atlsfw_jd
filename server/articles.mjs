@@ -119,6 +119,18 @@ export const dummy_data = {
                 "like_count": 6,
                 "tags": ["eco-friendly", "upcycled-fashion", "thrifting", "workforce"]
             }
+        },
+        {
+            "article": {
+                "article_title": "How to Live Sustainably",
+                "article_preview_image": "https://info.sundanceusa.com/hubfs/Sustainability%20Sundance%20USA.jpg",
+                "article_link": "https://www.inspirecleanenergy.com/blog/sustainable-living/how-to-live-sustainably",
+                "author_id": 4827,
+                "author_name": "Author 9",
+                "author_pfp_link": "https://iberiabioenergy.com/wp-content/uploads/bg-sustainability-750x750.png",
+                "like_count": 90,
+                "tags": ["eco-friendly", "upcycled-fashion", "thrifting", "workforce"]
+            }
         }
     ]
 }
