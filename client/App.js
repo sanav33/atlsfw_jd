@@ -102,8 +102,15 @@ const App = (navigation={navigation}) => {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log In">
-        <Stack.Screen name="Log In" component={LoginScreen} />
+      <Stack.Navigator
+        initialRouteName="Log In"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#02833D',
+          },
+          headerTintColor: 'white',
+        }}>
+        <Stack.Screen name="Log In" component={LoginScreen}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
         <Stack.Screen name="Community Screen" component={CommunityScreen} />
         <Stack.Screen name="Article Content" component={ArticleContentScreen} />
