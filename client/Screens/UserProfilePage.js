@@ -5,6 +5,7 @@ import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 
 const UserProfileScreen = ({ navigation }) => {
+  const [editMode, setEditMode] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [savedPath, setSavedPath] = useState(null); // Move this inside the component
 
@@ -25,7 +26,13 @@ const UserProfileScreen = ({ navigation }) => {
       throw e;
     }
   };
+  const switchMode = () => {
+    setEditMode(true);
+  }
 
+  const saveChanges = () => {
+    setEditMode(false)
+  }
   const pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') {
@@ -49,8 +56,12 @@ const UserProfileScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>User Profile Page</Text>
-      <Button title="Pick an image from gallery" onPress={pickImage} />
+      {editMode && <Button title="Pick an image from gallery" onPress={pickImage} />}
       {savedPath && <Image source={{ uri: savedPath }} style={{ width: 200, height: 200 }} />}
+      {!editMode ? 
+        <Button title="Edit Profile" onPress={switchMode} /> :
+        <Button title="Save Changes" onPress={saveChanges} />
+      }
     </View>
   );
 };
