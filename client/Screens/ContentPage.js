@@ -136,7 +136,7 @@ const CommunityScreen = () => {
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
                       <TextInput value={inputTag.join(', ')} placeholder="Search filters..." style={{ flex: 1, borderColor: 'gray', borderWidth: 1, padding: 5, borderRadius: 5 }} editable={false} />
                       <TouchableOpacity onPress={() => filterArticles() }style={{ marginLeft: 10 }} >
-                          <Icon name="filter" size={20} color="black" />
+                          <Icon name="search" size={20} color="black" />
                       </TouchableOpacity>
                   </View>
                   {/* Container for filter buttons */}
