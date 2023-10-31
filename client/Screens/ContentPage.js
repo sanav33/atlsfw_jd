@@ -147,10 +147,10 @@ const CommunityScreen = () => {
                               onPress={() => handleTagPress(tag)}
                               style={[
                                   styles.tagButton,
-                                  tags.includes(tag) && styles.tagButtonSelected
+                                  inputTag.includes(tag) && styles.tagButtonSelected
                               ]}
                           >
-                              <Text style={tags.includes(tag) ? styles.tagTextSelected : styles.tagText}>{tag}</Text>
+                              <Text style={inputTag.includes(tag) ? styles.tagTextSelected : styles.tagText}>{tag}</Text>
                           </TouchableOpacity>
                       ))}
                   </View>
