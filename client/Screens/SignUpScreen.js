@@ -138,7 +138,7 @@ const SignUpScreen = ({ navigation }) => {
         <Button
           title="Log in here!"
           color="green"
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('Log In')}
         />
       </View>
     </View>
