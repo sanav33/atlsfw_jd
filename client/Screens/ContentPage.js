@@ -177,8 +177,8 @@ const CommunityScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Signup')}>
-            <Icon name="heart" size={20} color="black" alignItems="center"/>
-            <Text>Likes</Text>
+            <Icon name="bookmark" size={20} color="black" alignItems="center"/>
+            <Text>Saved</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Signup')}>
