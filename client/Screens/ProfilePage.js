@@ -8,14 +8,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import VendorProfile from '../components/profile_pages/VendorProfile';
 import UserProfile from '../components/profile_pages/UserProfile';
 import AdminProfile from '../components/profile_pages/AdminProfile';
+import LoginScreen from './LoginScreen';
 
 const ProfilePage = ({ navigation }) => {
 
+    const isLogged = useSelector((store) => store.isLogged.isLogged);
     const account_type = useSelector((store) => store.acct_type.acct_type);
     // const account_type = 3; //hardcode to test
     let content;
-
-    if (account_type === 1) {
+    if (!isLogged) {
+      // login screen will render if user is not logged in
+      content = <LoginScreen/>;
+    } else if (account_type === 1) {
       content = <AdminProfile/>;
     } else if (account_type === 2) {
       content = <VendorProfile/>;
