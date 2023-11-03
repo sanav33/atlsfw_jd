@@ -5,8 +5,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const NavBar = () => {
     const navigation = useNavigation();
+    // To add new navigation route:
+    // onPress={() => navigation.navigate('new_screen_name_here')}
+    // new screen name MUST match Stack.Screen name prop in App.js
+
   return (
         <View>
+        {/* Nav Bar */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'lightgray', padding: 10 }}>
           {/* Navigation Buttons */}
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Community')}>
@@ -39,12 +44,15 @@ const NavBar = () => {
               <Text>Profile</Text>
           </TouchableOpacity>
         </View>
+
+        {/* LOGO */}
         <View style={{ alignItems: 'center', paddingBottom: 20 }}>
           <Image
             source={require('./ATLSFWlogo.jpg')}
             style={{ width: 150, height: 50, resizeMode: 'contain' }}
           />
         </View>
+        
         </View>
   );
 }

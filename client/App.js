@@ -39,6 +39,7 @@ const App = () => {
         <Stack.Screen name="Community" component={CommunityScreen} />
         <Stack.Screen name="Author" component={AuthorNameScreen} />
         <Stack.Screen name="Profile" component={ProfilePage} />
+        {/* add saved screen and future screens */}
       </Stack.Navigator>
       <NavBar/>
     </NavigationContainer>
