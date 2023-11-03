@@ -58,7 +58,7 @@ const LoginScreen = ({navigation}) => {
           console.log(account_type);
 
         // Handle success (e.g., navigate to another screen)
-          navigation.navigate('Community Screen');
+          navigation.navigate('Community');
       } else {
           console.log("well what about this");
           console.log(data.message);

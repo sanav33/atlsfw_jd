@@ -8,25 +8,20 @@ import Article from '../components/Article';
 import axios from 'axios';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 import ProfilePage from './ProfilePage';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 // Main component
-const CommunityScreen = () => {
-    const [currentScreen, setCurrentScreen] = useState('Community');
+const CommunityScreen = ({navigation}) => {
+
     const [isSavePressed, setSavePressed] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false); // For filter modal visibility
     const [tags, setTags] = useState([]);  // State for the tags
     const [inputTag, setInputTag] = useState([]); // For input field
     const [refreshKey, setRefreshKey] = useState(0);
 
-    const navigateToPage = (pageName) => {
-        setCurrentScreen(pageName);
-    };
     const handleSavePress = () => {
       // Toggle the state when the Save button is pressed
       setSavePressed(!isSavePressed);
-    };
-    const navigateToAuthorPage = () => {
-      setCurrentScreen('AuthorName');
     };
 
     const [articleData, setArticleData] = useState();
@@ -81,40 +76,30 @@ const CommunityScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Main Content */}
-      {currentScreen === 'Community' ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
-          {/* Filter Icon */}
-          <TouchableOpacity onPress={() => setShowFilterModal(true)} style={{ position: 'absolute', top: 10, right: 10, zIndex: 10 }}>
-            <Icon name="filter" size={30} color="black" />
-          </TouchableOpacity>
+        {/* Filter Icon */}
+        <TouchableOpacity onPress={() => setShowFilterModal(true)} style={{ position: 'absolute', top: 10, right: 10, zIndex: 10 }}>
+          <Icon name="filter" size={30} color="black" />
+        </TouchableOpacity>
 
-          <FlatList
-            numColumns={2}
-            data={articleData}
-            keyExtractor={item => item["_id"]}
-            renderItem={({ item, index}) => (
-                <Article article={{
-                  title: item["article_title"], 
-                  image:item["article_preview_image"], 
-                  author:item["author_name"], 
-                  likes:item["like_count"],
-                  article_id:item["_id"],
-                  article_link: item["article_link"],
-                }}></Article>
-            )}
-          />
-        </View>
+        <FlatList
+          numColumns={2}
+          data={articleData}
+          keyExtractor={item => item["_id"]}
+          renderItem={({ item, index}) => (
+              <Article article={{
+                title: item["article_title"], 
+                image:item["article_preview_image"], 
+                author:item["author_name"], 
+                likes:item["like_count"],
+                article_id:item["_id"],
+                article_link: item["article_link"],
+              }}></Article>
+          )}
+        />
+      </View>
         
-      ) : currentScreen === 'Signup' ? (
-        <SignupScreen />
-      ) : currentScreen === 'Profile' ? (
-        <ProfilePage />
-      ) : currentScreen === 'AuthorName' ? (
-        <AuthorNameScreen />
-      ) : null}
-
       {/* Filter Modal */}
       <Modal
           animationType="slide"
@@ -158,47 +143,6 @@ const CommunityScreen = () => {
           </View>
       </Modal>
 
-      {/* Navigation Bar */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'lightgray', padding: 10 }}>
-        {/* Navigation Buttons */}
-        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Community')}>
-            <Icon name="home" size={20} color="black" alignItems="center"/>
-            <Text>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Community')}>
-            <Icon name="calendar" size={20} color="black" alignItems="center"/>
-            <Text>Events</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Community')}>
-            <Icon name="search" size={20} color="black" alignItems="center"/>
-            <Text>Search</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Signup')}>
-            <Icon name="bookmark" size={20} color="black" alignItems="center"/>
-            <Text>Saved</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Signup')}>
-            <Icon name="shopping-cart" size={20} color="black" alignItems="center"/>
-            <Text>Shop</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigateToPage('Profile')}>
-            <Icon name="home" size={20} color="black" alignItems="center"/>
-            <Text>Profile</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Organization Logo */}
-      <View style={{ alignItems: 'center', paddingBottom: 20 }}>
-        <Image
-          source={require('./ATLSFWlogo.jpg')}
-          style={{ width: 150, height: 50, resizeMode: 'contain' }}
-        />
-      </View>
     </View>
   );
 };
