@@ -1,20 +1,53 @@
 import React, { useState } from 'react';
 import { Button, Text, TextInput, View, StyleSheet, Alert, Switch } from 'react-native';
+import hashString from '../../utils/hashingUtils.mjs';
+import MY_IP_ADDRESS from '../../environment_variables.mjs';
 
 const AdminProfile = () => {
+  const [email, setEmail] = useState('');
+
+  const handleAuth = async () => {
+    try {
+
+      const hashed_email = await hashString(email);
+
+      // Send email to backend
+      console.log("handling auth");
+      console.log(hashed_email);
+      console.log('http://' + MY_IP_ADDRESS + ':5050/vendor');
+      const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/vendor', {
+          hashed_email
+        });
+      console.log("response", response);
+
+
+
+    } catch (error) {
+      console.error('Error during authorization:', error.response.data.message);
+      Alert.alert('Authorization Error', error.response.data.message,
+        [{text:'Try Again',
+          cancelable: true,
+          },
+        ],
+      );
+    }
+  };
     return (
     <View style={styles.container}>
         <Text style={styles.text}>Admin Profile</Text>
         <TextInput
-            placeholder="Do later*"
+            placeholder="Vendor Email*"
             style={styles.input}
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
         />
 
         <View style={styles.buttonContainer}>
         <Button
-            title="Insert here"
+            title="Authorize vendor"
             color="black"
+            onPress={handleAuth}
         />
         </View>
     </View>

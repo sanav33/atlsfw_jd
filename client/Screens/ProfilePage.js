@@ -11,8 +11,8 @@ import AdminProfile from '../components/profile_pages/AdminProfile';
 
 const ProfilePage = ({ navigation }) => {
 
-    const account_type = useSelector((store) => store.acct_type.acct_type);
-    // const account_type = 3; //hardcode to test
+    // const account_type = useSelector((store) => store.acct_type.acct_type);
+    const account_type = 1; //hardcode to test
     let content;
 
     if (account_type === 1) {
