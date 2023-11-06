@@ -12,9 +12,9 @@ export const unlike = (data) => {
     };
   };
 
-export const get_list = (data) => {
+export const get_like_list = (data) => {
   return {
-    type: 'GET_LIST',
+    type: 'GET_LIKE_LIST',
     payload: data,
   };
 };

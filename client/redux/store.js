@@ -3,6 +3,7 @@ import loginReducer from './reducers/loginReducer';
 import likeReducer from './reducers/likeReducer';
 import idReducer from './reducers/idReducer';
 import accountReducer from './reducers/accountReducer';
+import saveReducer from './reducers/saveReducer';
 
 // HOW REDUX STATE WORKS
 // 
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
     liked_articles: likeReducer,
     user_id: idReducer,
     acct_type: accountReducer,
+    saved_articles: saveReducer,
     // add more reducers here
 });
 

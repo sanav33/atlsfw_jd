@@ -7,7 +7,8 @@ import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/loginAction';
 import { setID } from '../redux/actions/idAction';
-import { get_list } from '../redux/actions/likeAction';
+import { get_like_list } from '../redux/actions/likeAction';
+import { get_save_list } from '../redux/actions/saveAction';
 import { set_acct_type } from '../redux/actions/accountAction';
 
 const LoginScreen = ({navigation}) => {
@@ -37,21 +38,34 @@ const LoginScreen = ({navigation}) => {
           hashed_password,
         });
 
-      // console.log(response.data);
+      // console.log("response", response);
       const data = response.data;
-      console.log("HERE",data.account_type);
-      // console.log(data.user.liked_articles);
+      console.log(data);
 
       if (data.success) {
           console.log("successfully logged in");
-
+          console.log("HERE",data.account_type);
+          console.log(data.user.liked_articles);
+          console.log(data.user.saved_articles);
+ 
           // REDUX STATES
           //send login action to store
           dispatch(login());
           //set user ID to store
           dispatch(setID(data.user._id));
           //get previously liked articles list
-          dispatch(get_list(data.user.liked_articles));
+          console.log("bro");
+
+          if (data.user.liked_articles != null) {
+            console.log("breh");
+            dispatch(get_like_list(data.user.liked_articles));
+            console.log("liked state dispatched");
+          }
+          console.log("helo");
+          if (data.user.saved_articles != null) {
+            dispatch(get_save_list(data.user.saved_articles));
+            console.log("saved state dispatched");
+          }
           //set account type
           dispatch(set_acct_type(data.account_type));
 
@@ -60,10 +74,10 @@ const LoginScreen = ({navigation}) => {
         // Handle success (e.g., navigate to another screen)
           navigation.navigate('Community');
       } else {
-          console.log("well what about this");
-          console.log(data.message);
-        // Handle error (e.g., display an error message)
-        }
+        console.log("well what about this");
+        console.log(data.message);
+      // Handle error (e.g., display an error message)
+      }
     } catch (error) {
       console.error('Error during login:', error.response.data.message);
         Alert.alert('Login Error', error.response.data.message,

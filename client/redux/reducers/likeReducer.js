@@ -10,13 +10,13 @@ export default (state = initialState, action) => {
                 liked_articles: [...(new Set([...state.liked_articles, action.payload]))],
                 // liked_articles: [...state.liked_articles, action.payload],
               };
-        case 'DISLIKE':
+        case 'UNLIKE':
             const filtered = state.liked_articles.filter(article => article.id != action.payload);
             return { 
                 ...state, 
                 liked_articles: filtered,
             };
-        case 'GET_LIST':
+        case 'GET_LIKE_LIST':
             return {
                 ...state,
                 liked_articles: action.payload,
