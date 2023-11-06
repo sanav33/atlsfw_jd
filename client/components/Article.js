@@ -12,7 +12,9 @@ import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { useNavigation } from '@react-navigation/native';
 
 const Article = (props) => {
-	const { image, title, author, likes, article_id, article_link} = props.article;
+	const { image, title, author, likes, saves, article_id, article_link} = props.article;
+	const account_type = useSelector((store) => store.acct_type.acct_type);
+	// account_type = 1; //hardcode here to test save count text
 
 	const liked_articles_state = useSelector((store) => store.liked_articles.liked_articles);
 	const saved_articles_state = useSelector((store) => store.saved_articles.saved_articles);
@@ -81,7 +83,6 @@ const Article = (props) => {
 			liked_articles
 		});
 
-		console.log(response.data);
 		const data = response.data;
 
 		if (data.success) {
@@ -99,7 +100,6 @@ const Article = (props) => {
 			liked_articles
 		});
 
-		console.log(response.data);
 		const data = response.data;
 
 		if (data.success) {
@@ -152,7 +152,6 @@ const Article = (props) => {
 			saved_articles
 		});
 
-		console.log(response.data);
 		const data = response.data;
 
 		if (data.success) {
@@ -170,7 +169,6 @@ const Article = (props) => {
 			saved_articles
 		});
 
-		console.log(response.data);
 		const data = response.data;
 
 		if (data.success) {
@@ -206,8 +204,9 @@ const Article = (props) => {
       				<Text>{liked ? likes + 1 : likes}</Text>
     			</Pressable>
 
-          		<TouchableOpacity onPress={() => handleSave()} style={styles.saveButton}>
+          		<TouchableOpacity onPress={() => handleSave()} style={[styles.saveButton, account_type == 1 && styles.saveText]}>
             		<Icon name={isSavePressed ? 'bookmark' : 'bookmark-o'} size={30} color={isSavePressed ? 'blue' : 'black'} />
+					{account_type === 1 && <Text>{saves}</Text>}
          		</TouchableOpacity>
 			</View>
 		</View>
@@ -239,10 +238,13 @@ const styles = StyleSheet.create({
 	},
 	saveButton: {
 		position: "absolute",
-		bottom: 22,
+		bottom: 20,
 		right: 48,
 		padding: 5,
 		borderRadius: 50,
+	},
+	saveText: {
+		bottom: 2,
 	},
 	authorName: {
 		textDecorationLine: 'underline',
