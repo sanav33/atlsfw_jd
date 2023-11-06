@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Text, TextInput, View, StyleSheet, Alert, Switch } from 'react-native';
 import hashString from '../../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../../environment_variables.mjs';
+import axios from 'axios';
+
 
 const AdminProfile = () => {
   const [email, setEmail] = useState('');
@@ -13,8 +15,6 @@ const AdminProfile = () => {
 
       // Send email to backend
       console.log("handling auth");
-      console.log(hashed_email);
-      console.log('http://' + MY_IP_ADDRESS + ':5050/vendor');
       const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/vendor', {
           hashed_email
         });

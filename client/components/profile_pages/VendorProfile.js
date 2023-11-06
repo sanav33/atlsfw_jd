@@ -24,9 +24,9 @@ const VendorProfile = () => {
 
     return (
     <View style={styles.container}>
-        <Text style={styles.text}>Authorized Vendor Email</Text>
+        <Text style={styles.text}>Vendor Profile Page</Text>
         <TextInput
-            placeholder="Email*"
+            placeholder="To do*"
             value={email}
             onChangeText={setEmail}
             style={styles.input}
