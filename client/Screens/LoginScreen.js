@@ -44,32 +44,24 @@ const LoginScreen = ({navigation}) => {
 
       if (data.success) {
           console.log("successfully logged in");
-          console.log("HERE",data.account_type);
-          console.log(data.user.liked_articles);
-          console.log(data.user.saved_articles);
  
-          // REDUX STATES
+          // SET REDUX STATES
+
           //send login action to store
           dispatch(login());
           //set user ID to store
           dispatch(setID(data.user._id));
-          //get previously liked articles list
-          console.log("bro");
 
+          // get previously liked and saved articles list if it exists
           if (data.user.liked_articles != null) {
-            console.log("breh");
             dispatch(get_like_list(data.user.liked_articles));
-            console.log("liked state dispatched");
           }
-          console.log("helo");
           if (data.user.saved_articles != null) {
             dispatch(get_save_list(data.user.saved_articles));
-            console.log("saved state dispatched");
           }
+
           //set account type
           dispatch(set_acct_type(data.account_type));
-
-          console.log(account_type);
 
         // Handle success (e.g., navigate to another screen)
           navigation.navigate('Community');
