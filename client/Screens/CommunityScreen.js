@@ -83,7 +83,7 @@ const CommunityScreen = ({navigation}) => {
           <Icon name="filter" size={30} color="black" />
         </TouchableOpacity>
 
-        <FlatList
+        <MasonryList
           numColumns={2}
           data={articleData}
           keyExtractor={item => item["_id"]}
@@ -93,6 +93,7 @@ const CommunityScreen = ({navigation}) => {
                 image:item["article_preview_image"], 
                 author:item["author_name"], 
                 likes:item["like_count"],
+                saves:item["save_count"],
                 article_id:item["_id"],
                 article_link: item["article_link"],
               }}></Article>
