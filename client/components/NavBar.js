@@ -9,6 +9,9 @@ const NavBar = () => {
     // onPress={() => navigation.navigate('new_screen_name_here')}
     // new screen name MUST match Stack.Screen name prop in App.js
 
+    // Profile Page conditional rendering is all handled within its own file
+    // bc you cannot use .navigate inside conditionals (see React Rule of Hooks)
+
   return (
         <View>
         {/* Nav Bar */}
