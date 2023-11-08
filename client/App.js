@@ -35,6 +35,7 @@ const App = () => {
           headerTintColor: 'white',
         }}>
         <Stack.Screen name="Log In" component={LoginScreen}/>
+        <Stack.Screen name="Article Content" component={ArticleContentScreen}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen} />
         <Stack.Screen name="Community" component={CommunityScreen} />
         <Stack.Screen name="Author" component={AuthorNameScreen} />
