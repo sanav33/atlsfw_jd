@@ -3,6 +3,7 @@ import { AntDesign } from "@expo/vector-icons";
 import {useState, useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { like, unlike } from "../redux/actions/likeAction";
+import { save, unsave } from "../redux/actions/saveAction";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthorNameScreen from '../Screens/AuthorNameScreen'; // Import the AuthorNameScreen component
@@ -13,18 +14,15 @@ import { useNavigation } from '@react-navigation/native';
 const Article = (props) => {
 	const { image, title, author, likes, article_id, article_link} = props.article;
 
-	const [currentScreen, setCurrentScreen] = useState('Community');
-
 	const liked_articles_state = useSelector((store) => store.liked_articles.liked_articles);
+	const saved_articles_state = useSelector((store) => store.saved_articles.saved_articles);
 
   	const navigation = useNavigation();
 
 	const [ratio, setRatio] = useState(1);
-	const [isSavePressed, setSavePressed] = useState(false);
+	const [isSavePressed, setSavePressed] = useState(saved_articles_state.includes(article_id)); //replace with .includes
 	const [liked, setLiked] = useState(liked_articles_state.includes(article_id));
 	const [count, setCount] = useState(1);
-
-	const LikeButton = () => {};
 
   const navigateToContent = (link) => {
   	navigation.navigate('Article Content', { link });
@@ -51,7 +49,7 @@ const Article = (props) => {
 		setLiked((liked) => !liked);
 
 		//check if logged in 
-		console.log("inside article",isLogged);
+		console.log("inside article, like",isLogged);
 		console.log(user_id);
 
 		if (isLogged) {
@@ -72,8 +70,8 @@ const Article = (props) => {
 				removeFromDB(liked_articles);
 			}
 		} else {
-			//has not been tested yet bc can't get to comm pg without being logged
-			// navigation.navigate('Community Screen');
+			// not logged in, send to login
+			navigation.navigate('Log In');
 		}
 		
 	}
@@ -113,6 +111,77 @@ const Article = (props) => {
 		}
 	}
 
+	// SAVE BUTTON 
+	let saved_articles = [];
+
+	const handleSave = () => {
+		// toggle button state
+		setSavePressed((isSavePressed) => !isSavePressed);
+
+		//check if logged in 
+		console.log("inside article, save",isLogged);
+		console.log(user_id);
+
+		if (isLogged) {
+			if (!isSavePressed) {
+				// create temp list, append new saved article
+				saved_articles = saved_articles_state.slice();
+				saved_articles.push(article_id);
+				saved_articles = [...new Set(saved_articles)];
+
+				// hit BE endpoint
+				saveToDB();
+			} else {
+				// create temp list, remove saved article
+				saved_articles = saved_articles_state.slice();
+				saved_articles.splice(saved_articles.indexOf(article_id), 1)
+
+				// hit BE endpoint
+				unsaveFromDB();
+				console.log("unsaved");
+			}
+		} else {
+			// not logged in, send to login
+			navigation.navigate('Log In');
+		}
+		
+	}
+
+	const saveToDB = async () => {
+		const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/' + 'posts/' + user_id + '/' + article_id + '?save=1', {
+			saved_articles
+		});
+
+		console.log(response.data);
+		const data = response.data;
+
+		if (data.success) {
+			//dispatch save action if article has been added to db
+			dispatch(save(article_id));
+			
+		} else {
+			console.log("well what about this");
+          	console.log(data.message);
+		}
+	}
+
+	const unsaveFromDB = async () => {
+		const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/' + 'posts/' + user_id + '/' + article_id + '?save=-1', {
+			saved_articles
+		});
+
+		console.log(response.data);
+		const data = response.data;
+
+		if (data.success) {
+			//dispatch unsave action if article has been removed from db
+			dispatch(unsave(article_id));
+		} else {
+			console.log("well what about this");
+          	console.log(data.message);
+		}
+	}
+
 	return (
 		<View style={styles.article}>
 			<View>
@@ -137,7 +206,7 @@ const Article = (props) => {
       				<Text>{liked ? likes + 1 : likes}</Text>
     			</Pressable>
 
-          		<TouchableOpacity onPress={() => setSavePressed((isSavePressed) => !isSavePressed)} style={styles.saveButton}>
+          		<TouchableOpacity onPress={() => handleSave()} style={styles.saveButton}>
             		<Icon name={isSavePressed ? 'bookmark' : 'bookmark-o'} size={30} color={isSavePressed ? 'blue' : 'black'} />
          		</TouchableOpacity>
 			</View>
