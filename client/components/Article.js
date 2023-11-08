@@ -72,7 +72,6 @@ const Article = (props) => {
 				removeFromDB(liked_articles);
 			}
 		} else {
-			// not logged in, send to login
 			navigation.navigate('Log In');
 		}
 		

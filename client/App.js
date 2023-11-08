@@ -27,7 +27,7 @@ const App = () => {
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Log In"
+        initialRouteName="Community"
         screenOptions={{
           headerStyle: {
             backgroundColor: '#02833D',
