@@ -24,7 +24,6 @@ const Article = (props) => {
 	const [ratio, setRatio] = useState(1);
 	const [isSavePressed, setSavePressed] = useState(saved_articles_state.includes(article_id)); //replace with .includes
 	const [liked, setLiked] = useState(liked_articles_state.includes(article_id));
-	const [count, setCount] = useState(1);
 
   const navigateToContent = (link) => {
   	navigation.navigate('Article Content', { link });
@@ -140,7 +139,6 @@ const Article = (props) => {
 				console.log("unsaved");
 			}
 		} else {
-			// not logged in, send to login
 			navigation.navigate('Log In');
 		}
 		
