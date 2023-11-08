@@ -13,7 +13,7 @@ import MY_IP_ADDRESS from './environment_variables.mjs';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import { store } from './redux/store';
 import Article from "./components/Article";
-import ArticleContentScreen from './Screens/ArticleContent';
+import ArticleContent from './Screens/ArticleContent';
 import AuthorNameScreen from './Screens/AuthorNameScreen';
 import ProfilePage from './Screens/ProfilePage';
 import NavBar from './components/NavBar';
@@ -40,6 +40,7 @@ const App = () => {
         <Stack.Screen name="Community" component={CommunityScreen} />
         <Stack.Screen name="Author" component={AuthorNameScreen} />
         <Stack.Screen name="Profile" component={ProfilePage} />
+        <Stack.Screen name="Article Content" component={ArticleContent} />
         {/* add saved screen and future screens */}
       </Stack.Navigator>
       <NavBar/>
