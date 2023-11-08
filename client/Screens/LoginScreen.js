@@ -80,7 +80,7 @@ const LoginScreen = ({navigation}) => {
   return (
 
     <View style={styles.container}>
-      <Text style={styles.text}>New here?</Text>
+      <Text style={{...styles.text, paddingBottom: 10}}>Log In</Text>
       <TextInput
         placeholder="Email"
         value={email}
