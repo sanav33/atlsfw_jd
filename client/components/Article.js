@@ -72,8 +72,7 @@ const Article = (props) => {
 				removeFromDB(liked_articles);
 			}
 		} else {
-			//has not been tested yet bc can't get to comm pg without being logged
-			// navigation.navigate('Community Screen');
+			navigation.navigate('Log In');
 		}
 		
 	}

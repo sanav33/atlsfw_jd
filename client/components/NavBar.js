@@ -1,10 +1,10 @@
-import React from 'react';
+// import React from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Button, View, StyleSheet, Text, Image, Pressable, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const NavBar = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
     // To add new navigation route:
     // onPress={() => navigation.navigate('new_screen_name_here')}
     // new screen name MUST match Stack.Screen name prop in App.js

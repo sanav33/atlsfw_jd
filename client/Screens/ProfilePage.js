@@ -12,6 +12,12 @@ import AdminProfile from '../components/profile_pages/AdminProfile';
 const ProfilePage = ({ navigation }) => {
 
     const account_type = useSelector((store) => store.acct_type.acct_type);
+    const isLogged = useSelector((store) => store.isLogged.isLogged);
+
+    if (!isLogged) {
+      navigation.navigate("Log In");
+    }
+
     // const account_type = 3; //hardcode to test
     let content;
 
