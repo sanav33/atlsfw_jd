@@ -86,20 +86,17 @@ router.post('/posts/:user_id/:article_id/', async (req, res) => {
     articles = saved_articles;
     update = { $set: { saved_articles: saved_articles }}
   }
-
-  console.log(arg);
   await users_db.collection("customer_info").updateOne({ _id: new ObjectId(user_id) }, update,
     (err, _) => {
       if (err) {
         return res.status(400).send({ success: false, message: "Article update failed!" });
       }
   });
-
   // Update likes based on the "like" query parameter
   if (req.query.like) {
     let like_count = 0;
-    if (like && (like === 1 || like === -1)) {
-      await posts_db.collection("articles").updateOne({ _id: new ObjectId(article_id) }, { $inc: { like_count: like }}, (err, _) => {
+    if (arg && (arg === 1 || arg === -1)) {
+      await posts_db.collection("articles").updateOne({ _id: new ObjectId(article_id) }, { $inc: { like_count: arg }}, (err, _) => {
         if (err) {
           return res.status(400).send({ success: false, message: "Like action unsuccessful!" });
         }});
