@@ -1,4 +1,4 @@
-// import React from 'react';
+
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Button, View, StyleSheet, Text, Image, Pressable, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -6,10 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const NavBar = () => {
   const navigation = useNavigation();
-    // To add new navigation route:
-    // onPress={() => navigation.navigate('new_screen_name_here')}
-    // new screen name MUST match Stack.Screen name prop in App.js
-
+  // To add new navigation route:
+  // onPress={() => navigation.navigate('new_screen_name_here')}
+  // new screen name MUST match Stack.Screen name prop in App.js
     const isLogged = useSelector((store) => store.isLogged.isLogged);
     const handleProfileClick = () => {
       if (isLogged) {
@@ -39,7 +38,7 @@ const NavBar = () => {
               <Text>Search</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Sign Up')}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Saved Articles')}>
               <Icon name="bookmark" size={20} color="black" alignItems="center"/>
               <Text>Saved</Text>
           </TouchableOpacity>
@@ -61,10 +60,27 @@ const NavBar = () => {
             source={require('./ATLSFWlogo.jpg')}
             style={{ width: 150, height: 50, resizeMode: 'contain' }}
           />
-        </View>
-        
-        </View>
+          <Text>Shop</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={() => navigation.navigate("Profile")}
+        >
+          <Icon name="home" size={20} color="black" alignItems="center" />
+          <Text>Profile</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* LOGO */}
+      <View style={{ alignItems: "center", paddingBottom: 20 }}>
+        <Image
+          source={require("./ATLSFWlogo.jpg")}
+          style={{ width: 150, height: 50, resizeMode: "contain" }}
+        />
+      </View>
+    </View>
   );
-}
+};
 
 export default NavBar;
