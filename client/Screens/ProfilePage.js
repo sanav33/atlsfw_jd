@@ -11,11 +11,6 @@ import AdminProfile from '../components/profile_pages/AdminProfile';
 
 const ProfilePage = ({ navigation }) => {
 
-    const isLogged = useSelector((store) => store.isLogged.isLogged);
-
-    if (!isLogged) {
-      navigation.navigate("Log In");
-    }
     const account_type = useSelector((store) => store.acct_type.acct_type);
     // const account_type = 1; //hardcode to test
 
@@ -29,7 +24,9 @@ const ProfilePage = ({ navigation }) => {
       content = <UserProfile/>;
     } else {
       console.log("hello this account type doesnt exist");
-      content = null;
+      // content = null;
+      navigation.navigate("Log In");
+      return null;
     }
 
 
