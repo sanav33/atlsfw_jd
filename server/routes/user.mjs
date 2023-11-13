@@ -26,7 +26,7 @@ router.patch('/edit/:user_id', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        res.send('User updated successfully');
+        res.status(200).send('User updated successfully');
     } catch (e) {
         console.log(e);
         res.status(500).send('Error updating user');
