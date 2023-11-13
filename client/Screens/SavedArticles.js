@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 
 // Main component
 const SavedArticles = ({ navigation }) => {
+  
   const [isSavePressed, setSavePressed] = useState(false);
   const saved_articles_state = useSelector(
     (store) => store.saved_articles.saved_articles
@@ -55,7 +56,7 @@ const SavedArticles = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <FlatList
-          numColumns={2}
+          numColumns={1}
           data={articleData}
           keyExtractor={(item) => item["_id"]}
           renderItem={({ item, index }) => (
