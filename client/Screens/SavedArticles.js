@@ -17,9 +17,14 @@ import axios from "axios";
 import MY_IP_ADDRESS from "../environment_variables.mjs";
 import { useSelector } from "react-redux";
 
-// Main component
 const SavedArticles = ({ navigation }) => {
-  
+  // redux state
+  const isLogged = useSelector((store) => store.isLogged.isLogged);
+
+  if (!isLogged) {
+    navigation.replace("Log In");
+  }
+
   const [isSavePressed, setSavePressed] = useState(false);
   const saved_articles_state = useSelector(
     (store) => store.saved_articles.saved_articles
