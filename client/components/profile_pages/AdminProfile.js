@@ -407,4 +407,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserScreen;
+export default AdminProfile;
