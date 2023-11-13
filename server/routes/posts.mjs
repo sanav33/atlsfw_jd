@@ -9,6 +9,30 @@ router.get("/tags", async (req, res) => {
   res.status(200).json(tagsList);
 });
 
+router.post("/posts/create", async (req, res) => {
+  const { article_title, article_preview_image, article_link, author_id, author_name, author_pfp_link, tags } = req.body;
+  if (!article_title || !article_link || !article_preview_image || !author_id || !author_name || !author_pfp_link) {
+      return res.status(400).json({ success: false, message: 'Missing article information' });
+  }
+  try {
+    await posts_db.collection('articles').insertOne({
+      article_title,
+      article_preview_image,
+      article_link,
+      author_id,
+      author_name,
+      author_pfp_link,
+      tags,
+      like_count: 0,
+      save_count: 0,
+    });
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // Get a list of 50 posts
 router.get("/posts", async (req, res) => {
   try {
