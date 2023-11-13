@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     padding: 60,
   },
   buttonContainer: {
-    marginVertical: 10,
+    marginVertical: 6,
     backgroundColor: 'lightgray',
     borderRadius: 8,
     borderWidth: 1,
@@ -162,12 +162,12 @@ const styles = StyleSheet.create({
   switchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
   },
   text: {
     fontWeight: 'bold',
     fontSize: 25,
-    paddingTop: 20,
+    paddingTop: 10,
     textAlign: 'center',
   },
   input: {
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: 12,
+    marginBottom: 5,
     padding: 8,
   },
 });
