@@ -15,7 +15,7 @@ import * as FileSystem from "expo-file-system";
 import MY_IP_ADDRESS from "../../environment_variables.mjs";
 import axios from "axios";
 
-const UserScreen = () => {
+const AdminProfile = () => {
   const [selectedTab, setSelectedTab] = useState("contact");
   const [isEnabled, setIsEnabled] = useState(false);
   const [editMode, setEditMode] = useState(false);
