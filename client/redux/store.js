@@ -4,6 +4,7 @@ import likeReducer from './reducers/likeReducer';
 import idReducer from './reducers/idReducer';
 import accountReducer from './reducers/accountReducer';
 import saveReducer from './reducers/saveReducer';
+import userInfoReducer from './reducers/userInfoReducer';
 
 // HOW REDUX STATE WORKS
 // 
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
     user_id: idReducer,
     acct_type: accountReducer,
     saved_articles: saveReducer,
+    user_info: userInfoReducer,
     // add more reducers here
 });
 

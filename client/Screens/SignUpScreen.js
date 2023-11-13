@@ -5,6 +5,7 @@ import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { isValidPassword, isValidEmail } from '../utils/format.mjs';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
+import { setUserInfo } from "../redux/actions/userInfoAction";
 
 const SignUpScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
@@ -43,14 +44,23 @@ const SignUpScreen = ({ navigation }) => {
           birthday: birthday,
         };
 
-        const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/signup', userData);
+        // REDUX
+        //send login action to store
+        dispatch(setUserInfo(userData));
+
+        const response = await axios.post(
+          "http://" + MY_IP_ADDRESS + ":5050/signup",
+          userData
+        );
 
         const data = response.data;
         if (data.success) {
-          Alert.alert('Success', 'Account created successfully!', [{ text: 'OK' }]);
-          navigation.replace('Log In');
+          Alert.alert("Success", "Account created successfully!", [
+            { text: "OK" },
+          ]);
+          navigation.replace("Log In");
         } else {
-          Alert.alert('Error', data.message, [{ text: 'Try Again' }]);
+          Alert.alert("Error", data.message, [{ text: "Try Again" }]);
         }
       }
       
