@@ -85,7 +85,7 @@ const Article = (props) => {
         removeFromDB(liked_articles);
       }
     } else {
-      navigation.navigate("Log In");
+      navigation.replace("Log In");
     }
   };
 
@@ -171,7 +171,7 @@ const Article = (props) => {
         console.log("unsaved");
       }
     } else {
-      navigation.navigate("Log In");
+      navigation.replace("Log In");
     }
   };
 

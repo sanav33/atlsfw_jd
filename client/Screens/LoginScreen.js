@@ -64,7 +64,7 @@ const LoginScreen = ({navigation}) => {
           dispatch(set_acct_type(data.account_type));
 
         // Handle success (e.g., navigate to another screen)
-          navigation.navigate('Community');
+          navigation.replace('Community');
       } else {
         console.log("well what about this");
         console.log(data.message);

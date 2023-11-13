@@ -5,6 +5,7 @@ import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { isValidPassword, isValidEmail } from '../utils/format.mjs';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
+
 const SignUpScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -47,7 +48,7 @@ const SignUpScreen = ({ navigation }) => {
         const data = response.data;
         if (data.success) {
           Alert.alert('Success', 'Account created successfully!', [{ text: 'OK' }]);
-          navigation.navigate('Log In');
+          navigation.replace('Log In');
         } else {
           Alert.alert('Error', data.message, [{ text: 'Try Again' }]);
         }
@@ -138,7 +139,7 @@ const SignUpScreen = ({ navigation }) => {
         <Button
           title="Log in here!"
           color="green"
-          onPress={() => navigation.navigate('Log In')}
+          onPress={() => navigation.replace('Log In')}
         />
       </View>
     </View>

@@ -25,7 +25,7 @@ const ProfilePage = ({ navigation }) => {
     } else {
       console.log("hello this account type doesnt exist");
       // content = null;
-      navigation.navigate("Log In");
+      navigation.replace("Log In");
       return null;
     }
 

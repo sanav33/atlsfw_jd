@@ -12,9 +12,10 @@ const NavBar = () => {
     const isLogged = useSelector((store) => store.isLogged.isLogged);
     const handleProfileClick = () => {
       if (isLogged) {
-        navigation.navigate('Profile'); // Navigate to Profile if logged in
+        // navigation.navigate('Profile'); // Navigate to Profile if logged in
+        navigation.reset({ index: 0, routes: [{ name: 'Profile' }], });
       } else {
-        navigation.navigate('Log In'); // Navigate to Login if not logged in
+        navigation.reset({ index: 0, routes: [{ name: 'Log In' }], });
       }
     }
 
@@ -23,27 +24,52 @@ const NavBar = () => {
         {/* Nav Bar */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'lightgray', padding: 10 }}>
           {/* Navigation Buttons */}
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Community')}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Community' }],
+                });
+          }}>
               <Icon name="home" size={20} color="black" alignItems="center"/>
               <Text>Home</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Community')}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Community' }],
+                });
+          }}>              
               <Icon name="calendar" size={20} color="black" alignItems="center"/>
               <Text>Events</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Community')}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Community' }],
+                });
+          }}>              
               <Icon name="search" size={20} color="black" alignItems="center"/>
               <Text>Search</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Saved Articles')}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Saved Articles' }],
+                });
+          }}>
               <Icon name="bookmark" size={20} color="black" alignItems="center"/>
               <Text>Saved</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('Sign Up')}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Sign Up' }],
+                });
+          }}>              
               <Icon name="shopping-cart" size={20} color="black" alignItems="center"/>
               <Text>Shop</Text>
           </TouchableOpacity>
@@ -53,24 +79,6 @@ const NavBar = () => {
               <Text>Profile</Text>
           </TouchableOpacity>
         </View>
-
-        {/* LOGO */}
-        <View style={{ alignItems: 'center', paddingBottom: 20 }}>
-          <Image
-            source={require('./ATLSFWlogo.jpg')}
-            style={{ width: 150, height: 50, resizeMode: 'contain' }}
-          />
-          <Text>Shop</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{ alignItems: "center" }}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <Icon name="home" size={20} color="black" alignItems="center" />
-          <Text>Profile</Text>
-        </TouchableOpacity>
-      </View>
 
       {/* LOGO */}
       <View style={{ alignItems: "center", paddingBottom: 20 }}>

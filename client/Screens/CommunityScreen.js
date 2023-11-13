@@ -19,6 +19,8 @@ import axios from "axios";
 import MY_IP_ADDRESS from "../environment_variables.mjs";
 import ProfilePage from "./ProfilePage";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
+
 
 // Main component
 const CommunityScreen = ({ navigation }) => {
@@ -26,6 +28,14 @@ const CommunityScreen = ({ navigation }) => {
   const [showFilterModal, setShowFilterModal] = useState(false); // For filter modal visibility
   const [tags, setTags] = useState([]); // State for the tags
   const [inputTag, setInputTag] = useState([]); // For input field
+
+  const liked_articles_state = useSelector(
+    (store) => store.liked_articles.liked_articles
+  );
+  const saved_articles_state = useSelector(
+    (store) => store.saved_articles.saved_articles
+  );
+  const isLogged = useSelector((store) => store.isLogged.isLogged);
 
   const handleSavePress = () => {
     // Toggle the state when the Save button is pressed
@@ -98,7 +108,7 @@ const CommunityScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <FlatList
-          numColumns={2}
+          numColumns={1}
           data={articleData}
           keyExtractor={(item) => item["_id"]}
           renderItem={({ item, index }) => (
