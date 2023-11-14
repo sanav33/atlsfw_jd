@@ -10,6 +10,7 @@ import { setID } from '../redux/actions/idAction';
 import { get_like_list } from '../redux/actions/likeAction';
 import { get_save_list } from '../redux/actions/saveAction';
 import { set_acct_type } from '../redux/actions/accountAction';
+import { setUserInfo } from '../redux/actions/userInfoAction';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -31,8 +32,8 @@ const LoginScreen = ({navigation}) => {
 
       // Send the user data to your backend
       console.log("handling login");
-      console.log(hashed_email);
-      console.log(hashed_password);
+      // console.log(hashed_email);
+      // console.log(hashed_password);
       const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/', {
           hashed_email,
           hashed_password,
@@ -51,6 +52,8 @@ const LoginScreen = ({navigation}) => {
           dispatch(login());
           //set user ID to store
           dispatch(setID(data.user._id));
+          // set userInfo
+          dispatch(setUserInfo(data.user));
 
           // get previously liked and saved articles list if it exists
           if (data.user.liked_articles != null) {

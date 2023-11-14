@@ -1,13 +1,17 @@
 const initialState = {
-  firstName: "",
-  lastName: "",
-  username: "",
-  email: "",
-  password: "",
-  phoneNum: "",
-  birthday: "",
-  gender: "",
-  agreeSubscribe: false,
+  userInfo: {
+    hashed_email: "",
+    hashed_password: "",
+    encrypted_email: "",
+    first_name: "",
+    last_name: "",
+    username: "",
+    gender: "",
+    phone_number: "",
+    subscribed_to_news: false,
+    birthday: "",
+    user_id: "",
+  },
 };
 
 export default (state = initialState, action) => {
@@ -15,7 +19,7 @@ export default (state = initialState, action) => {
     case 'SET_USER_INFO':
       return {
         ...state,
-        ...action.payload,
+        userInfo: action.payload,
       };
 
     default:

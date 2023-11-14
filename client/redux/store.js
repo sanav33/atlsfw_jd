@@ -36,7 +36,7 @@ const rootReducer = combineReducers({
     user_id: idReducer,
     acct_type: accountReducer,
     saved_articles: saveReducer,
-    user_info: userInfoReducer,
+    userInfo: userInfoReducer,
     // add more reducers here
 });
 

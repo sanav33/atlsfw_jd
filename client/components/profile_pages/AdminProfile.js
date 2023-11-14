@@ -8,21 +8,31 @@ import {
   Switch,
   ScrollView,
   Button,
+  TextInput
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as FileSystem from "expo-file-system";
 import MY_IP_ADDRESS from "../../environment_variables.mjs";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserInfo } from "../../redux/actions/userInfoAction";
 
 const AdminProfile = () => {
+  const userInfo = useSelector((store) => store.userInfo.userInfo);
   const [selectedTab, setSelectedTab] = useState("contact");
   const [isEnabled, setIsEnabled] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [savedPath, setSavedPath] = useState(null);
   const [topLiked, setTopLiked] = useState([]); 
-  const [topSaved, setTopSaved] = useState([]); 
+  const [topSaved, setTopSaved] = useState([]);
+  const [editedFirstName, setEditedFirstName] = useState(userInfo["first_name"]);
+  const [editedLastName, setEditedLastName] = useState(userInfo["last_name"]);
+  const [editedUsername, setEditedUsername] = useState(userInfo["username"]);
+  const [editedBirthday, setEditedBirthday] = useState(userInfo["birthday"]);
+  const [editedPhoneNumber, setEditedPhoneNumber] = useState(userInfo["phone_number"]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // fetch top most liked and saved articles upon loading of the page
@@ -32,7 +42,7 @@ const AdminProfile = () => {
         const response = await axios.get(url);
         if (response.data && Array.isArray(response.data)) {
           setTopLiked(response.data);
-          // console.log("top articles:", JSON.stringify(response.data, null, 2));
+          console.log(userInfo);
         }
       } catch (error) {
         console.error("Error fetching top liked posts:", error.message);
@@ -70,7 +80,13 @@ const AdminProfile = () => {
 
   const switchEditMode = () => {
     setEditMode(true);
+    setEditedFirstName(userInfo.first_name);
+    setEditedLastName(userInfo.last_name);
+    setEditedUsername(userInfo.username);
+    setEditedBirthday(userInfo.birthday);
+    setEditedPhoneNumber(userInfo.phone_number);
   };
+
 
   const saveChanges = async () => {
     setEditMode(false);
@@ -78,6 +94,14 @@ const AdminProfile = () => {
       const newPath = await saveImageLocally(imageUri);
       setSavedPath(newPath);
     }
+    dispatch(setUserInfo({
+      ...userInfo,
+      first_name: editedFirstName,
+      last_name: editedLastName,
+      username: editedUsername,
+      birthday: editedBirthday,
+      phone_number: editedPhoneNumber,
+    }))
   };
 
   const saveImageLocally = async (fileUri) => {
@@ -137,7 +161,9 @@ const AdminProfile = () => {
               style={styles.profileImage}
             />
           </TouchableOpacity>
-          <Text style={styles.name}>Doe, Jane</Text>
+          <Text style={styles.name}>
+            {userInfo["first_name"] + " " + userInfo["last_name"]}
+          </Text>
           {editMode && (
             <Button title="Change Profile Picture" onPress={pickImage} />
           )}
@@ -183,10 +209,64 @@ const AdminProfile = () => {
         </View>
         {selectedTab === "contact" && (
           <View style={styles.contactSection}>
-            <Text style={styles.interestText}> Email: janedoe@example.com</Text>
-            <Text style={styles.interestText}> Birth Month: March</Text>
+            <Text style={styles.label}>First Name:</Text>
+            {editMode ? (
+              <TextInput
+                value={editedFirstName}
+                onChangeText={setEditedFirstName}
+                style={styles.input}
+              />
+            ) : (
+              <Text style={styles.value}>{userInfo["first_name"]}</Text>
+            )}
+
+            <Text style={styles.label}>Last Name:</Text>
+            {editMode ? (
+              <TextInput
+                value={editedLastName}
+                onChangeText={setEditedLastName}
+                style={styles.input}
+              />
+            ) : (
+              <Text style={styles.value}>{userInfo["last_name"]}</Text>
+            )}
+
+            <Text style={styles.label}>Username:</Text>
+            {editMode ? (
+              <TextInput
+                value={editedUsername}
+                onChangeText={setEditedUsername}
+                style={styles.input}
+              />
+            ) : (
+              <Text style={styles.value}>{userInfo["username"]}</Text>
+            )}
+
+            <Text style={styles.label}>Phone Number:</Text>
+            {editMode ? (
+              <TextInput
+                value={editedPhoneNumber}
+                onChangeText={setEditedPhoneNumber}
+                keyboardType="number-pad"
+                style={styles.input}
+              />
+            ) : (
+              <Text style={styles.value}>{userInfo["phone_number"]}</Text>
+            )}
+
+            <Text style={styles.label}>Birthday:</Text>
+            {editMode ? (
+              <TextInput
+                value={editedBirthday}
+                onChangeText={setEditedBirthday}
+                style={styles.input}
+              />
+            ) : (
+              <Text style={styles.value}>{userInfo["birthday"]}</Text>
+            )}
           </View>
         )}
+
         {selectedTab === "most liked" && (
           <View style={styles.detailsSection}>
             {topLiked
@@ -402,8 +482,25 @@ const styles = StyleSheet.create({
   contactSection: {
     padding: 16,
     color: "#424242",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "left",
+    justifyContent: "left",
+  },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+  },
+  label: {
+    fontSize: 15,
+    color: "#424242",
+    paddingVertical: 5,
+  },
+  value: {
+    fontSize: 15,
+    color: "#424242",
+    paddingVertical: 5,
   },
 });
 
