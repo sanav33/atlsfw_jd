@@ -17,4 +17,5 @@ web-build/
 .metro-health-check*
 
 server/password.mjs
+client/password.mjs
 client/environment_variables.mjs
