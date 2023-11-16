@@ -73,6 +73,8 @@ router.get("/discover/:vendor_id", async (req, res) => {
         const result = await collection.findOne({ vendor_id: new ObjectId(vendor_id) });
         if (!result) {
             res.status(400).send("Vendor does not exist");
+        } else if (result.vendor_account_initialized == false) {
+            res.status(400).send("Vendor discovery page uninitialized");
         } else {
             res.status(200).send(result);
         }
