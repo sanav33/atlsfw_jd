@@ -29,9 +29,20 @@ router.post("/", async (req, res) => {
         console.log(hashed_password);
         return res.status(400).json({ success: false, message: 'The email-password combination is incorrect' });
     }
-    const userInfo = await users_db.collection("customer_info").findOne({hashed_email: hashed_email});
-    userInfo._id = userInfo._id.toString();
-
+    const userInfo = await users_db.collection('customer_info').findOne({ hashed_email });
+    if (existingUser.account_type == 2) {
+        const vendor_info = await users_db.collection("vendor_info").findOne({ vendor_id: userInfo._id });
+        if (vendor_info == null) {
+            res.status(500).json({ success: false, message: "Vendor does not exist" });
+        } else if (vendor_info.vendor_account_initialized == false) {
+            userInfo.vendor_account_initialized = false;
+        } else {
+            userInfo.brand_name = vendor_info.brand_name;
+            userInfo.title = vendor_info.title;
+            userInfo.intro = vendor_info.intro;
+            userInfo.shop_now_link = vendor_info.shop_now_link;
+        }
+    }
     res.status(200).json({ success: true, account_type: existingUser.account_type, user: userInfo});
 });
 
