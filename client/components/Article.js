@@ -22,7 +22,7 @@ const Article = (props) => {
   const { image, title, author, likes, saves, article_id, article_link } =
     props.article;
   const account_type = useSelector((store) => store.acct_type.acct_type);
-  // account_type = 1; //hardcode here to test save count text
+  //account_type = 1; //hardcode here to test save count text
 
   const liked_articles_state = useSelector(
     (store) => store.liked_articles.liked_articles

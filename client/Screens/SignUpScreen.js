@@ -5,17 +5,25 @@ import hashString from '../utils/hashingUtils.mjs';
 import MY_IP_ADDRESS from '../environment_variables.mjs';
 import { isValidPassword, isValidEmail } from '../utils/format.mjs';
 import encryptWithPublicKey from '../utils/encryptionUtils.mjs';
+import { setUserInfo } from "../redux/actions/userInfoAction";
+import { useSelector, useDispatch } from "react-redux";
 
 const SignUpScreen = ({ navigation }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phoneNum, setPhoneNum] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [gender, setGender] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [gender, setGender] = useState("");
   const [agreeSubscribe, setAgreeSubscribe] = useState(false);
+  const [user_id, setUserID] = useState("");
+
+  // REDUX
+  //send login action to store
+  const dispatch = useDispatch();
+
   //encrypted email
 
   const handleSignUp = async () => {
@@ -23,11 +31,17 @@ const SignUpScreen = ({ navigation }) => {
       const hashed_email = await hashString(email);
       const hashed_password = await hashString(password);
       const encrypted_email = encryptWithPublicKey(email);
-      
+
       if (!isValidEmail(email)) {
-        Alert.alert('Error', "Email format is invalid", [{ text: 'Try Again' }]);
+        Alert.alert("Error", "Email format is invalid", [
+          { text: "Try Again" },
+        ]);
       } else if (!isValidPassword(password)) {
-        Alert.alert('Error', 'Password must satisfy the following requirements: \n1. At least one uppercase letter \n2. At least one lowercase letter \n3. At least one number \n4. At least one special character \n 5. At least 8 characters long', [{ text: 'Try Again' }]);
+        Alert.alert(
+          "Error",
+          "Password must satisfy the following requirements: \n1. At least one uppercase letter \n2. At least one lowercase letter \n3. At least one number \n4. At least one special character \n 5. At least 8 characters long",
+          [{ text: "Try Again" }]
+        );
       } else {
         // Send the user data to your backend
         let userData = {
@@ -43,20 +57,32 @@ const SignUpScreen = ({ navigation }) => {
           birthday: birthday,
         };
 
-        const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/signup', userData);
+        const response = await axios.post(
+          "http://" + MY_IP_ADDRESS + ":5050/signup",
+          userData
+        );
 
         const data = response.data;
         if (data.success) {
-          Alert.alert('Success', 'Account created successfully!', [{ text: 'OK' }]);
-          navigation.replace('Log In');
+            const updatedUserInfo = {
+              ...userData,
+              user_id: data.user._id, // Assuming the server response structure includes user._id
+            };
+          dispatch(setUserInfo(updatedUserInfo));
+          console.log("user info: " + JSON.stringify(updatedUserInfo, null, 2));
+          Alert.alert("Success", "Account created successfully!", [
+            { text: "OK" },
+          ]);
+          navigation.replace("Log In");
         } else {
-          Alert.alert('Error', data.message, [{ text: 'Try Again' }]);
+          Alert.alert("Error", data.message, [{ text: "Try Again" }]);
         }
       }
-      
     } catch (error) {
-      console.error('Error during sign up:', error.response?.data?.message);
-      Alert.alert('Sign Up Error', error.response?.data?.message, [{ text: 'Try Again' }]);
+      console.error("Error during sign up:", error.response?.data?.message);
+      Alert.alert("Sign Up Error", error.response?.data?.message, [
+        { text: "Try Again" },
+      ]);
     }
   };
 
@@ -121,17 +147,15 @@ const SignUpScreen = ({ navigation }) => {
           trackColor={{ false: "#767577", true: "#81b0ff" }}
           thumbColor={agreeSubscribe ? "#f5dd4b" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={() => setAgreeSubscribe(previousState => !previousState)}
+          onValueChange={() =>
+            setAgreeSubscribe((previousState) => !previousState)
+          }
           value={agreeSubscribe}
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button
-          title="Sign Up"
-          color="black"
-          onPress={handleSignUp}
-        />
+        <Button title="Sign Up" color="black" onPress={handleSignUp} />
       </View>
 
       <Text style={styles.text}>Already have an account?</Text>
@@ -139,7 +163,7 @@ const SignUpScreen = ({ navigation }) => {
         <Button
           title="Log in here!"
           color="green"
-          onPress={() => navigation.replace('Log In')}
+          onPress={() => navigation.replace("Log In")}
         />
       </View>
     </View>
