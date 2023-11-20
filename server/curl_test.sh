@@ -18,7 +18,7 @@ URL="http://${IP_ADDRESS}:${PORT}" # Replace '/endpoint' with the correct endpoi
 
 # curl -X POST \
 #      -H "Content-Type: application/json" \
-#      -d '{ "hashed_email": "testCat6" }' \
+#      -d '{ "hashed_email": "30499c65794929be3df9f4647a2c4ed874f98312e81193a98102d73125077be3" }' \
 #      $URL/vendor
 
 # curl -X POST \
@@ -28,10 +28,10 @@ URL="http://${IP_ADDRESS}:${PORT}" # Replace '/endpoint' with the correct endpoi
 
 curl -X POST \
      -H "Content-Type: application/json" \
-     -d '{ "brand_name": "Reformation", "shop_now_link": "https://www.thereformation.com/", "title": "Winter Weddings", "intro": "Reformation began by selling vintage clothing out of a small Los Angeles storefront in 2009. We quickly expanded into making our own stuff, with a focus on sustainability. Today, we make effortless silhouettes that celebrate the feminine figure and pioneer sustainable practices, focusing on people and progress each step of the way." }' \
-     $URL/discover/create/652d9bde94287b3889bfe1f0
+     -d '{ "brand_name": "Aysegul", "shop_now_link": "https://ayseguliknadesigns.com/", "title": "Designer/Owner", "intro": "Aysegul is a designer from Istanbul, Turkey.  She studed at Savannah College of Art & Design (SCAD) in Atlanta, GA  and focuses on garment construction using sustainable textiles, using recycled deadstock fabrics." }' \
+     $URL/discover/create/655b7f350ca73bc904150388
 
-curl $URL/discover/652d9bde94287b3889bfe1f0
+curl $URL/discover/655b7f350ca73bc904150388
 
 # Send GET request
 # curl -X POST \
