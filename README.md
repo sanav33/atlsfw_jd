@@ -7,7 +7,7 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 1. User Profile Page now gives the user the option to edit their contact information and select interests.
 2. Admin Profile Page now shows statistics about the top 3 saved and top 3 liked articles.
 3. Profile Page allows user to add and change profile pictures.
-4. Likes symbol in navbar has been changed to Saved symbol to reflect new functionality.
+4. Heart icon in navbar has been changed to bookmark icon, reflecting new functionality of the Saved Articles page. 
 5. Saved button in navbar leads to saved articles for logged-in users and Login Page for guest users.
 6. Tag selection UI has been improved to change color to indicate which tags are currently selected.
 7. Header has been changed to green to reflect client branding.
@@ -20,7 +20,7 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 4. Signup Page no longer displays an error for signups that do not include input in the optional fields which should go through as a valid signup.
 
 ### Known Issues
-1. MasonryList usage is causing a bug, and its implementation is only visible when there is originally a FlatList in its place and once pulled from master, it can be changed to MasonryList to be displayed correctly on the app.
+1. MasonryList usage is causing a bug, and its implementation is only visible when there is originally a FlatList in its place when the app is run. While the app is running, the FlatList tag can be changed to MasonryList and after saving this change, the layout displays correctly on the app.
 
 ## Version 0.3.0
 ### Features
