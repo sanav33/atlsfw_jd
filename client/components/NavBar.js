@@ -22,7 +22,7 @@ const NavBar = () => {
   return (
         <View>
         {/* Nav Bar */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'lightgray', padding: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: '#02833D', padding: 10 }}>
           {/* Navigation Buttons */}
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
                 navigation.reset({
@@ -30,8 +30,8 @@ const NavBar = () => {
                     routes: [{ name: 'Community' }],
                 });
           }}>
-              <Icon name="home" size={20} color="black" alignItems="center"/>
-              <Text>Home</Text>
+              <Icon name="home" size={20} color="white" alignItems="center"/>
+              <Text style={styles.whiteText}>Home</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
@@ -40,8 +40,8 @@ const NavBar = () => {
                     routes: [{ name: 'Community' }],
                 });
           }}>              
-              <Icon name="calendar" size={20} color="black" alignItems="center"/>
-              <Text>Events</Text>
+              <Icon name="calendar" size={20} color="white" alignItems="center"/>
+              <Text style={styles.whiteText}>Events</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
@@ -50,8 +50,8 @@ const NavBar = () => {
                     routes: [{ name: 'Community' }],
                 });
           }}>              
-              <Icon name="search" size={20} color="black" alignItems="center"/>
-              <Text>Search</Text>
+              <Icon name="search" size={20} color="white" alignItems="center"/>
+              <Text style={styles.whiteText}>Search</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
@@ -60,8 +60,8 @@ const NavBar = () => {
                     routes: [{ name: 'Saved Articles' }],
                 });
           }}>
-              <Icon name="bookmark" size={20} color="black" alignItems="center"/>
-              <Text>Saved</Text>
+              <Icon name="bookmark" size={20} color="white" alignItems="center"/>
+              <Text style={styles.whiteText}>Saved</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {
@@ -70,13 +70,13 @@ const NavBar = () => {
                     routes: [{ name: 'Sign Up' }],
                 });
           }}>              
-              <Icon name="shopping-cart" size={20} color="black" alignItems="center"/>
-              <Text>Shop</Text>
+              <Icon name="shopping-cart" size={20} color="white" alignItems="center"/>
+              <Text style={styles.whiteText}>Shop</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => handleProfileClick()}>
-              <Icon name="home" size={20} color="black" alignItems="center"/>
-              <Text>Profile</Text>
+              <Icon name="home" size={20} color="white" alignItems="center"/>
+              <Text style={styles.whiteText}>Profile</Text>
           </TouchableOpacity>
         </View>
 
@@ -90,5 +90,11 @@ const NavBar = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  whiteText: {
+    color: 'white',
+  },
+});
 
 export default NavBar;
