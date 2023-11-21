@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, ScrollView, Button } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 
 const UserScreen = () => {
@@ -56,9 +55,9 @@ const UserScreen = () => {
   };
 
   const pickImage = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
       return;
     }
 
@@ -69,8 +68,9 @@ const UserScreen = () => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImageUri(result.uri);
+    if (!result.cancelled && result.assets && result.assets.length > 0) {
+      console.log(result.assets[0].uri);
+      setImageUri(result.assets[0].uri);
     }
   };
 
@@ -91,7 +91,7 @@ const UserScreen = () => {
       <View style={styles.profileSection}>
         <TouchableOpacity onPress={pickImage} disabled={!editMode}>
           <Image
-            source={savedPath ? { uri: savedPath } : require('./user.jpg')}
+            source={imageUri ? { uri: imageUri } : require('./user.jpg')}
             style={styles.profileImage}
           />
         </TouchableOpacity>
