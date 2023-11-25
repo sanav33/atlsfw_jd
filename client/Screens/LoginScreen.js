@@ -11,6 +11,7 @@ import { get_like_list } from '../redux/actions/likeAction';
 import { get_save_list } from '../redux/actions/saveAction';
 import { set_acct_type } from '../redux/actions/accountAction';
 import { setUserInfo } from '../redux/actions/userInfoAction';
+import { getVend } from '../redux/actions/vendAction';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -45,6 +46,7 @@ const LoginScreen = ({navigation}) => {
 
       if (data.success) {
           console.log("successfully logged in");
+          console.log(data.user.vendor_account_initialized);
  
           // SET REDUX STATES
 
@@ -54,6 +56,8 @@ const LoginScreen = ({navigation}) => {
           dispatch(setID(data.user._id));
           // set userInfo
           dispatch(setUserInfo(data.user));
+          // set vendor initialized boolean state
+          dispatch(getVend(data.user.vendor_account_initialized));
 
           // get previously liked and saved articles list if it exists
           if (data.user.liked_articles != null) {
@@ -67,7 +71,7 @@ const LoginScreen = ({navigation}) => {
           dispatch(set_acct_type(data.account_type));
 
         // Handle success (e.g., navigate to another screen)
-          navigation.replace('Community');
+        navigation.reset({ index: 0, routes: [{ name: 'Community' }], });
       } else {
         console.log("well what about this");
         console.log(data.message);

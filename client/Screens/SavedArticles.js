@@ -22,7 +22,7 @@ const SavedArticles = ({ navigation }) => {
   const isLogged = useSelector((store) => store.isLogged.isLogged);
 
   if (!isLogged) {
-    navigation.replace("Log In");
+    navigation.reset({ index: 0, routes: [{ name: 'Log In' }], });
   }
 
   const [isSavePressed, setSavePressed] = useState(false);
