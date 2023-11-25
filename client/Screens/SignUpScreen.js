@@ -73,7 +73,7 @@ const SignUpScreen = ({ navigation }) => {
           Alert.alert("Success", "Account created successfully!", [
             { text: "OK" },
           ]);
-          navigation.replace("Log In");
+          navigation.reset({ index: 0, routes: [{ name: 'Log In' }], });
         } else {
           Alert.alert("Error", data.message, [{ text: "Try Again" }]);
         }
@@ -163,7 +163,7 @@ const SignUpScreen = ({ navigation }) => {
         <Button
           title="Log in here!"
           color="green"
-          onPress={() => navigation.replace("Log In")}
+          onPress={() => navigation.reset({ index: 0, routes: [{ name: 'Log In' }], })}
         />
       </View>
     </View>

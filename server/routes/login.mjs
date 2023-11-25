@@ -41,6 +41,7 @@ router.post("/", async (req, res) => {
             userInfo.title = vendor_info.title;
             userInfo.intro = vendor_info.intro;
             userInfo.shop_now_link = vendor_info.shop_now_link;
+            userInfo.vendor_account_initialized = true;
         }
     }
     res.status(200).json({ success: true, account_type: existingUser.account_type, user: userInfo});

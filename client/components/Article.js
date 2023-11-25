@@ -85,7 +85,7 @@ const Article = (props) => {
         removeFromDB(liked_articles);
       }
     } else {
-      navigation.replace("Log In");
+      navigation.reset({ index: 0, routes: [{ name: 'Log In' }], });
     }
   };
 

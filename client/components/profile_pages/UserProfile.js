@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 
-const UserScreen = () => {
+const UserProfile = () => {
   const [selectedTab, setSelectedTab] = useState('contact');
   const [isEnabled, setIsEnabled] = useState(false);
   const [selectedInterests, setSelectedInterests] = useState([]);
@@ -272,4 +272,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserScreen;
+export default UserProfile;
