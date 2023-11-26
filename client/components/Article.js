@@ -21,11 +21,6 @@ import { useNavigation } from "@react-navigation/native";
 const Article = (props) => {
   const { image, title, author, likes, saves, article_id, article_link } =
     props.article;
-  if (likes < 0) {
-    likes = 0;
-  } else if (saves < 0) {
-    saves = 0;
-  }
   const account_type = useSelector((store) => store.acct_type.acct_type);
   //account_type = 1; //hardcode here to test save count text
 
