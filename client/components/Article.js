@@ -21,6 +21,11 @@ import { useNavigation } from "@react-navigation/native";
 const Article = (props) => {
   const { image, title, author, likes, saves, article_id, article_link } =
     props.article;
+  if (likes < 0) {
+    likes = 0;
+  } else if (saves < 0) {
+    saves = 0;
+  }
   const account_type = useSelector((store) => store.acct_type.acct_type);
   //account_type = 1; //hardcode here to test save count text
 
@@ -61,32 +66,35 @@ const Article = (props) => {
 
   const handleLike = () => {
     // toggle button state
-    setLiked((liked) => !liked);
+    if (likes >= 0) {
+      setLiked((liked) => !liked);
 
-    //check if logged in
-    console.log("inside article, like", isLogged);
-    console.log(user_id);
-
-    if (isLogged) {
-      if (!liked) {
-        // create temp list, append new liked article
-        liked_articles = liked_articles_state.slice();
-        liked_articles.push(article_id);
-        liked_articles = [...new Set(liked_articles)];
-
-        // hit BE endpoint
-        addedToDB(liked_articles);
+      //check if logged in
+      console.log("inside article, like", isLogged);
+      console.log(user_id);
+  
+      if (isLogged) {
+        if (!liked) {
+          // create temp list, append new liked article
+          liked_articles = liked_articles_state.slice();
+          liked_articles.push(article_id);
+          liked_articles = [...new Set(liked_articles)];
+  
+          // hit BE endpoint
+          addedToDB(liked_articles);
+        } else {
+          // create temp list, remove liked article
+          liked_articles = liked_articles_state.slice();
+          liked_articles.splice(liked_articles.indexOf(article_id), 1);
+  
+          // hit BE endpoint
+          removeFromDB(liked_articles);
+        }
       } else {
-        // create temp list, remove liked article
-        liked_articles = liked_articles_state.slice();
-        liked_articles.splice(liked_articles.indexOf(article_id), 1);
-
-        // hit BE endpoint
-        removeFromDB(liked_articles);
+        navigation.reset({ index: 0, routes: [{ name: 'Log In' }], });
       }
-    } else {
-      navigation.reset({ index: 0, routes: [{ name: 'Log In' }], });
     }
+
   };
 
   const addedToDB = async () => {
@@ -145,34 +153,37 @@ const Article = (props) => {
   let saved_articles = [];
 
   const handleSave = () => {
-    // toggle button state
-    setSavePressed((isSavePressed) => !isSavePressed);
+    if (saves >= 0) {
+      // toggle button state
+      setSavePressed((isSavePressed) => !isSavePressed);
 
-    //check if logged in
-    console.log("inside article, save", isLogged);
-    console.log(user_id);
+      //check if logged in
+      console.log("inside article, save", isLogged);
+      console.log(user_id);
 
-    if (isLogged) {
-      if (!isSavePressed) {
-        // create temp list, append new saved article
-        saved_articles = saved_articles_state.slice();
-        saved_articles.push(article_id);
-        saved_articles = [...new Set(saved_articles)];
+      if (isLogged) {
+        if (!isSavePressed) {
+          // create temp list, append new saved article
+          saved_articles = saved_articles_state.slice();
+          saved_articles.push(article_id);
+          saved_articles = [...new Set(saved_articles)];
 
-        // hit BE endpoint
-        saveToDB();
+          // hit BE endpoint
+          saveToDB();
+        } else {
+          // create temp list, remove saved article
+          saved_articles = saved_articles_state.slice();
+          saved_articles.splice(saved_articles.indexOf(article_id), 1);
+
+          // hit BE endpoint
+          unsaveFromDB();
+          console.log("unsaved");
+        }
       } else {
-        // create temp list, remove saved article
-        saved_articles = saved_articles_state.slice();
-        saved_articles.splice(saved_articles.indexOf(article_id), 1);
-
-        // hit BE endpoint
-        unsaveFromDB();
-        console.log("unsaved");
+        navigation.replace("Log In");
       }
-    } else {
-      navigation.replace("Log In");
     }
+
   };
 
   const saveToDB = async () => {
