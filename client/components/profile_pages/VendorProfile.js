@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, ScrollView, Button } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
+import { useSelector, useDispatch } from "react-redux";
+import { setVend } from '../../redux/actions/vendAction';
 
 const VendorProfile = () => {
+  const initialized = useSelector((store) => store.isInit.isInit);
+  const dispatch = useDispatch();
+
   const [selectedTab, setSelectedTab] = useState('article');
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [editMode, setEditMode] = useState(false);
@@ -34,6 +38,9 @@ const VendorProfile = () => {
       const newPath = await saveImageLocally(imageUri);
       setSavedPath(newPath);
     }
+    // after request for successful discovery page creation
+    // Mimi: if you refactor the save flow, just use the line below
+    dispatch(setVend());
   };
 
   const saveImageLocally = async (fileUri) => {
@@ -54,9 +61,9 @@ const VendorProfile = () => {
   };
 
   const pickImage = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
       return;
     }
 
@@ -67,8 +74,9 @@ const VendorProfile = () => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImageUri(result.uri);
+    if (!result.cancelled && result.assets && result.assets.length > 0) {
+      console.log(result.assets[0].uri);
+      setImageUri(result.assets[0].uri);
     }
   };
 
@@ -89,7 +97,7 @@ const VendorProfile = () => {
       <View style={styles.profileSection}>
         <TouchableOpacity onPress={pickImage} disabled={!editMode}>
           <Image
-            source={savedPath ? { uri: savedPath } : require('./user.jpg')}
+            source={imageUri ? { uri: imageUri } : require('./user.jpg')}
             style={styles.profileImage}
           />
         </TouchableOpacity>
