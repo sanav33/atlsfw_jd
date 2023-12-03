@@ -50,7 +50,7 @@ To run a command in your terminal, type in the command and press Enter.
 
 2. Open the cloned repository using VSCode and open up a terminal session in VSCode using ``Ctrl + Shift + ` `` (final character is a backtick).
 3. Create a `password.mjs` file in the `server` folder with the MongoDB Atlas credentials and the private key
-for the encryption utilities (these credentials will be securely delivered to the client in person.
+for the encryption utilities (these credentials will be securely delivered to the client in person).
 
 You can use the "New File" button in the VSCode File Explorer shown below to create the file.
 
