@@ -72,7 +72,6 @@ router.get("/posts/top_liked", async (req, res) => {
 });
 
 router.get("/posts/top_saved", async (req, res) => {
-  console.log("bro");
   try {
     const collection = posts_db.collection('articles');
     const top_saved = await collection.find({})
