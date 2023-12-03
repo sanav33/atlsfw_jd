@@ -67,14 +67,6 @@ const AdminProfile = () => {
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const toggleInterest = (interest) => {
-    setSelectedInterests((prevSelectedInterests) =>
-      prevSelectedInterests.includes(interest)
-        ? prevSelectedInterests.filter((i) => i !== interest)
-        : [...prevSelectedInterests, interest]
-    );
-  };
-
   const selectTab = (tab) => {
     setSelectedTab(tab);
   };
@@ -97,7 +89,6 @@ const AdminProfile = () => {
     }
 
     const updatedUserInfo = {
-      ...userInfo,
       first_name: editedFirstName,
       last_name: editedLastName,
       username: editedUsername,
@@ -107,26 +98,24 @@ const AdminProfile = () => {
 
     // Send the user data to your backend
     const response = await axios.patch("http://" + MY_IP_ADDRESS + ":5050/edit/" + user_id, updatedUserInfo);
-
-    const data = response.data;
-
-    if(data.success) {
-      dispatch(setUserInfo({
-        ...userInfo,
-        first_name: editedFirstName,
-        last_name: editedLastName,
-        username: editedUsername,
-        birthday: editedBirthday,
-        phone_number: editedPhoneNumber,
-      }));
-    } else {
-      console.log("well what about this");
-      console.log(data.message);
+    
+    if (response.status == 200) {
+      dispatch(
+        setUserInfo({
+          ...userInfo,
+          first_name: editedFirstName,
+          last_name: editedLastName,
+          username: editedUsername,
+          birthday: editedBirthday,
+          phone_number: editedPhoneNumber,
+       })
+      );
     }
   };
 
+
   const saveImageLocally = async (fileUri) => {
-    const fileName = fileUri.split("/").pop();
+    const fileName = fileUri.split('/').pop();
     const newPath = FileSystem.documentDirectory + fileName;
 
     try {
@@ -134,7 +123,7 @@ const AdminProfile = () => {
         from: fileUri,
         to: newPath,
       });
-      console.log("Image saved at", newPath);
+      console.log('Image saved at', newPath);
       return newPath;
     } catch (e) {
       console.error(e);
@@ -143,9 +132,9 @@ const AdminProfile = () => {
   };
 
   const pickImage = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== "granted") {
-      alert("Sorry, we need camera roll permissions to make this work!");
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
       return;
     }
 
@@ -156,20 +145,11 @@ const AdminProfile = () => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImageUri(result.uri);
+    if (!result.cancelled && result.assets && result.assets.length > 0) {
+      console.log(result.assets[0].uri);
+      setImageUri(result.assets[0].uri);
     }
   };
-
-  const Checkbox = ({ isSelected, onToggle }) => {
-    return (
-      <TouchableOpacity style={styles.checkbox} onPress={onToggle}>
-        {isSelected && <View style={styles.checkboxSelected} />}
-      </TouchableOpacity>
-    );
-  };
-
-  const interestsList = ["Events", "Tips/Tricks (DIY)", "News", "Shopping"];
 
   return (
     <View style={styles.container}>
@@ -503,8 +483,8 @@ const styles = StyleSheet.create({
   contactSection: {
     padding: 16,
     color: "#424242",
-    alignItems: "left",
-    justifyContent: "left",
+    alignItems: "center",
+    justifyContent: "center",
   },
   input: {
     height: 40,

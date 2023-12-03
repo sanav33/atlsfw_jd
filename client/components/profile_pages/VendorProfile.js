@@ -4,6 +4,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { useSelector, useDispatch } from "react-redux";
 import { setVend } from '../../redux/actions/vendAction';
+import axios from "axios";
+import MY_IP_ADDRESS from "../../environment_variables.mjs";
+import { setUserInfo } from "../../redux/actions/userInfoAction";
 
 const VendorProfile = () => {
   const initialized = useSelector((store) => store.isInit.isInit);
@@ -14,6 +17,7 @@ const VendorProfile = () => {
   const [editMode, setEditMode] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [savedPath, setSavedPath] = useState(null);
+  const userInfo = useSelector((store) => store.userInfo.userInfo);
 
 
   const toggleInterest = interest => {
@@ -101,7 +105,7 @@ const VendorProfile = () => {
             style={styles.profileImage}
           />
         </TouchableOpacity>
-        <Text style={styles.name}>*VENDOR PAGE*</Text>
+        <Text style={styles.name}>{userInfo["first_name"] + " " + userInfo["last_name"]}</Text>
         {editMode && (
           <Button title="Change Profile Picture" onPress={pickImage} />
         )}
