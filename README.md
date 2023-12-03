@@ -22,6 +22,7 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 6. Within the `users` database, create three collections: `vendor_info`, `customer_info`, and `user_login`.
 
 The final structure of your database should look like this:
+
 <img src="./db.png" alt="DB Structure" width="200"/>
 
 ### Running commands in the Terminal
@@ -41,6 +42,7 @@ export getMongoPasscode() {
 export default getMongoPasscode;
 ```
 You can use the "New File" button in the VSCode File Explorer shown below to create the file.
+
 <img src="./new_file.png" alt="New File" width="200"/>
 
 ## Setting up the server
