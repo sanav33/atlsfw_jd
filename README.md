@@ -1,6 +1,56 @@
 # Atlanta Sustainable Fashion Week (ATLSFW) Mobile Application
 A mobile application where ATLSFW will gauge user interest on topics related to sustainable fashion and users will have access to educational articles so they can learn how to shop/style sustainably.
 
+# Installation Guide
+
+## Prerequisites
+1. MacOS or Linux Laptop connected to a secured wi-fi connection
+2. iPhone connected to the same network
+3. Docker Desktop (installation instructions for [Mac OS](https://docs.docker.com/desktop/install/mac-install/) and [Linux](https://docs.docker.com/desktop/install/linux-install/))
+4. NodeJS (install [here](https://nodejs.org/en/download))
+5. An IDE (we recommend [VSCode](https://code.visualstudio.com/download))
+6. A Terminal (pre-installed on Mac OS and Linux)
+7. Git (installation instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+8. Expo Go App (available on the App Store) and account
+
+## Setting up the database
+1. Create a MongoDB Atlas account [here](https://www.mongodb.com/cloud/atlas/register) and login.
+2. Navigate to the Database tab under the Deployment section in the left sidebar.
+3. Click on the Collections tab.
+4. Use the Create Database button to create two databases: `posts` and `users`.
+5. Within the `posts` database, create one collection: `articles`.
+6. Within the `users` database, create three collections: `vendor_info`, `customer_info`, and `user_login`.
+
+The final structure of your database should look like this:
+<insert screenshot of DB structure>
+
+## Setting up the app
+1. Open up a terminal window and clone the repository using the following command:
+```git clone https://github.com/sanav33/atlsfw_jd.git```
+2. Open the cloned repository using VSCode and open up a terminal session in VSCode using `Cmd + Shift + \``.
+3. Create a `password.mjs` file with the following content:
+```
+export getMongoPasscode() {
+    return "<password>"
+}
+export default getMongoPasscode;
+```
+
+## Setting up the server
+1. Open up a second terminal window in the cloned repository within VSCode.
+2. Run `cd server` in the terminal to change the directory to the `server` directory.
+3. Open Docker Desktop and leave it running in the background.
+4. Run `./run_server.sh`. You should see `Server is running on port: 5050`.
+
+## Setting up client
+1. Open up a second terminal window in the cloned repository within VSCode.
+2. Run `cd client` in the terminal to change the directory to the `client` directory.
+4. Run `npm install`.
+5. Open up the Expo Go app on your phone.
+6. Run `npx expo login` in your terminal and login using your Expo Go account credentials (you only have to do this the first time you run the app).
+7. Run `npx expo start`
+8. Run `./run_client.sh`. The app instance will show up in the Expo Go app.
+
 # Release Notes
 ## Version 0.4.0
 ### Features
@@ -69,24 +119,6 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 1. N/A
 ### Known Issues
 1. Account login works without encryption of email and password
-
-## Setting up server
-1. Clone the repository.
-2. Run `cd server`.
-3. Create a `password.mjs` file with the following content:
-```
-export getMongoPasscode() {
-    return "<password>"
-}
-export default getMongoPasscode;
-```
-4. Run `./run_server.sh`. You should see `Server is running on port: 5050`.
-
-## Setting up client
-1. Run `npm install` within the client directory.
-2. Install the Expo Go app from the App Store and create an account.
-3. Run `npx expo login` in your terminal.
-4. Run `./run_client.sh`.
 
 ### Troubleshooting
 * Can't run `./run_server.sh` or `.run_client.sh` because of a "Permission denied" error?
