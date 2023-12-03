@@ -33,8 +33,6 @@ const LoginScreen = ({navigation}) => {
 
       // Send the user data to your backend
       console.log("handling login");
-      // console.log(hashed_email);
-      // console.log(hashed_password);
       const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/', {
           hashed_email,
           hashed_password,
@@ -42,7 +40,7 @@ const LoginScreen = ({navigation}) => {
 
       // console.log("response", response);
       const data = response.data;
-      console.log(data);
+      console.log(data.user);
 
       if (data.success) {
           console.log("successfully logged in");

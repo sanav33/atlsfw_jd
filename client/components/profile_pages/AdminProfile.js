@@ -33,6 +33,7 @@ const AdminProfile = () => {
   const [editedBirthday, setEditedBirthday] = useState(userInfo["birthday"]);
   const [editedPhoneNumber, setEditedPhoneNumber] = useState(userInfo["phone_number"]);
   const dispatch = useDispatch();
+  const user_id = useSelector((store) => store.user_id.user_id);
 
   useEffect(() => {
     // fetch top most liked and saved articles upon loading of the page
@@ -42,7 +43,7 @@ const AdminProfile = () => {
         const response = await axios.get(url);
         if (response.data && Array.isArray(response.data)) {
           setTopLiked(response.data);
-          console.log(userInfo);
+          // console.log(userInfo);
         }
       } catch (error) {
         console.error("Error fetching top liked posts:", error.message);
@@ -94,14 +95,34 @@ const AdminProfile = () => {
       const newPath = await saveImageLocally(imageUri);
       setSavedPath(newPath);
     }
-    dispatch(setUserInfo({
+
+    const updatedUserInfo = {
       ...userInfo,
       first_name: editedFirstName,
       last_name: editedLastName,
       username: editedUsername,
       birthday: editedBirthday,
       phone_number: editedPhoneNumber,
-    }))
+    };
+
+    // Send the user data to your backend
+    const response = await axios.patch("http://" + MY_IP_ADDRESS + ":5050/edit/" + user_id, updatedUserInfo);
+
+    const data = response.data;
+
+    if(data.success) {
+      dispatch(setUserInfo({
+        ...userInfo,
+        first_name: editedFirstName,
+        last_name: editedLastName,
+        username: editedUsername,
+        birthday: editedBirthday,
+        phone_number: editedPhoneNumber,
+      }));
+    } else {
+      console.log("well what about this");
+      console.log(data.message);
+    }
   };
 
   const saveImageLocally = async (fileUri) => {
