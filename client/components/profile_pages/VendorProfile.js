@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, ScrollView, Button } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, ScrollView, Button, Alert, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { setVend } from '../../redux/actions/vendAction';
 import axios from "axios";
 import MY_IP_ADDRESS from "../../environment_variables.mjs";
 import { setUserInfo } from "../../redux/actions/userInfoAction";
+import ArticleForm from '../../Screens/ArticleForm';
 
 const VendorProfile = () => {
   const initialized = useSelector((store) => store.isInit.isInit);
@@ -18,7 +19,6 @@ const VendorProfile = () => {
   const [imageUri, setImageUri] = useState(null);
   const [savedPath, setSavedPath] = useState(null);
   const userInfo = useSelector((store) => store.userInfo.userInfo);
-
 
   const toggleInterest = interest => {
     setSelectedInterests(prevSelectedInterests =>
@@ -96,19 +96,19 @@ const VendorProfile = () => {
 
   return (
     <View style={styles.container}>
-    <ScrollView>
-      <View style={styles.header}></View>
-      <View style={styles.profileSection}>
-        <TouchableOpacity onPress={pickImage} disabled={!editMode}>
-          <Image
-            source={imageUri ? { uri: imageUri } : require('./user.jpg')}
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
-        <Text style={styles.name}>{userInfo["first_name"] + " " + userInfo["last_name"]}</Text>
-        {editMode && (
-          <Button title="Change Profile Picture" onPress={pickImage} />
-        )}
+      <ScrollView>
+        <View style={styles.header}></View>
+        <View style={styles.profileSection}>
+          <TouchableOpacity onPress={pickImage} disabled={!editMode}>
+            <Image
+              source={imageUri ? { uri: imageUri } : require('./user.jpg')}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
+          <Text style={styles.name}>{userInfo["first_name"] + " " + userInfo["last_name"]}</Text>
+          {editMode && (
+            <Button title="Change Profile Picture" onPress={pickImage} />
+          )}
           <View style={styles.infoContainer}>
             <TouchableOpacity
               style={[styles.infoTab, selectedTab === 'article' && styles.selectedTab]}
@@ -124,14 +124,9 @@ const VendorProfile = () => {
             </TouchableOpacity>
           </View>
         </View>
-        {selectedTab === 'article' && (
-          <View style={styles.contactSection}>
-            <Text style={styles.interestText}> Email: janedoe@example.com</Text>
-            <Text style={styles.interestText}> Birth Month: March</Text>
-            <Text style={styles.interestText}> Phone: +14048093421</Text>
-          </View>
-        )}
-        {selectedTab === 'discovery' && (
+        {selectedTab === 'article' ? (
+          <ArticleForm />
+        ) : (
           <View style={styles.detailsSection}>
             <Text style={styles.interestText}>What sustainable information are you interested in?</Text>
             {interestsList.map(interest => (
@@ -145,22 +140,22 @@ const VendorProfile = () => {
             ))}
           </View>
         )}
-        </ScrollView>
-        {/* Footer section */}
-        <View style={styles.footer}>
-          {!editMode ? (
-        <TouchableOpacity style={styles.editProfileButton} onPress={switchEditMode}>
-          <Text>Edit Profile</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity style={styles.editProfileButton} onPress={saveChanges}>
-          <Text>Save Changes</Text>
-        </TouchableOpacity>
-      )}
-        </View>
+      </ScrollView>
+      {/* Footer section */}
+      <View style={styles.footer}>
+        {!editMode ? (
+          <TouchableOpacity style={styles.editProfileButton} onPress={switchEditMode}>
+            <Text>Edit Profile</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.editProfileButton} onPress={saveChanges}>
+            <Text>Save Changes</Text>
+          </TouchableOpacity>
+        )}
       </View>
-    );
-  };
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
