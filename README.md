@@ -4,14 +4,14 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 # Installation Guide
 
 ## Prerequisites
-1. MacOS or Linux Laptop connected to a secured wi-fi connection
-2. iPhone connected to the same network
-3. Docker Desktop (installation instructions for [Mac OS](https://docs.docker.com/desktop/install/mac-install/) and [Linux](https://docs.docker.com/desktop/install/linux-install/))
-4. NodeJS (install [here](https://nodejs.org/en/download))
-5. An IDE (we recommend [VSCode](https://code.visualstudio.com/download))
-6. A Terminal (pre-installed on Mac OS and Linux)
-7. Git (installation instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
-8. Expo Go App (available on the App Store) and account
+* MacOS or Linux Laptop connected to a secured wi-fi connection
+* iPhone connected to the same network
+* Docker Desktop (installation instructions for [Mac OS](https://docs.docker.com/desktop/install/mac-install/) and [Linux](https://docs.docker.com/desktop/install/linux-install/))
+* NodeJS (install [here](https://nodejs.org/en/download))
+* An IDE (we recommend [VSCode](https://code.visualstudio.com/download))
+* A Terminal (pre-installed on Mac OS and Linux)
+* Git (installation instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+* Expo Go App (available on the App Store) and account
 
 ## Setting up the database
 1. Create a MongoDB Atlas account [here](https://www.mongodb.com/cloud/atlas/register) and login.
@@ -22,19 +22,26 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 6. Within the `users` database, create three collections: `vendor_info`, `customer_info`, and `user_login`.
 
 The final structure of your database should look like this:
-<insert screenshot of DB structure>
+![DB Structure](./db.png)
+
+### Running commands in the Terminal
+To run a command in your terminal, type in the command and press Enter.
 
 ## Setting up the app
 1. Open up a terminal window and clone the repository using the following command:
+   
 ```git clone https://github.com/sanav33/atlsfw_jd.git```
-2. Open the cloned repository using VSCode and open up a terminal session in VSCode using `Cmd + Shift + \``.
-3. Create a `password.mjs` file with the following content:
+
+3. Open the cloned repository using VSCode and open up a terminal session in VSCode using `Ctrl + Shift + ``.
+4. Create a `password.mjs` file in the `server` folder with the following content:
 ```
 export getMongoPasscode() {
     return "<password>"
 }
 export default getMongoPasscode;
 ```
+You can use the "Create File" button in the VSCode File Explorer shown below to create the file.
+![VSCode Create File](./new_file.png)
 
 ## Setting up the server
 1. Open up a second terminal window in the cloned repository within VSCode.
