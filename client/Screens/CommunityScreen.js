@@ -54,7 +54,6 @@ const CommunityScreen = ({ navigation }) => {
           "?tags=" +
           inputTag.join(",")
       );
-      console.log(response.data);
       setArticleData(response.data);
     } catch (error) {
       console.error("Error during data fetch:", error.message);
