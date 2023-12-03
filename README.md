@@ -22,7 +22,7 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 6. Within the `users` database, create three collections: `vendor_info`, `customer_info`, and `user_login`.
 
 The final structure of your database should look like this:
-![DB Structure](./db.png)
+<img src="./db.png" alt="DB Structure" width="200"/>
 
 ### Running commands in the Terminal
 To run a command in your terminal, type in the command and press Enter.
@@ -40,8 +40,8 @@ export getMongoPasscode() {
 }
 export default getMongoPasscode;
 ```
-You can use the "Create File" button in the VSCode File Explorer shown below to create the file.
-![VSCode Create File](./new_file.png)
+You can use the "New File" button in the VSCode File Explorer shown below to create the file.
+<img src="./new_file.png" alt="New File" width="200"/>
 
 ## Setting up the server
 1. Open up a second terminal window in the cloned repository within VSCode.
