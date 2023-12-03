@@ -36,32 +36,30 @@ const SavedArticles = ({ navigation }) => {
   };
 
   const [articleData, setArticleData] = useState();
-
-  // function for fetching article data with selected tags
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        "http://" + MY_IP_ADDRESS + ":5050/posts"
-      );
-      const filteredData = response.data.filter((article) =>
-        saved_articles_state.includes(article._id)
-      );
-      setArticleData(filteredData);
-    } catch (error) {
-      console.error("Error during data fetch:", error.message);
-    }
-  };
-
-  // Fetch article data when page is initialized
+  
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://" + MY_IP_ADDRESS + ":5050/posts"
+        );
+        const filteredData = response.data.filter((article) =>
+          saved_articles_state.includes(article._id)
+        );
+        setArticleData(filteredData);
+      } catch (error) {
+        console.error("Error during data fetch:", error.message);
+      }
+    }; 
     fetchData();
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <FlatList
-          numColumns={1}
+        {articleData && 
+        <MasonryList
+          numColumns={2}
           data={articleData}
           keyExtractor={(item) => item["_id"]}
           renderItem={({ item, index }) => (
@@ -78,6 +76,7 @@ const SavedArticles = ({ navigation }) => {
             ></Article>
           )}
         />
+        }
       </View>
     </View>
   );

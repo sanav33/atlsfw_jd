@@ -106,9 +106,9 @@ const CommunityScreen = ({ navigation }) => {
         >
           <Icon name="filter" size={30} color="black" />
         </TouchableOpacity>
-
-        <FlatList
-          numColumns={1}
+        {articleData &&
+        <MasonryList
+          numColumns={2}
           data={articleData}
           keyExtractor={(item) => item["_id"]}
           renderItem={({ item, index }) => (
@@ -125,6 +125,7 @@ const CommunityScreen = ({ navigation }) => {
             ></Article>
           )}
         />
+        }
       </View>
 
       {/* Filter Modal */}
