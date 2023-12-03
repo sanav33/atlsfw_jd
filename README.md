@@ -15,14 +15,30 @@ A mobile application where ATLSFW will gauge user interest on topics related to 
 
 ## Setting up the database
 1. Create a MongoDB Atlas account [here](https://www.mongodb.com/cloud/atlas/register) and login.
-2. Navigate to the Database tab under the Deployment section in the left sidebar.
-3. Click on the Collections tab.
-4. Use the Create Database button to create two databases: `posts` and `users`.
+2. Navigate to the **Database** tab under the **Deployment** section in the left sidebar.
+3. Click on the **Collections** tab.
+4. Use the **Create Database** button to create two databases: `posts` and `users`.
 5. Within the `posts` database, create one collection: `articles`.
 6. Within the `users` database, create three collections: `vendor_info`, `customer_info`, and `user_login`.
 
 The final structure of your database should look like this:
+
+
 <img src="./db.png" alt="DB Structure" width="200"/>
+
+7. Finally, navigate back to the **Overview** tab and click the **Connect** button and then click the **Drivers** option.
+8. Copy the URI as shown below:
+
+
+<img src="./uri.png" alt="db uri" width="300"/>
+
+
+10. Open up the `server/db/conn.mjs` file and change line 4 to your own database's URI. Do not remove the `getMongoPasscode()`.
+You will need to partition the URI like so:
+
+
+<img src="./conn.png" alt="db uri" width="300"/>
+
 
 ### Running commands in the Terminal
 To run a command in your terminal, type in the command and press Enter.
@@ -32,15 +48,13 @@ To run a command in your terminal, type in the command and press Enter.
    
 ```git clone https://github.com/sanav33/atlsfw_jd.git```
 
-3. Open the cloned repository using VSCode and open up a terminal session in VSCode using `Ctrl + Shift + ``.
-4. Create a `password.mjs` file in the `server` folder with the following content:
-```
-export getMongoPasscode() {
-    return "<password>"
-}
-export default getMongoPasscode;
-```
+2. Open the cloned repository using VSCode and open up a terminal session in VSCode using ``Ctrl + Shift + ` `` (final character is a backtick).
+3. Create a `password.mjs` file in the `server` folder with the MongoDB Atlas credentials and the private key
+for the encryption utilities (these credentials will be securely delivered to the client in person).
+
 You can use the "New File" button in the VSCode File Explorer shown below to create the file.
+
+
 <img src="./new_file.png" alt="New File" width="200"/>
 
 ## Setting up the server
