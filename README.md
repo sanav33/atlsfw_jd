@@ -30,14 +30,14 @@ The final structure of your database should look like this:
 8. Copy the URI as shown below:
 
 
-<img src="./uri.png" alt="db uri" width="300"/>
+<img src="./uri.png" alt="db uri" width="700"/>
 
 
 10. Open up the `server/db/conn.mjs` file and change line 4 to your own database's URI. Do not remove the `getMongoPasscode()`.
 You will need to partition the URI like so:
 
 
-<img src="./conn.png" alt="db uri" width="300"/>
+<img src="./conn.png" alt="db uri" width="800"/>
 
 
 ### Running commands in the Terminal
