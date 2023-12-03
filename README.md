@@ -39,7 +39,6 @@ You will need to partition the URI like so:
 
 <img src="./conn.png" alt="db uri" width="800"/>
 
-
 ### Running commands in the Terminal
 To run a command in your terminal, type in the command and press Enter.
 
@@ -56,6 +55,7 @@ You can use the "New File" button in the VSCode File Explorer shown below to cre
 
 
 <img src="./new_file.png" alt="New File" width="200"/>
+
 
 ## Setting up the server
 1. Open up a second terminal window in the cloned repository within VSCode.
