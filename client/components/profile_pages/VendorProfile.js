@@ -4,9 +4,6 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { useSelector, useDispatch } from "react-redux";
 import { setVend } from '../../redux/actions/vendAction';
-import axios from "axios";
-import MY_IP_ADDRESS from "../../environment_variables.mjs";
-import { setUserInfo } from "../../redux/actions/userInfoAction";
 import ArticleForm from '../../Screens/ArticleForm';
 
 const VendorProfile = () => {
