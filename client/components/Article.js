@@ -64,8 +64,8 @@ const Article = (props) => {
     setLiked((liked) => !liked);
 
     //check if logged in
-    console.log("inside article, like", isLogged);
-    console.log(user_id);
+    // console.log("inside article, like", isLogged);
+    // console.log(user_id);
 
     if (isLogged) {
       if (!liked) {
@@ -149,8 +149,8 @@ const Article = (props) => {
     setSavePressed((isSavePressed) => !isSavePressed);
 
     //check if logged in
-    console.log("inside article, save", isLogged);
-    console.log(user_id);
+    // console.log("inside article, save", isLogged);
+    // console.log(user_id);
 
     if (isLogged) {
       if (!isSavePressed) {
