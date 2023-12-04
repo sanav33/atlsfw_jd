@@ -19,8 +19,10 @@ import MY_IP_ADDRESS from "../environment_variables.mjs";
 import { useNavigation } from "@react-navigation/native";
 
 const Article = (props) => {
-  const { image, title, author, likes, saves, article_id, article_link } =
+  const { image, title, author, likes, saves, article_id, article_link, author_id } =
     props.article;
+  console.log("random", author_id);
+  console.log(props.article);
   const account_type = useSelector((store) => store.acct_type.acct_type);
   //account_type = 1; //hardcode here to test save count text
 
@@ -41,6 +43,11 @@ const Article = (props) => {
 
   const navigateToContent = (link) => {
     navigation.navigate("Article Webview", { link });
+  };
+
+  const navigateToAuthor = (id) => {
+    console.log("test: ", id);
+    navigation.navigate("Author", { id });
   };
 
   useEffect(() => {
@@ -240,7 +247,7 @@ const Article = (props) => {
         </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Author")}
+          onPress={() => navigateToAuthor(author_id)}
           style={{ marginTop: 10 }}
         >
           <Text style={styles.authorName}>{author}</Text>

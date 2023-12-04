@@ -121,6 +121,7 @@ const CommunityScreen = ({ navigation }) => {
                 saves: item["save_count"],
                 article_id: item["_id"],
                 article_link: item["article_link"],
+                author_id: item["author_id"],
               }}
             ></Article>
           )}

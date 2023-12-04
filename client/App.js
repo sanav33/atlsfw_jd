@@ -24,6 +24,7 @@ import SavedArticles from "./Screens/SavedArticles";
 import AuthorNameScreen from "./Screens/AuthorNameScreen";
 import ProfilePage from "./Screens/ProfilePage";
 import NavBar from "./components/NavBar";
+import ShopNowWebview from "./Screens/ShopNowWebview";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
           <Stack.Screen name="Profile" component={ProfilePage} />
           <Stack.Screen name="Saved Articles" component={SavedArticles} />
           <Stack.Screen name="Article Webview" component={ArticleContent} />
+          <Stack.Screen name="Shop Now Webview" component={ShopNowWebview} /> 
           {/* add future screens */}
         </Stack.Navigator>
         <NavBar />
