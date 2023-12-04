@@ -8,6 +8,7 @@ import axios from "axios";
 import MY_IP_ADDRESS from "../../environment_variables.mjs";
 import { setUserInfo } from "../../redux/actions/userInfoAction";
 import ArticleForm from '../../Screens/ArticleForm';
+import DiscoveryPageCreation from '../../Screens/DiscoveryPageCreation';
 
 const VendorProfile = () => {
   const initialized = useSelector((store) => store.isInit.isInit);
@@ -127,32 +128,11 @@ const VendorProfile = () => {
         {selectedTab === 'article' ? (
           <ArticleForm />
         ) : (
-          <View style={styles.detailsSection}>
-            <Text style={styles.interestText}>What sustainable information are you interested in?</Text>
-            {interestsList.map(interest => (
-              <View key={interest} style={styles.interestItem}>
-                <Checkbox
-                  isSelected={selectedInterests.includes(interest)}
-                  onToggle={() => toggleInterest(interest)}
-                />
-                <Text style={styles.interestText}>{interest}</Text>
-              </View>
-            ))}
-          </View>
+          selectedTab === 'discovery' && (
+            <DiscoveryPageCreation/>
+          )
         )}
       </ScrollView>
-      {/* Footer section */}
-      <View style={styles.footer}>
-        {!editMode ? (
-          <TouchableOpacity style={styles.editProfileButton} onPress={switchEditMode}>
-            <Text>Edit Profile</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.editProfileButton} onPress={saveChanges}>
-            <Text>Save Changes</Text>
-          </TouchableOpacity>
-        )}
-      </View>
     </View>
   );
 };
