@@ -73,6 +73,20 @@ You can use the "New File" button in the VSCode File Explorer shown below to cre
 8. Run `./run_client.sh`. The app instance will show up in the Expo Go app.
 
 # Release Notes
+## Version 0.5.0
+### Features
+1. Article creation form allows vendors to create posts from their Profile page.
+2. Vendors can now create Discovery pages for their brand which will be linked to their account.
+3. Users can navigate to a vendor's discovery page by clicking on the author name underneath the article thumbnails.
+
+### Bug Fixes
+1. MasonryList bug has been fixed.
+2. Negative save values in the database are no longer an issue.
+3. Client-side decryption bug has been fixed.
+
+### Known Issues
+N/A
+
 ## Version 0.4.0
 ### Features
 1. User Profile Page now gives the user the option to edit their contact information and select interests.
