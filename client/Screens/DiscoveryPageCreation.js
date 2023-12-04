@@ -15,7 +15,6 @@ const DiscoveryPageCreation = () => {
     try {
       vendor_id = userInfo["_id"];
       console.log('hi');
-      console.log(vendor_id);
       const url = `http://${MY_IP_ADDRESS}:5050/discover/create/`+vendor_id;
       const payload = {
         brand_name: brand_name,
