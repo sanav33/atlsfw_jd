@@ -8,7 +8,8 @@ import {
   Switch,
   ScrollView,
   Button,
-  TextInput
+  TextInput,
+  Alert
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
@@ -17,10 +18,12 @@ import MY_IP_ADDRESS from "../../environment_variables.mjs";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserInfo } from "../../redux/actions/userInfoAction";
+import hashString from '../../utils/hashingUtils.mjs';
 
 const AdminProfile = () => {
   const userInfo = useSelector((store) => store.userInfo.userInfo);
-  const [selectedTab, setSelectedTab] = useState("contact");
+  const [selectedTab, setSelectedTab] = useState("auth");
+  const [email, setEmail] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [imageUri, setImageUri] = useState(null);
@@ -151,6 +154,30 @@ const AdminProfile = () => {
     }
   };
 
+  const handleAuth = async () => {
+    try {
+      const hashed_email = await hashString(email);
+      // Send email to backend
+      const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/vendor', {
+          hashed_email
+        });
+      Alert.alert('Success', "Vendor Email is Authorized",
+        [{text:'OK',
+          cancelable: true,
+          },
+        ],
+      );
+    } catch (error) {
+      console.error('Error during authorization:', error.response.data.message);
+      Alert.alert('Authorization Error', error.response.data.message,
+        [{text:'Try Again',
+          cancelable: true,
+          },
+        ],
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -172,12 +199,12 @@ const AdminProfile = () => {
             <TouchableOpacity
               style={[
                 styles.infoTab,
-                selectedTab === "contact" && styles.selectedTab,
+                selectedTab === "auth" && styles.selectedTab,
               ]}
-              onPress={() => selectTab("contact")}
+              onPress={() => selectTab("auth")}
             >
-              <Text style={selectedTab === "contact" && styles.selectedTabText}>
-                Contact
+              <Text style={selectedTab === "auth" && styles.selectedTabText}>
+                Authorize Vendor
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -208,63 +235,23 @@ const AdminProfile = () => {
             </TouchableOpacity>
           </View>
         </View>
-        {selectedTab === "contact" && (
+        {selectedTab === "auth" && (
           <View style={styles.contactSection}>
-            <Text style={styles.label}>First Name:</Text>
-            {editMode ? (
-              <TextInput
-                value={editedFirstName}
-                onChangeText={setEditedFirstName}
+            <TextInput
+                placeholder="Vendor Email*"
                 style={styles.input}
-              />
-            ) : (
-              <Text style={styles.value}>{userInfo["first_name"]}</Text>
-            )}
-
-            <Text style={styles.label}>Last Name:</Text>
-            {editMode ? (
-              <TextInput
-                value={editedLastName}
-                onChangeText={setEditedLastName}
-                style={styles.input}
-              />
-            ) : (
-              <Text style={styles.value}>{userInfo["last_name"]}</Text>
-            )}
-
-            <Text style={styles.label}>Username:</Text>
-            {editMode ? (
-              <TextInput
-                value={editedUsername}
-                onChangeText={setEditedUsername}
-                style={styles.input}
-              />
-            ) : (
-              <Text style={styles.value}>{userInfo["username"]}</Text>
-            )}
-
-            <Text style={styles.label}>Phone Number:</Text>
-            {editMode ? (
-              <TextInput
-                value={editedPhoneNumber}
-                onChangeText={setEditedPhoneNumber}
-                keyboardType="number-pad"
-                style={styles.input}
-              />
-            ) : (
-              <Text style={styles.value}>{userInfo["phone_number"]}</Text>
-            )}
-
-            <Text style={styles.label}>Birthday:</Text>
-            {editMode ? (
-              <TextInput
-                value={editedBirthday}
-                onChangeText={setEditedBirthday}
-                style={styles.input}
-              />
-            ) : (
-              <Text style={styles.value}>{userInfo["birthday"]}</Text>
-            )}
+                keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
+            />
+          
+            <View style={styles.editProfileButton}>
+            <Button
+                title="Authorize vendor"
+                color="black"
+                onPress={handleAuth}
+            />
+            </View>
           </View>
         )}
 
@@ -481,7 +468,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   contactSection: {
-    padding: 16,
+    padding: 30,
     color: "#424242",
     alignItems: "center",
     justifyContent: "center",
@@ -491,7 +478,7 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 15,
-    paddingHorizontal: 10,
+    padding: 10,
   },
   label: {
     fontSize: 15,
