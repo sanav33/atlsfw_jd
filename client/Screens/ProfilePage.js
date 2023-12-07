@@ -22,7 +22,6 @@ const ProfilePage = ({ navigation }) => {
     } else if (account_type === 3) {
       content = <UserProfile/>;
     } else {
-      console.log("hello this account type doesnt exist");
       // content = null;
       navigation.replace("Log In");
       return null;

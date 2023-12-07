@@ -14,7 +14,6 @@ const DiscoveryPageCreation = () => {
   const handleSubmit = async () => {
     try {
       vendor_id = userInfo["_id"];
-      console.log('hi');
       const url = `http://${MY_IP_ADDRESS}:5050/discover/create/`+vendor_id;
       const payload = {
         brand_name: brand_name,
@@ -22,10 +21,7 @@ const DiscoveryPageCreation = () => {
         title: title,
         intro: intro,
       };
-      console.log(userInfo);
-      console.log('Payload:', payload);
       const response = await axios.post(url, payload);
-      console.log(response.status);
 
       if (response.status == 200) {
         Alert.alert('Discovery Page Created Successfully');

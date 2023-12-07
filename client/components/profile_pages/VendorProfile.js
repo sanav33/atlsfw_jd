@@ -54,7 +54,6 @@ const VendorProfile = () => {
         from: fileUri,
         to: newPath,
       });
-      console.log('Image saved at', newPath);
       return newPath;
     } catch (e) {
       console.error(e);
@@ -77,7 +76,6 @@ const VendorProfile = () => {
     });
 
     if (!result.cancelled && result.assets && result.assets.length > 0) {
-      console.log(result.assets[0].uri);
       setImageUri(result.assets[0].uri);
     }
   };

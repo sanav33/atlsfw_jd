@@ -23,6 +23,4 @@ async function getArticleById(id) {
 
 const testList = await getAllArticles()
 const iid = testList[0]._id
-console.log(testList[0]._id)
 const testart = await getArticleById(iid)
-console.log(testart)
