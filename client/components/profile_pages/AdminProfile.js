@@ -46,7 +46,6 @@ const AdminProfile = () => {
         const response = await axios.get(url);
         if (response.data && Array.isArray(response.data)) {
           setTopLiked(response.data);
-          // console.log(userInfo);
         }
       } catch (error) {
         console.error("Error fetching top liked posts:", error.message);
@@ -126,7 +125,6 @@ const AdminProfile = () => {
         from: fileUri,
         to: newPath,
       });
-      console.log('Image saved at', newPath);
       return newPath;
     } catch (e) {
       console.error(e);
@@ -149,7 +147,6 @@ const AdminProfile = () => {
     });
 
     if (!result.cancelled && result.assets && result.assets.length > 0) {
-      console.log(result.assets[0].uri);
       setImageUri(result.assets[0].uri);
     }
   };

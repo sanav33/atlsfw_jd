@@ -12,21 +12,16 @@ enum AccountType {
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    console.log("getting login");
     res.json({ success: true });
 });
 
 router.post("/", async (req, res) => {
-    console.log("got a login request");
     const { hashed_email, hashed_password } = req.body;
-    console.log(hashed_email, hashed_password);
     if (!hashed_email || !hashed_password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }
     const existingUser = await users_db.collection('user_login').findOne({ hashed_email: hashed_email, hashed_password: hashed_password });
     if (!existingUser) {
-        console.log(hashed_email);
-        console.log(hashed_password);
         return res.status(400).json({ success: false, message: 'The email-password combination is incorrect' });
     }
     const userInfo = await users_db.collection('customer_info').findOne({ hashed_email });

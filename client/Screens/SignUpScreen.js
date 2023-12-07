@@ -69,7 +69,6 @@ const SignUpScreen = ({ navigation }) => {
               user_id: data.user._id, // Assuming the server response structure includes user._id
             };
           dispatch(setUserInfo(updatedUserInfo));
-          console.log("user info: " + JSON.stringify(updatedUserInfo, null, 2));
           Alert.alert("Success", "Account created successfully!", [
             { text: "OK" },
           ]);

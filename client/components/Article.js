@@ -21,8 +21,6 @@ import { useNavigation } from "@react-navigation/native";
 const Article = (props) => {
   const { image, title, author, likes, saves, article_id, article_link, author_id } =
     props.article;
-  console.log("random", author_id);
-  console.log(props.article);
   const account_type = useSelector((store) => store.acct_type.acct_type);
   //account_type = 1; //hardcode here to test save count text
 
@@ -46,7 +44,6 @@ const Article = (props) => {
   };
 
   const navigateToAuthor = (id) => {
-    console.log("test: ", id);
     navigation.navigate("Author", { id });
   };
 
@@ -69,10 +66,6 @@ const Article = (props) => {
   const handleLike = () => {
     // toggle button state
     setLiked((liked) => !liked);
-
-    //check if logged in
-    // console.log("inside article, like", isLogged);
-    // console.log(user_id);
 
     if (isLogged) {
       if (!liked) {
@@ -116,9 +109,6 @@ const Article = (props) => {
     if (data.success) {
       //dispatch like action if article has been added to db
       dispatch(like(article_id));
-    } else {
-      console.log("well what about this");
-      console.log(data.message);
     }
   };
 
@@ -142,9 +132,6 @@ const Article = (props) => {
     if (data.success) {
       //dispatch unlike action if article has been removed from db
       dispatch(unlike(article_id));
-    } else {
-      console.log("well what about this");
-      console.log(data.message);
     }
   };
 
@@ -154,10 +141,6 @@ const Article = (props) => {
   const handleSave = () => {
     // toggle button state
     setSavePressed((isSavePressed) => !isSavePressed);
-
-    //check if logged in
-    // console.log("inside article, save", isLogged);
-    // console.log(user_id);
 
     if (isLogged) {
       if (!isSavePressed) {
@@ -175,7 +158,6 @@ const Article = (props) => {
 
         // hit BE endpoint
         unsaveFromDB();
-        console.log("unsaved");
       }
     } else {
       navigation.replace("Log In");
@@ -202,9 +184,6 @@ const Article = (props) => {
     if (data.success) {
       //dispatch save action if article has been added to db
       dispatch(save(article_id));
-    } else {
-      console.log("well what about this");
-      console.log(data.message);
     }
   };
 
@@ -228,9 +207,6 @@ const Article = (props) => {
     if (data.success) {
       //dispatch unsave action if article has been removed from db
       dispatch(unsave(article_id));
-    } else {
-      console.log("well what about this");
-      console.log(data.message);
     }
   };
 

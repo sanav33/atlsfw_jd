@@ -41,7 +41,6 @@ router.get("/posts", async (req, res) => {
 
     // If the tags query parameter exists, split it by comma to get an array
     const tags = tagsQuery ? tagsQuery.split(",") : [];
-    console.log(tags);
 
     const collection = posts_db.collection('articles');
 
@@ -86,7 +85,6 @@ router.get("/posts/top_saved", async (req, res) => {
 });
 
 router.post('/posts/:user_id/:article_id/', async (req, res) => {
-  console.log("trying to like/dislike an article");
   const { user_id, article_id } = req.params;
 
   if (!user_id) {
@@ -129,7 +127,6 @@ router.post('/posts/:user_id/:article_id/', async (req, res) => {
     return res.status(200).send({ success: true });
   }
   if (req.query.save) {
-    console.log("saving");
     let save_count = 0;
     if (arg && (arg === 1 || arg === -1)) {
       await posts_db.collection("articles").updateOne({ _id: new ObjectId(article_id) }, { $inc: { save_count: arg }}, (err, _) => {

@@ -12,14 +12,11 @@ enum AccountType {
 const router = express.Router();
 
 router.get("/signup", async (req, res) => {
-    console.log("getting signup");
     res.json({ success: true });
 });
 
 router.post("/signup", async (req, res) => {
-    console.log("got a signup request");
     const {hashed_email, encrypted_email, hashed_password, first_name, last_name, username, birthday, gender, phone_number, subscribed_to_news } = req.body;
-    console.log(hashed_email, hashed_password);
     if (!hashed_email || !hashed_password) {
         return res.status(400).json({ success: false, message: 'Missing email or password' });
     }

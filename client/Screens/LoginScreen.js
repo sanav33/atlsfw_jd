@@ -32,19 +32,14 @@ const LoginScreen = ({navigation}) => {
       const hashed_password = await hashString(password);
 
       // Send the user data to your backend
-      console.log("handling login");
       const response = await axios.post('http://' + MY_IP_ADDRESS + ':5050/', {
           hashed_email,
           hashed_password,
         });
 
-      // console.log("response", response);
       const data = response.data;
-      console.log(data.user);
 
       if (data.success) {
-          console.log("successfully logged in");
-          console.log(data.user.vendor_account_initialized);
  
           // SET REDUX STATES
 
@@ -70,10 +65,6 @@ const LoginScreen = ({navigation}) => {
 
         // Handle success (e.g., navigate to another screen)
         navigation.reset({ index: 0, routes: [{ name: 'Community' }], });
-      } else {
-        console.log("well what about this");
-        console.log(data.message);
-      // Handle error (e.g., display an error message)
       }
     } catch (error) {
       console.error('Error during login:', error.response.data.message);

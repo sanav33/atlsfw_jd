@@ -15,7 +15,6 @@ const AuthorNameScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const navigateToShopLink = (link) => {
-    console.log(link);
     navigation.navigate("Shop Now Webview", { link });
   };
 
@@ -23,7 +22,6 @@ const AuthorNameScreen = ({ route }) => {
     const fetchAuthorInfo = async () => {
       try {
         const response = await axios.get(`http://${MY_IP_ADDRESS}:5050/discover/` + author_id);
-        console.log(response.data);
 
         if (response.status === 200) {
           setAuthorInfo(response.data);

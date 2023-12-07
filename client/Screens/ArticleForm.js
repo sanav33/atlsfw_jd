@@ -26,10 +26,8 @@ const ArticleForm = () => {
         author_pfp_link: authorPfpLink,
         tags: tags.split(',').map(tag => tag.trim()),
       };
-      console.log(userInfo);
-      console.log('Payload:', payload);
+
       const response = await axios.post(url, payload);
-      console.log(response.data.message);
 
       if (response.data.success) {
         Alert.alert('Article Created Successfully');
